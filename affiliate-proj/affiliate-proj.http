@@ -4,3 +4,39 @@ GET {{affiliate_proj_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{affiliate_proj_HostAddress}}/users/
+Accept: application/json
+
+###
+
+GET {{affiliate_proj_HostAddress}}/users/7ad805da-0f53-41a7-b1cf-72e95b737dd2
+Accept: application/json
+
+###
+
+POST {{affiliate_proj_HostAddress}}/users
+Content-Type: application/json
+
+{ 
+    "uuid": "1e30b95f-875d-4a4b-a886-4715386e651e",
+    "username": "bobby123",
+    "password": "mynameistherealslimshady"
+}
+
+###
+
+PUT {{affiliate_proj_HostAddress}}/users/5233d2b1-d7a6-4113-8500-6a7cce80c258
+Content-Type: application/json
+
+{
+  "uuid": "5233d2b1-d7a6-4113-8500-6a7cce80c258",
+  "username": "Lenny",
+  "password": "LennyWasHere:)"
+}
+
+###
+
+DELETE {{affiliate_proj_HostAddress}}/Users/1e30b95f-875d-4a4b-a886-4715386e651e
+
+###
