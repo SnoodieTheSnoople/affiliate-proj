@@ -13,6 +13,10 @@ public class Program
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
+        
+        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:Url"));
+        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:AnonPublicKey"));
+        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:ServiceRoleKey"));
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
