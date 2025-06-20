@@ -2,11 +2,11 @@
 
 public class Creator
 {
-    private string _creatorId { get; set; }
-    private DateTime _createdAt { get; set; }
-    private string _firstname  { get; set; }
-    private string _lastname { get; set; }
-    private DateOnly _dob { get; set; }
-    private string _stripeId  { get; set; }
-    private string _userId  { get; set; }
+    public string CreatorId { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public string _Firstname  { get; set; }
+    public string Lastname { get; set; }
+    public DateOnly Dob { get; set; }
+    public string StripeId  { get; set; }
+    public string UserId  { get; set; }
 }
