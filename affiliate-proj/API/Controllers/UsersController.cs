@@ -13,31 +13,31 @@ namespace affiliate_proj.API.Controllers
         {
             new User
             {
-                uuid = "7ad805da-0f53-41a7-b1cf-72e95b737dd2",
-                username = "admin",
-                password = "admin",
-                created_at = DateTime.Now
+                Uuid = "7ad805da-0f53-41a7-b1cf-72e95b737dd2",
+                Username = "admin",
+                Password = "admin",
+                CreatedAt = DateTime.Now
             },
             new User
             {
-                uuid = Guid.NewGuid().ToString(),
-                username = "user",
-                password = "user",
-                created_at = DateTime.Now
+                Uuid = Guid.NewGuid().ToString(),
+                Username = "user",
+                Password = "user",
+                CreatedAt = DateTime.Now
             },
             new User
             {
-                uuid = Guid.NewGuid().ToString(),
-                username = "user2",
-                password = "user2",
-                created_at = DateTime.Now
+                Uuid = Guid.NewGuid().ToString(),
+                Username = "user2",
+                Password = "user2",
+                CreatedAt = DateTime.Now
             },
             new User
             {
-                uuid = "5233d2b1-d7a6-4113-8500-6a7cce80c258",
-                username = "user3",
-                password = "user3",
-                created_at = DateTime.Now
+                Uuid = "5233d2b1-d7a6-4113-8500-6a7cce80c258",
+                Username = "user3",
+                Password = "user3",
+                CreatedAt = DateTime.Now
             }
         };
 
@@ -50,7 +50,7 @@ namespace affiliate_proj.API.Controllers
         [HttpGet("{uuid}")]
         public ActionResult<User> GetUserByUUID(string uuid)
         {
-            var user =  users.FirstOrDefault(x => x.uuid == uuid);
+            var user =  users.FirstOrDefault(x => x.Uuid == uuid);
             if (user == null) return NotFound();
             
             // return Ok(users.Find(u => u.uuid == uuid));
@@ -61,22 +61,22 @@ namespace affiliate_proj.API.Controllers
         public ActionResult<User> AddUser(User user)
         {
             if (user == null) return BadRequest();
-            if (users.FirstOrDefault(x => x.uuid == user.uuid) != null) return BadRequest();
+            if (users.FirstOrDefault(x => x.Uuid == user.Uuid) != null) return BadRequest();
             
-            user.created_at = DateTime.Now;
+            user.CreatedAt = DateTime.Now;
             users.Add(user);
-            return CreatedAtAction(nameof(GetUserByUUID), new { uuid = user.uuid }, user);
+            return CreatedAtAction(nameof(GetUserByUUID), new { uuid = user.Uuid }, user);
         }
 
         [HttpPut("{uuid}")]
         public IActionResult UpdateUser(string uuid, User user)
         {   
-            if (uuid != user.uuid) return NotFound();
+            if (uuid != user.Uuid) return NotFound();
 
-            var selectedUser =  users.FirstOrDefault(x => x.uuid == uuid);
+            var selectedUser =  users.FirstOrDefault(x => x.Uuid == uuid);
             
-            selectedUser.username = user.username;
-            selectedUser.password = user.password;
+            selectedUser.Username = user.Username;
+            selectedUser.Password = user.Password;
 
             return NoContent();
         }
@@ -84,7 +84,7 @@ namespace affiliate_proj.API.Controllers
         [HttpDelete("{uuid}")]
         public IActionResult DeleteUser(string uuid)
         {
-            var selectedUser = users.FirstOrDefault(x => x.uuid == uuid);
+            var selectedUser = users.FirstOrDefault(x => x.Uuid == uuid);
             if (selectedUser == null) return NotFound();
             users.Remove(selectedUser);
             return NoContent();

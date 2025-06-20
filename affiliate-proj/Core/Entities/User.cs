@@ -2,8 +2,8 @@
 
 public class User
 {
-    public string uuid { get; set;  }
-    public DateTime created_at { get; set; }
-    public string username { get; set; }
-    public string password { get; set; }
+    public string Uuid { get; set;  }
+    public DateTime CreatedAt { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
 }
