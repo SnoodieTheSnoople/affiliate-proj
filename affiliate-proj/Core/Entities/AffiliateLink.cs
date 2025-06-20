@@ -9,4 +9,5 @@ public class AffiliateLink
     public string RefParam { get; set; }
     public string ProductLink { get; set; }
     public int Clicks { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
