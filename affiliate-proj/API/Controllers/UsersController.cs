@@ -1,5 +1,4 @@
 using affiliate_proj.Core.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers
@@ -9,7 +8,7 @@ namespace affiliate_proj.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        static private List<User> users = new List<User>
+        private static List<User> users = new List<User>
         {
             new User
             {
