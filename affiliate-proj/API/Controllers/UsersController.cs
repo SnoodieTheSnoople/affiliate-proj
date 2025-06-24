@@ -56,10 +56,11 @@ namespace affiliate_proj.API.Controllers
             return Ok(returnedUsers);
         }
 
-        [HttpGet("{uuid}")]
-        public ActionResult<User> GetUserByUUID(System.Guid uuid)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<User>> GetUserById(System.Guid userId)
         {
-            var user =  users.FirstOrDefault(x => x.UserId == uuid);
+            // var user =  users.FirstOrDefault(x => x.UserId == userId);
+            var user = await _accountService.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
             
             // return Ok(users.Find(u => u.uuid == uuid));
@@ -74,7 +75,7 @@ namespace affiliate_proj.API.Controllers
             
             user.CreatedAt = DateTime.Now;
             users.Add(user);
-            return CreatedAtAction(nameof(GetUserByUUID), new { uuid = user.UserId }, user);
+            return CreatedAtAction(nameof(GetUserById), new { uuid = user.UserId }, user);
         }
 
         [HttpPut("{uuid}")]
