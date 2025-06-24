@@ -1,12 +1,26 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace affiliate_proj.Core.Entities;
 
 public class Store
 {
-    public string StoreId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public System.Guid StoreId { get; set; }
+    
     public DateTime CreatedAt { get; set; }
+    
+    [Required]
     public string StoreName { get; set; }
+    
+    [Required]
     public string ShopifyId { get; set; }
+    
+    [Required]
     public string ShopifyToken { get; set; }
+    
+    [Required]
     public string StoreUrl { get; set; }
 
     // TODO: Review entity on ER diagram.
