@@ -1,3 +1,5 @@
+using affiliate_proj.Accessors.DatabaseAccessors;
+
 namespace affiliate_proj;
 
 public class Program
@@ -12,11 +14,19 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
-        var app = builder.Build();
+        // Exposing keys to test presence of keys.
+        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:Url"));
+        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:AnonPublicKey"));
+        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:ServiceRoleKey"));
         
-        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:Url"));
-        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:AnonPublicKey"));
-        Console.WriteLine(app.Configuration.GetValue<string?>("Supabase:ServiceRoleKey"));
+        builder.Services.AddSingleton<SupabaseAccessor>(tmp => new SupabaseAccessor(
+            builder.Configuration.GetValue<string>("Supabase:Url"),
+            builder.Configuration.GetValue<string>("Supabase:AnonPublicKey"),
+            builder.Configuration.GetValue<string>("Supabase:ServiceRoleKey"))
+        );
+
+
+        var app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
