@@ -19,4 +19,10 @@ public class AccountService : IAccountService
         var users = _supabaseAccessor.Users.AsNoTracking().ToList();
         return users;
     }
+
+    public async Task<User> GetUserByIdAsync(System.Guid userId)
+    {
+        var user = await _supabaseAccessor.Users.FindAsync(userId);
+        return user;
+    }
 }
