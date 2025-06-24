@@ -1,3 +1,4 @@
+using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Core.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,48 +9,57 @@ namespace affiliate_proj.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly IAccountService _accountService;
+        
         private static List<User> users = new List<User>
         {
             new User
             {
-                Uuid = "7ad805da-0f53-41a7-b1cf-72e95b737dd2",
+                UserId = new Guid("7ad805da-0f53-41a7-b1cf-72e95b737dd2"),
                 Username = "admin",
                 Password = "admin",
                 CreatedAt = DateTime.Now
             },
             new User
             {
-                Uuid = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid(),
                 Username = "user",
                 Password = "user",
                 CreatedAt = DateTime.Now
             },
             new User
             {
-                Uuid = Guid.NewGuid().ToString(),
+                UserId = Guid.NewGuid(),
                 Username = "user2",
                 Password = "user2",
                 CreatedAt = DateTime.Now
             },
             new User
             {
-                Uuid = "5233d2b1-d7a6-4113-8500-6a7cce80c258",
+                UserId = new Guid("5233d2b1-d7a6-4113-8500-6a7cce80c258"),
                 Username = "user3",
                 Password = "user3",
                 CreatedAt = DateTime.Now
             }
         };
 
-        [HttpGet]
-        public ActionResult<List<User>> GetUsers()
+        public UsersController(IAccountService accountService)
         {
-            return Ok(users);
+            _accountService = accountService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> GetUsers()
+        {
+            var returnedUsers = await _accountService.GetAllUsersAsync();
+            // return Ok(users);
+            return Ok(returnedUsers);
         }
 
         [HttpGet("{uuid}")]
-        public ActionResult<User> GetUserByUUID(string uuid)
+        public ActionResult<User> GetUserByUUID(System.Guid uuid)
         {
-            var user =  users.FirstOrDefault(x => x.Uuid == uuid);
+            var user =  users.FirstOrDefault(x => x.UserId == uuid);
             if (user == null) return NotFound();
             
             // return Ok(users.Find(u => u.uuid == uuid));
@@ -60,19 +70,19 @@ namespace affiliate_proj.API.Controllers
         public ActionResult<User> AddUser(User user)
         {
             if (user == null) return BadRequest();
-            if (users.FirstOrDefault(x => x.Uuid == user.Uuid) != null) return BadRequest();
+            if (users.FirstOrDefault(x => x.UserId == user.UserId) != null) return BadRequest();
             
             user.CreatedAt = DateTime.Now;
             users.Add(user);
-            return CreatedAtAction(nameof(GetUserByUUID), new { uuid = user.Uuid }, user);
+            return CreatedAtAction(nameof(GetUserByUUID), new { uuid = user.UserId }, user);
         }
 
         [HttpPut("{uuid}")]
-        public IActionResult UpdateUser(string uuid, User user)
+        public IActionResult UpdateUser(System.Guid uuid, User user)
         {   
-            if (uuid != user.Uuid) return NotFound();
+            if (uuid != user.UserId) return NotFound();
 
-            var selectedUser =  users.FirstOrDefault(x => x.Uuid == uuid);
+            var selectedUser =  users.FirstOrDefault(x => x.UserId == uuid);
             
             selectedUser.Username = user.Username;
             selectedUser.Password = user.Password;
@@ -81,9 +91,9 @@ namespace affiliate_proj.API.Controllers
         }
 
         [HttpDelete("{uuid}")]
-        public IActionResult DeleteUser(string uuid)
+        public IActionResult DeleteUser(System.Guid uuid)
         {
-            var selectedUser = users.FirstOrDefault(x => x.Uuid == uuid);
+            var selectedUser = users.FirstOrDefault(x => x.UserId == uuid);
             if (selectedUser == null) return NotFound();
             users.Remove(selectedUser);
             return NoContent();
