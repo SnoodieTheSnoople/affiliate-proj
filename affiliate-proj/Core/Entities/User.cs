@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace affiliate_proj.Core.Entities;
 
 public class User
 {
-    [Required]
-    public string Uuid { get; set;  }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public System.Guid UserId { get; set;  }
     public DateTime CreatedAt { get; set; }
     
     [Required]
