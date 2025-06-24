@@ -10,7 +10,7 @@ Accept: application/json
 
 ###
 
-GET {{affiliate_proj_HostAddress}}/users/7ad805da-0f53-41a7-b1cf-72e95b737dd2
+GET {{affiliate_proj_HostAddress}}/users/5d18508e-c792-4e0f-972b-82d41718d927
 Accept: application/json
 
 ###
