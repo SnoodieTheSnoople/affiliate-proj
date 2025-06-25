@@ -15,6 +15,11 @@ Accept: application/json
 
 ###
 
+GET {{affiliate_proj_HostAddress}}/users/5d18508e-c792-4e0f-972b-82d41718d000
+Accept: application/json
+
+###
+
 POST {{affiliate_proj_HostAddress}}/users
 Content-Type: application/json
 
