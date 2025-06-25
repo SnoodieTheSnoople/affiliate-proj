@@ -52,18 +52,15 @@ namespace affiliate_proj.API.Controllers
         public async Task<ActionResult<List<User>>> GetUsers()
         {
             var returnedUsers = await _accountService.GetAllUsersAsync();
-            // return Ok(users);
             return Ok(returnedUsers);
         }
 
         [HttpGet("{userId}")]
         public async Task<ActionResult<User>> GetUserById(System.Guid userId)
         {
-            // var user =  users.FirstOrDefault(x => x.UserId == userId);
             var user = await _accountService.GetUserByIdAsync(userId);
             if (user == null) return NotFound();
             
-            // return Ok(users.Find(u => u.uuid == uuid));
             return Ok(user);
         }
 
