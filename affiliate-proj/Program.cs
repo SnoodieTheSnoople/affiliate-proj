@@ -1,6 +1,8 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Services;
+using affiliate_proj.Core.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -42,9 +44,27 @@ public class Program
 
         builder.Services.AddScoped<IAccountService, AccountService>();
 
+        builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
+            {
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<SupabaseAccessor>();
+            // .AddDefaultTokenProviders();
+
+        builder.Services.AddSingleton<IEmailSender<User>, NoOpEmailSender>();
+
+        builder.Services.AddAuthorization();
+
         var app = builder.Build();
-        
-        
+
+        app.MapIdentityApi<User>();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
