@@ -37,16 +37,16 @@ public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid
 
         modelBuilder.Entity<User>(builder =>
         {
-            builder.ToTable("User");
+            builder.ToTable("users");
             builder.Property(user => user.Id).HasColumnName("user_id");
             builder.Property(user => user.CreatedAt).HasColumnName("created_at");
             builder.Property(user => user.UserName).HasColumnName("username");
             builder.Property(user => user.Email).HasColumnName("email");
             // Named "password" for simplicity. ALl passwords are hashed and not plaintext.
             builder.Property(user => user.PasswordHash).HasColumnName("password");
+            // TODO: Add other Identity properties to Users table.
         });
     }
-    
     
     public void ShowKeys()
     {
