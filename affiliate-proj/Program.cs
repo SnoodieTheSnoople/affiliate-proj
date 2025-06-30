@@ -55,8 +55,8 @@ public class Program
                 options.Password.RequireUppercase = true;
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<SupabaseAccessor>();
-            // .AddDefaultTokenProviders();
+            .AddEntityFrameworkStores<SupabaseAccessor>()
+            .AddDefaultTokenProviders();
 
         builder.Services.AddSingleton<IEmailSender<User>, NoOpEmailSender>();
 
