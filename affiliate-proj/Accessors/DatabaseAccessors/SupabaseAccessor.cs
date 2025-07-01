@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Accessors.DatabaseAccessors;
 
-public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+public class SupabaseAccessor
 {
     private readonly string _url;
     private readonly string _anonPublicKey;
     private readonly string _serviceRoleKey;
+    private readonly Supabase.Client _client;
+    
     
     // public DbSet<User> Users { get; set; }
 
@@ -23,6 +25,11 @@ public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid
         _url = url;
         _anonPublicKey = anonPublicKey;
         _serviceRoleKey = serviceRoleKey;
+    }
+
+    public SupabaseAccessor(Supabase.Client client)
+    {
+        _client = client;
     }
 
     // protected override void OnModelCreating(ModelBuilder modelBuilder)
