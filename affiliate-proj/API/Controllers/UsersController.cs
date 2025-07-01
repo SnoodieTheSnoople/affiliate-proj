@@ -24,6 +24,7 @@ namespace affiliate_proj.API.Controllers
             if (user == null) return Task.FromResult<ActionResult<string?>>(NotFound());
             
             return Task.FromResult<ActionResult<string?>>(Ok(user));
+            // TODO: Return user information from Supabase Auth.Users table using the access token/refresh token.
         }
     }
 }
