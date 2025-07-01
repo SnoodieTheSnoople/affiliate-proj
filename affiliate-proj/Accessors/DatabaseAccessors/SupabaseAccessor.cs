@@ -13,10 +13,10 @@ public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid
     
     // public DbSet<User> Users { get; set; }
 
-    public SupabaseAccessor(DbContextOptions<SupabaseAccessor> options) : base(options)
-    {
-        
-    }
+    // public SupabaseAccessor(DbContextOptions<SupabaseAccessor> options) : base(options)
+    // {
+    //     
+    // }
 
     public SupabaseAccessor(string url,  string anonPublicKey, string serviceRoleKey)
     {
@@ -25,28 +25,27 @@ public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid
         _serviceRoleKey = serviceRoleKey;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        // modelBuilder.Entity<User>().ToTable("users");
-        // // modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("user_id");
-        // modelBuilder.Entity<User>().Property(x => x.CreatedAt).HasColumnName("created_at");
-        // // modelBuilder.Entity<User>().Property(x => x.Username).HasColumnName("username");
-        // // modelBuilder.Entity<User>().Property(x => x.Email).HasColumnName("email");
-        // // modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
-
-        modelBuilder.Entity<User>(builder =>
-        {
-            builder.ToTable("users");
-            builder.Property(user => user.Id).HasColumnName("user_id");
-            builder.Property(user => user.CreatedAt).HasColumnName("created_at");
-            builder.Property(user => user.UserName).HasColumnName("username");
-            builder.Property(user => user.Email).HasColumnName("email");
-            // Named "password" for simplicity. ALl passwords are hashed and not plaintext.
-            builder.Property(user => user.PasswordHash).HasColumnName("password");
-            // TODO: Add other Identity properties to Users table.
-        });
-    }
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     base.OnModelCreating(modelBuilder);
+    //     // modelBuilder.Entity<User>().ToTable("users");
+    //     // // modelBuilder.Entity<User>().Property(x => x.UserId).HasColumnName("user_id");
+    //     // modelBuilder.Entity<User>().Property(x => x.CreatedAt).HasColumnName("created_at");
+    //     // // modelBuilder.Entity<User>().Property(x => x.Username).HasColumnName("username");
+    //     // // modelBuilder.Entity<User>().Property(x => x.Email).HasColumnName("email");
+    //     // // modelBuilder.Entity<User>().Property(x => x.Password).HasColumnName("password");
+    //
+    //     modelBuilder.Entity<User>(builder =>
+    //     {
+    //         builder.ToTable("users");
+    //         builder.Property(user => user.Id).HasColumnName("user_id");
+    //         builder.Property(user => user.CreatedAt).HasColumnName("created_at");
+    //         builder.Property(user => user.UserName).HasColumnName("username");
+    //         builder.Property(user => user.Email).HasColumnName("email");
+    //         // Named "password" for simplicity. ALl passwords are hashed and not plaintext.
+    //         builder.Property(user => user.PasswordHash).HasColumnName("password");
+    //     });
+    // }
     
     public void ShowKeys()
     {
