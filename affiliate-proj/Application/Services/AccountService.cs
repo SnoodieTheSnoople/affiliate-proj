@@ -14,23 +14,19 @@ public class AccountService : IAccountService
         _supabaseAccessor = supabaseAccessor;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+
+    public Task<IEnumerable<User>> GetAllUsersAsync()
     {
-        var users = _supabaseAccessor.Users.AsNoTracking().ToList();
-        return users;
+        throw new NotImplementedException();
     }
 
-    public async Task<User> GetUserByIdAsync(System.Guid userId)
+    public Task<User> GetUserByIdAsync(Guid userId)
     {
-        var user = await _supabaseAccessor.Users.FindAsync(userId);
-        return user;
+        throw new NotImplementedException();
     }
 
-    public async Task<User> GetUserByEmailAsync(string email)
+    public Task<User> GetUserByEmailAsync(string email)
     {
-        // Use for forgotten password?
-        // Do not expose to any endpoint.
-        var user = await _supabaseAccessor.Users.FindAsync(email);
-        return user;
+        throw new NotImplementedException();
     }
 }
