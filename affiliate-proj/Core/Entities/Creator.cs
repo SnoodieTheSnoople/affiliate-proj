@@ -24,5 +24,5 @@ public class Creator
     public string StripeId  { get; set; }
     
     [ForeignKey("UserId")]
-    public string User  { get; set; }
+    public User User  { get; set; }
 }
