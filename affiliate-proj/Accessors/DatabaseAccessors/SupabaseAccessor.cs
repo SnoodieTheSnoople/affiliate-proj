@@ -18,12 +18,12 @@ public class SupabaseAccessor : IdentityDbContext<User, IdentityRole<Guid>, Guid
         
     }
 
-    // public SupabaseAccessor(string url,  string anonPublicKey, string serviceRoleKey)
-    // {
-    //     _url = url;
-    //     _anonPublicKey = anonPublicKey;
-    //     _serviceRoleKey = serviceRoleKey;
-    // }
+    public SupabaseAccessor(string url,  string anonPublicKey, string serviceRoleKey)
+    {
+        _url = url;
+        _anonPublicKey = anonPublicKey;
+        _serviceRoleKey = serviceRoleKey;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
