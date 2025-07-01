@@ -1,5 +1,6 @@
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers
@@ -48,13 +49,7 @@ namespace affiliate_proj.API.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<User>>> GetUsers()
-        {
-            var returnedUsers = await _accountService.GetAllUsersAsync();
-            return Ok(returnedUsers);
-        }
-
+        [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<User>> GetUserById(System.Guid userId)
         {
