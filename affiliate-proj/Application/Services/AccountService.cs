@@ -16,7 +16,7 @@ public class AccountService : IAccountService
         _postgresDbContext = postgresDbContext;
     }
 
-    public Task<User> GetUserByIdAsync(Guid userId)
+    public string? GetUserByIdAsync(Guid userId)
     {
         throw new NotImplementedException();
     }
