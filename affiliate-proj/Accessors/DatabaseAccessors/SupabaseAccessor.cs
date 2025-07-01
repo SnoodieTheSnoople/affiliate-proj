@@ -1,9 +1,4 @@
-﻿using affiliate_proj.Core.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace affiliate_proj.Accessors.DatabaseAccessors;
+﻿namespace affiliate_proj.Accessors.DatabaseAccessors;
 
 public class SupabaseAccessor
 {
@@ -56,8 +51,8 @@ public class SupabaseAccessor
     
     public void ShowKeys()
     {
-        Console.WriteLine(_url);
-        Console.WriteLine(_anonPublicKey);
-        Console.WriteLine(_serviceRoleKey);
+        // Console.WriteLine(_url);
+        // Console.WriteLine(_anonPublicKey);
+        // Console.WriteLine(_serviceRoleKey);
     }
 }
