@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace affiliate_proj.Core.Entities;
 
+[Table("creators")]
 public class Creator
 {
     [Key]
