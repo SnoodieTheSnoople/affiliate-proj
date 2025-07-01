@@ -10,9 +10,10 @@ public class AccountService : IAccountService
     private readonly SupabaseAccessor _supabaseAccessor;
     private readonly PostgresDbContext _postgresDbContext;
 
-    public AccountService(SupabaseAccessor supabaseAccessor)
+    public AccountService(SupabaseAccessor supabaseAccessor,  PostgresDbContext postgresDbContext)
     {
         _supabaseAccessor = supabaseAccessor;
+        _postgresDbContext = postgresDbContext;
     }
 
     public Task<User> GetUserByIdAsync(Guid userId)
