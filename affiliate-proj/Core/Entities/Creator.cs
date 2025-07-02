@@ -23,6 +23,8 @@ public class Creator
     
     public string StripeId  { get; set; }
     
+    public Guid UserId { get; set; }
+    
     [ForeignKey("UserId")]
     public User User  { get; set; }
 }
