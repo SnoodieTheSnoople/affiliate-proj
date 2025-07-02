@@ -4,7 +4,7 @@ namespace affiliate_proj.Application.Interfaces;
 
 public interface IAccountService
 { 
-    string? GetUserByIdAsync(Guid userId);
+    Task<User?> GetUserByIdAsync(Guid userId);
     Task<User> GetUserByEmailAsync(string email);
     
     Task<User> GetUserNameAsync(System.Guid userId);
