@@ -1,10 +1,11 @@
-﻿using affiliate_proj.Core.Entities;
+﻿using affiliate_proj.Core.DTOs.Account;
+using affiliate_proj.Core.Entities;
 
 namespace affiliate_proj.Application.Interfaces;
 
 public interface IAccountService
 { 
-    Task<User?> GetUserByIdAsync(Guid userId);
+    Task<UserDTO?> GetUserByIdAsync(Guid userId);
     Task<User> GetUserByEmailAsync(string email);
     
     Task<User> GetUserNameAsync(System.Guid userId);
