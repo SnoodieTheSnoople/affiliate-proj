@@ -1,9 +1,9 @@
-using System.Security.Cryptography;
 using System.Text;
 using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Supabase;
@@ -27,7 +27,7 @@ public class Program
 
         // Add services to the container.
 
-        // builder.Services.AddControllers();
+        builder.Services.AddControllers();
         
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
@@ -38,12 +38,6 @@ public class Program
         Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:ServiceRoleKey"));
         Console.WriteLine(builder.Configuration.GetValue<string>("Postgres:ConnectionString"));
         Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:JWTSecret"));
-        
-        // builder.Services.AddSingleton<SupabaseAccessor>(tmp => new SupabaseAccessor(
-        //     builder.Configuration.GetValue<string>("Supabase:Url"),
-        //     builder.Configuration.GetValue<string>("Supabase:AnonPublicKey"),
-        //     builder.Configuration.GetValue<string>("Supabase:ServiceRoleKey"))
-        // );
         
         builder.Services.AddSingleton<Supabase.Client>( _ =>
             new Supabase.Client(builder.Configuration.GetValue<string>("Supabase:Url"),
@@ -56,7 +50,6 @@ public class Program
         var bytes = Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Supabase:JWTSecret")!);
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
         {
-            // options.Authority = builder.Configuration.GetValue<string>("Supabase:Url");
             options.TokenValidationParameters = new()
             {
                 ValidateIssuer = true,
@@ -69,7 +62,8 @@ public class Program
             };
         });
 
-        builder.Services.AddControllers();
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddScoped<IAccountService, AccountService>();
         
         var app = builder.Build();
 
@@ -78,11 +72,11 @@ public class Program
         {
             app.MapOpenApi();
             app.MapScalarApiReference();
-
         }
 
         app.UseHttpsRedirection();
-
+        app.UseRouting();
+        
         app.UseAuthentication();
         app.UseAuthorization();
 
@@ -93,13 +87,6 @@ public class Program
 
     public static SecurityKey GetSupabaseSigningKey(IConfiguration configuration, byte[] jwtSecret)
     {
-        // var publicKey = configuration.GetValue<string>("Supabase:JWTSecret");
-        // if (!string.IsNullOrEmpty(publicKey))
-        // {
-        //     var rsa = RSA.Create();
-        //     rsa.ImportFromPem(publicKey);
-        //     return new RsaSecurityKey(rsa);
-        // }
         return new SymmetricSecurityKey(jwtSecret);
     }
 }
