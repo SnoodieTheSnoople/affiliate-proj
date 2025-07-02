@@ -16,8 +16,9 @@ public class PostgresDbContext : DbContext
     {
         modelBuilder.Entity<User>(builder =>
         {
-            builder.ToTable("User");
+            builder.ToTable("users");
             builder.Property(user => user.UserId).HasColumnName("user_id");
+            builder.Property(user => user.Username).HasColumnName("username");
             builder.Property(user => user.CreatedAt).HasColumnName("created_at");
             builder.Property(user => user.DeletedAt).HasColumnName("deleted_at");
             builder.Property(user => user.PhoneNumber).HasColumnName("phone_number");
@@ -27,7 +28,7 @@ public class PostgresDbContext : DbContext
         {
             builder.ToTable("Creator");
             builder.Property(creator => creator.CreatorId).HasColumnName("creator_id");
-            builder.Property(creator => creator.User.UserId).HasColumnName("user_id");
+            builder.Property(creator => creator.UserId).HasColumnName("user_id");
             builder.Property(creator => creator.CreatedAt).HasColumnName("created_at");
             builder.Property(creator => creator.Firstname).HasColumnName("firstname");
             builder.Property(creator => creator.Lastname).HasColumnName("surname");
