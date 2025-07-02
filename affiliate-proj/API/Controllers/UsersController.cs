@@ -1,4 +1,7 @@
+using System.Runtime.CompilerServices;
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Core.DTOs.Account;
+using affiliate_proj.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,13 +21,18 @@ namespace affiliate_proj.API.Controllers
 
         [Authorize]
         [HttpGet("{userId}")]
-        public Task<ActionResult<string?>> GetUserById(System.Guid userId)
+        public async Task<ActionResult<UserDTO>> GetUserById(Guid userId)
         {
-            var user = _accountService.GetUserByIdAsync(userId);
-            if (user == null) return Task.FromResult<ActionResult<string?>>(NotFound());
-            
-            return Task.FromResult<ActionResult<string?>>(Ok(user));
-            // TODO: Return user information from Supabase Auth.Users table using the access token/refresh token.
+            if (userId == Guid.Empty) return NotFound();
+            try
+            {
+                var user = await _accountService.GetUserByIdAsync(userId);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
         }
     }
 }
