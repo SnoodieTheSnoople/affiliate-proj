@@ -2,8 +2,9 @@
 
 public class UserDTO
 {
-    public System.Guid Uuid { get; set; }
-    public string CreatedAt { get; set; }
+    
+    public Guid UserId { get; set; }
     public string Username { get; set; }
-    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
