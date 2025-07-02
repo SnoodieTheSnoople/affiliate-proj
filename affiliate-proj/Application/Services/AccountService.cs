@@ -16,9 +16,14 @@ public class AccountService : IAccountService
         _postgresDbContext = postgresDbContext;
     }
 
-    public string? GetUserByIdAsync(Guid userId)
+    public async Task<User?> GetUserByIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        var supabaseUser = _supabaseAccessor.GetCurrentUser();
+        if (supabaseUser == null) return null;
+        
+        if (supabaseUser.Id.Equals(userId.ToString())) return null;
+        
+        return await _postgresDbContext.Users.FindAsync(userId);
     }
 
     public Task<User> GetUserByEmailAsync(string email)
