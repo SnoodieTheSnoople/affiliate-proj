@@ -1,4 +1,6 @@
-﻿namespace affiliate_proj.Accessors.DatabaseAccessors;
+﻿using Supabase.Gotrue;
+
+namespace affiliate_proj.Accessors.DatabaseAccessors;
 
 public class SupabaseAccessor
 {
@@ -51,8 +53,13 @@ public class SupabaseAccessor
     
     public void ShowKeys()
     {
-        // Console.WriteLine(_url);
-        // Console.WriteLine(_anonPublicKey);
-        // Console.WriteLine(_serviceRoleKey);
+        Console.WriteLine(_url);
+        Console.WriteLine(_anonPublicKey);
+        Console.WriteLine(_serviceRoleKey);
+    }
+
+    public User? GetCurrentUser()
+    {
+        return _client.Auth.CurrentUser; 
     }
 }
