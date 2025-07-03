@@ -50,6 +50,22 @@ namespace affiliate_proj.API.Controllers
                 return Unauthorized(ex);
             }
         }
+        
+        [HttpPost("update-email")]
+        public async Task<ActionResult<UserDTO>> SetUserEmail([FromBody] UserRequest request)
+        {
+            if (String.IsNullOrEmpty(request.Email)) return NotFound();
+
+            try
+            {
+                var user = await _accountService.SetEmailAsync(request.Email, request.UserId);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
 
         [HttpGet("/creator-profile/{userId}")]
         public async Task<ActionResult<CreatorDTO>> GetCreatorById(Guid userId)
