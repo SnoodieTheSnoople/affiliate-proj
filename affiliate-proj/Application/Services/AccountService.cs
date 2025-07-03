@@ -27,6 +27,12 @@ public class AccountService : IAccountService
                throw new UnauthorizedAccessException("User not authenticated.");
     }
 
+    private string GetUserEmailFromAcessToken()
+    {
+        return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value ??
+               throw new UnauthorizedAccessException("User not authenticated.");
+    }
+
     public async Task<UserDTO?> GetUserByIdAsync(Guid userId)
     {
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
@@ -41,45 +47,59 @@ public class AccountService : IAccountService
             Username = user.Username,
             PhoneNumber = user.PhoneNumber,
             CreatedAt = user.CreatedAt,
+            Email = user.Email,
         };
     }
     
-    public Task<User> GetUserByEmailAsync(string email)
+    public async Task<UserDTO?> GetUserByEmailAsync(string email)
+    {
+        if (!GetUserEmailFromAcessToken().Equals(email)) throw new UnauthorizedAccessException("Email mismatch.");
+        
+        var user = await _postgresDbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
+        
+        if (user == null) return null;
+
+        return new UserDTO
+        {
+            UserId = user.UserId,
+            Username = user.Username,
+            PhoneNumber = user.PhoneNumber,
+            CreatedAt = user.CreatedAt,
+            Email = user.Email,
+        };
+    }
+
+    public Task<UserDTO> GetUserNameAsync(Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetUserNameAsync(Guid userId)
+    public Task<UserDTO> GetPhoneNumberAsync(Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetPhoneNumberAsync(Guid userId)
+    public Task<UserDTO> SetUserNameAsync(User userDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> SetUserNameAsync(User user)
+    public Task<UserDTO> SetPhoneNumberAsync(User userDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> SetPhoneNumberAsync(User user)
+    public Task<UserDTO> SetFirstNameAsync(string firstname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> SetFirstNameAsync(string firstname)
+    public Task<UserDTO> SetLastNameAsync(string lastname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> SetLastNameAsync(string lastname)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<User> SetDateOfBirthAsync(DateTime dateofbirth)
+    public Task<UserDTO> SetDateOfBirthAsync(DateTime dateofbirth)
     {
         throw new NotImplementedException();
     }
