@@ -41,7 +41,8 @@ namespace affiliate_proj.API.Controllers
             if (userId == Guid.Empty) return NotFound();
             try
             {
-                return Ok();
+                var creator = await _accountService.GetCreatorByUserIdAsync(userId);
+                return Ok(creator);
             }
             catch (UnauthorizedAccessException ex)
             {
