@@ -83,4 +83,29 @@ public class AccountService : IAccountService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId)
+    {
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        
+        var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        
+        if (creator == null) return null;
+
+        return new CreatorDTO
+        {
+            CreatorId = creator.CreatorId,
+            CreatedAt = creator.CreatedAt,
+            Firstname = creator.Firstname,
+            Surname = creator.Surname,
+            Dob = creator.Dob,
+            StripeId = creator.StripeId,
+            UserId = creator.UserId,
+        };
+    }
+
+    public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator)
+    {
+        throw new NotImplementedException();
+    }
 }
