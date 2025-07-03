@@ -10,6 +10,7 @@ namespace affiliate_proj.API.Controllers
     // [Route("api/[controller]")]
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -18,8 +19,7 @@ namespace affiliate_proj.API.Controllers
         {
             _accountService = accountService;
         }
-
-        [Authorize]
+        
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserDTO>> GetUserById(Guid userId)
         {
@@ -28,6 +28,20 @@ namespace affiliate_proj.API.Controllers
             {
                 var user = await _accountService.GetUserByIdAsync(userId);
                 return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
+
+        [HttpGet("/creator-profile/{userId}")]
+        public async Task<ActionResult<CreatorDTO>> GetCreatorById(Guid userId)
+        {
+            if (userId == Guid.Empty) return NotFound();
+            try
+            {
+                return Ok();
             }
             catch (UnauthorizedAccessException ex)
             {
