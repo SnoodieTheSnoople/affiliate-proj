@@ -33,6 +33,14 @@ public class AccountService : IAccountService
                throw new UnauthorizedAccessException("User not authenticated.");
     }
 
+    private bool CheckUserExists(Guid userId)
+    {
+        var user = _postgresDbContext.Users.Find(userId);
+        if (user == null) return false;
+        
+        return true;
+    }
+
     public async Task<UserDTO?> GetUserByIdAsync(Guid userId)
     {
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
@@ -69,13 +77,9 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<UserDTO> GetUserNameAsync(Guid userId)
+    public Task<UserDTO?> SetEmailAsync(string email)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<UserDTO> GetPhoneNumberAsync(Guid userId)
-    {
+        
         throw new NotImplementedException();
     }
 
@@ -89,17 +93,17 @@ public class AccountService : IAccountService
         throw new NotImplementedException();
     }
 
-    public Task<UserDTO> SetFirstNameAsync(string firstname)
+    public Task<CreatorDTO> SetFirstNameAsync(string firstname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<UserDTO> SetLastNameAsync(string lastname)
+    public Task<CreatorDTO> SetLastNameAsync(string lastname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<UserDTO> SetDateOfBirthAsync(DateTime dateofbirth)
+    public Task<CreatorDTO> SetDateOfBirthAsync(DateTime dateofbirth)
     {
         throw new NotImplementedException();
     }
