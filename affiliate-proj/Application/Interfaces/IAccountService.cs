@@ -7,8 +7,7 @@ public interface IAccountService
 { 
     Task<Core.DTOs.Account.UserDTO?> GetUserByIdAsync(Guid userId);
     Task<UserDTO?> GetUserByEmailAsync(string email);
-    
-    Task<UserDTO?> SetEmailAsync(string email);
+    Task<UserDTO?> SetEmailAsync(string email, Guid userId);
     Task<UserDTO> SetUserNameAsync(User userDto);
     Task<UserDTO> SetPhoneNumberAsync(User userDto);
     
