@@ -1,9 +1,9 @@
-using System.Runtime.CompilerServices;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Core.DTOs.Account;
-using affiliate_proj.Core.Entities;
+using affiliate_proj.Core.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserDTO = affiliate_proj.Core.DTOs.Account.UserDTO;
 
 namespace affiliate_proj.API.Controllers
 {
@@ -27,6 +27,22 @@ namespace affiliate_proj.API.Controllers
             try
             {
                 var user = await _accountService.GetUserByIdAsync(userId);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
+
+        [HttpPost("by-email")]
+        public async Task<ActionResult<UserDTO>> GetUserByEmail([FromBody] UserRequest request)
+        {
+            if (String.IsNullOrEmpty(request.Email)) return NotFound();
+
+            try
+            {
+                var user = await _accountService.GetUserByEmailAsync(request.Email);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
