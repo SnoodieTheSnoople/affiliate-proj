@@ -5,18 +5,18 @@ namespace affiliate_proj.Application.Interfaces;
 
 public interface IAccountService
 { 
-    Task<UserDTO?> GetUserByIdAsync(Guid userId);
-    Task<User> GetUserByEmailAsync(string email);
+    Task<Core.DTOs.Account.UserDTO?> GetUserByIdAsync(Guid userId);
+    Task<UserDTO?> GetUserByEmailAsync(string email);
     
-    Task<User> GetUserNameAsync(System.Guid userId);
-    Task<User> GetPhoneNumberAsync(System.Guid userId);
+    Task<UserDTO> GetUserNameAsync(System.Guid userId);
+    Task<UserDTO> GetPhoneNumberAsync(System.Guid userId);
     
-    Task<User> SetUserNameAsync(User user);
-    Task<User> SetPhoneNumberAsync(User user);
+    Task<UserDTO> SetUserNameAsync(User userDto);
+    Task<UserDTO> SetPhoneNumberAsync(User userDto);
     
-    Task<User> SetFirstNameAsync(string firstname);
-    Task<User> SetLastNameAsync(string lastname);
-    Task<User> SetDateOfBirthAsync(DateTime dateofbirth);
+    Task<UserDTO> SetFirstNameAsync(string firstname);
+    Task<UserDTO> SetLastNameAsync(string lastname);
+    Task<UserDTO> SetDateOfBirthAsync(DateTime dateofbirth);
     Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);
     Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator);
 }
