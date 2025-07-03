@@ -17,5 +17,6 @@ public interface IAccountService
     Task<User> SetFirstNameAsync(string firstname);
     Task<User> SetLastNameAsync(string lastname);
     Task<User> SetDateOfBirthAsync(DateTime dateofbirth);
-    
+    Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);
+    Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator);
 }
