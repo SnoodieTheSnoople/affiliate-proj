@@ -8,7 +8,7 @@ public class User
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public System.Guid UserId { get; set;  }
+    public Guid UserId { get; set;  }
     
     public DateTime CreatedAt { get; set; }
     
@@ -19,4 +19,7 @@ public class User
     
     [Required]
     public string PhoneNumber { get; set; }
+    
+    [Required]
+    public string Email { get; set; }
 }

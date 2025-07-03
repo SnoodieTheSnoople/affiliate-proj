@@ -8,4 +8,5 @@ public class UserDTO
     public string PhoneNumber { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+    public string Email { get; set; }
 }
