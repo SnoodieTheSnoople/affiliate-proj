@@ -15,7 +15,7 @@ public class User
     [Required]
     public string Username { get; set; }
     
-    public DateTime DeletedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
     
     [Required]
     public string PhoneNumber { get; set; }

@@ -7,4 +7,5 @@ public class UserDTO
     public string Username { get; set; }
     public string PhoneNumber { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }
