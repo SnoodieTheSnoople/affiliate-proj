@@ -2,13 +2,13 @@
 
 public class CreatorDTO
 {
-    public string CreatorId { get; set; }
+    public Guid CreatorId { get; set; }
     
     public DateTime CreatedAt { get; set; }
     
     public string Firstname  { get; set; }
     
-    public string Lastname { get; set; }
+    public string Surname { get; set; }
     
     public DateTime Dob { get; set; }
     
