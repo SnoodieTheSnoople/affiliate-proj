@@ -8,7 +8,7 @@ public class Creator
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string CreatorId { get; set; }
+    public Guid CreatorId { get; set; }
     
     public DateTime CreatedAt { get; set; }
     
@@ -19,12 +19,13 @@ public class Creator
     public string Lastname { get; set; }
     
     [Required]
-    public DateOnly Dob { get; set; }
+    public DateTime Dob { get; set; }
     
-    public string StripeId  { get; set; }
+    public string? StripeId  { get; set; }
     
+    [Required]
     public Guid UserId { get; set; }
     
-    [ForeignKey("UserId")]
+    [ForeignKey(nameof(UserId))]
     public User User  { get; set; }
 }
