@@ -59,6 +59,7 @@ public class AccountService : IAccountService
         };
     }
 
+    /* Use only for testing. Do not use in production. */
     public async Task<UserDTO?> GetUserByEmailAsync(string email)
     {
         if (!GetUserEmailFromAcessToken().Equals(email)) throw new UnauthorizedAccessException("Email mismatch.");
