@@ -125,7 +125,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<UserDTO?> SetPhoneNumberAsync(User userDto)
+    public async Task<UserDTO?> SetPhoneNumberAsync(string phoneNumber, Guid userId)
     {
         throw new NotImplementedException();
     }

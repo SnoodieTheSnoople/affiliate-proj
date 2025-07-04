@@ -9,7 +9,7 @@ public interface IAccountService
     Task<UserDTO?> GetUserByEmailAsync(string email);
     Task<UserDTO?> SetEmailAsync(string email, Guid userId);
     Task<UserDTO?> SetUserNameAsync(string username, Guid userId);
-    Task<UserDTO?> SetPhoneNumberAsync(User userDto);
+    Task<UserDTO?> SetPhoneNumberAsync(string phoneNumber, Guid userId);
     
     Task<CreatorDTO?> SetFirstNameAsync(string firstname);
     Task<CreatorDTO?> SetLastNameAsync(string lastname);
