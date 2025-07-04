@@ -67,6 +67,22 @@ namespace affiliate_proj.API.Controllers
             }
         }
 
+        [HttpPost("update-username")]
+        public async Task<ActionResult<UserDTO>> SetUserName([FromBody] UserRequest request)
+        {
+            if (String.IsNullOrEmpty(request.Username)) return NotFound();
+
+            try
+            {
+                var user = await _accountService.SetUserNameAsync(request.Username, request.UserId);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
+
         [HttpGet("/creator-profile/{userId}")]
         public async Task<ActionResult<CreatorDTO>> GetCreatorById(Guid userId)
         {
