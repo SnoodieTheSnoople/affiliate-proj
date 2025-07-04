@@ -83,6 +83,22 @@ namespace affiliate_proj.API.Controllers
             }
         }
 
+        [HttpPost("update-phone-number")]
+        public async Task<ActionResult<UserDTO>> SetPhoneNumber([FromBody] UserRequest request)
+        {
+            if (String.IsNullOrEmpty(request.PhoneNumber)) return NotFound();
+
+            try
+            {
+                var user = await _accountService.SetPhoneNumberAsync(request.PhoneNumber, request.UserId);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
+
         [HttpGet("/creator-profile/{userId}")]
         public async Task<ActionResult<CreatorDTO>> GetCreatorById(Guid userId)
         {
