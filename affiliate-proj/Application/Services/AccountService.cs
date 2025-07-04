@@ -127,7 +127,25 @@ public class AccountService : IAccountService
 
     public async Task<UserDTO?> SetPhoneNumberAsync(string phoneNumber, Guid userId)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        
+        var user = await _postgresDbContext.Users.FindAsync(userId);
+        if (user == null) return null;
+        
+        user.PhoneNumber = phoneNumber;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        user = await _postgresDbContext.Users.FirstOrDefaultAsync(user => user.PhoneNumber == phoneNumber);
+
+        return new UserDTO
+        {
+            UserId = user.UserId,
+            Username = user.Username,
+            PhoneNumber = user.PhoneNumber,
+            CreatedAt = user.CreatedAt,
+            Email = user.Email,
+        };
     }
 
     public Task<CreatorDTO?> SetFirstNameAsync(string firstname)
