@@ -103,27 +103,27 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<UserDTO> SetUserNameAsync(User userDto)
+    public Task<UserDTO?> SetUserNameAsync(string username, Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<UserDTO> SetPhoneNumberAsync(User userDto)
+    public Task<UserDTO?> SetPhoneNumberAsync(User userDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO> SetFirstNameAsync(string firstname)
+    public Task<CreatorDTO?> SetFirstNameAsync(string firstname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO> SetLastNameAsync(string lastname)
+    public Task<CreatorDTO?> SetLastNameAsync(string lastname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO> SetDateOfBirthAsync(DateTime dateofbirth)
+    public Task<CreatorDTO?> SetDateOfBirthAsync(DateTime dateofbirth)
     {
         throw new NotImplementedException();
     }
