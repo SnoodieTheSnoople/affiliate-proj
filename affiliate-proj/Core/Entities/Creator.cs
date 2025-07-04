@@ -1,12 +1,31 @@
-﻿namespace affiliate_proj.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace affiliate_proj.Core.Entities;
+
+[Table("creators")]
 public class Creator
 {
-    public string CreatorId { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid CreatorId { get; set; }
+    
     public DateTime CreatedAt { get; set; }
-    public string _Firstname  { get; set; }
-    public string Lastname { get; set; }
-    public DateOnly Dob { get; set; }
-    public string StripeId  { get; set; }
-    public string UserId  { get; set; }
+    
+    [Required]
+    public string Firstname  { get; set; }
+    
+    [Required]
+    public string Surname { get; set; }
+    
+    [Required]
+    public DateTime Dob { get; set; }
+    
+    public string? StripeId  { get; set; }
+    
+    [Required]
+    public Guid UserId { get; set; }
+    
+    [ForeignKey(nameof(UserId))]
+    public User User  { get; set; }
 }
