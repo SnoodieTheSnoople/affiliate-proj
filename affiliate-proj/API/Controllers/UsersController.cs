@@ -52,7 +52,7 @@ namespace affiliate_proj.API.Controllers
         }
         
         [HttpPost("update-email")]
-        public async Task<ActionResult<UserDTO>> SetUserEmail([FromBody] UserRequest request)
+        public async Task<ActionResult<UserDTO>> UpdateUserEmail([FromBody] UserRequest request)
         {
             if (String.IsNullOrEmpty(request.Email)) return NotFound();
 
@@ -68,7 +68,7 @@ namespace affiliate_proj.API.Controllers
         }
 
         [HttpPost("update-username")]
-        public async Task<ActionResult<UserDTO>> SetUserName([FromBody] UserRequest request)
+        public async Task<ActionResult<UserDTO>> UpdateUserName([FromBody] UserRequest request)
         {
             if (String.IsNullOrEmpty(request.Username)) return NotFound();
 
@@ -84,7 +84,7 @@ namespace affiliate_proj.API.Controllers
         }
 
         [HttpPost("update-phone-number")]
-        public async Task<ActionResult<UserDTO>> SetPhoneNumber([FromBody] UserRequest request)
+        public async Task<ActionResult<UserDTO>> UpdatePhoneNumber([FromBody] UserRequest request)
         {
             if (String.IsNullOrEmpty(request.PhoneNumber)) return NotFound();
 
