@@ -78,6 +78,34 @@ public class AccountService : IAccountService
         };
     }
 
+    public async Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid  userId)
+    {
+        if (!GetUserIdFromAccessToken().Equals(userId.ToString())) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (CheckUserExists(userId)) return null;
+
+        var user = new User
+        {
+            UserId = userId,
+            Username = userDto.Username,
+            PhoneNumber = userDto.PhoneNumber,
+            Email = userDto.Email,
+            DeletedAt = null
+        };
+
+        _postgresDbContext.Users.Add(user);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        var returnUserEntry = await _postgresDbContext.Users.FindAsync(userId);
+        return new UserDTO
+        {
+            UserId = returnUserEntry.UserId,
+            Username = returnUserEntry.Username,
+            PhoneNumber = returnUserEntry.PhoneNumber,
+            Email = returnUserEntry.Email,
+            CreatedAt = returnUserEntry.CreatedAt,
+        };
+    }
+
     public async Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
     {
         if (GetUserIdFromAccessToken() !=  userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
