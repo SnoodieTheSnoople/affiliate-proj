@@ -58,7 +58,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var user = await _accountService.SetEmailAsync(request.Email, request.UserId);
+                var user = await _accountService.UpdateEmailAsync(request.Email, request.UserId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
@@ -74,7 +74,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var user = await _accountService.SetUserNameAsync(request.Username, request.UserId);
+                var user = await _accountService.UpdateUserNameAsync(request.Username, request.UserId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
@@ -90,7 +90,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var user = await _accountService.SetPhoneNumberAsync(request.PhoneNumber, request.UserId);
+                var user = await _accountService.UpdatePhoneNumberAsync(request.PhoneNumber, request.UserId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)

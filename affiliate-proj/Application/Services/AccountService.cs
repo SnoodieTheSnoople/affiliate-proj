@@ -78,7 +78,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public async Task<UserDTO?> SetEmailAsync(string email, Guid userId)
+    public async Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
     {
         if (GetUserIdFromAccessToken() !=  userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         if (!CheckUserExists(userId)) return null;
@@ -102,7 +102,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public async Task<UserDTO?> SetUserNameAsync(string username, Guid userId)
+    public async Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId)
     {
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         if (!CheckUserExists(userId)) return null; 
@@ -125,7 +125,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public async Task<UserDTO?> SetPhoneNumberAsync(string phoneNumber, Guid userId)
+    public async Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId)
     {
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
