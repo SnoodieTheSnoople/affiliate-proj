@@ -55,7 +55,23 @@ namespace affiliate_proj.API.Controllers
         [HttpPost("set-user")]
         public async Task<ActionResult<UserDTO>> SetUser([FromBody] UserRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var newUserObjectMap = new UserDTO
+                {
+                    UserId = request.UserId,
+                    Email = request.Email,
+                    PhoneNumber = request.PhoneNumber,
+                    Username = request.Username,
+                };
+
+                var returnedUserFromRequest = await _accountService.SetUserAsync(newUserObjectMap, request.UserId);
+                return returnedUserFromRequest;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
         }
         
         [HttpPost("update-email")]
