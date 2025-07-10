@@ -19,7 +19,7 @@ public class PostgresDbContext : DbContext
             builder.ToTable("users");
             builder.Property(user => user.UserId).HasColumnName("user_id");
             builder.Property(user => user.Username).HasColumnName("username");
-            builder.Property(user => user.CreatedAt).HasColumnName("created_at");
+            builder.Property(user => user.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
             builder.Property(user => user.DeletedAt).HasColumnName("deleted_at");
             builder.Property(user => user.PhoneNumber).HasColumnName("phone_number");
             builder.Property(user => user.Email).HasColumnName("email");
