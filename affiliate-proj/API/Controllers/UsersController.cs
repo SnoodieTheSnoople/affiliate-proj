@@ -50,6 +50,12 @@ namespace affiliate_proj.API.Controllers
                 return Unauthorized(ex);
             }
         }
+
+        [HttpPost("set-user")]
+        public async Task<ActionResult<UserDTO>> SetUser([FromBody] UserRequest request)
+        {
+            throw new NotImplementedException();
+        }
         
         [HttpPost("update-email")]
         public async Task<ActionResult<UserDTO>> UpdateUserEmail([FromBody] UserRequest request)
