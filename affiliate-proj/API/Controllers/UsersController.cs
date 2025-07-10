@@ -77,7 +77,15 @@ namespace affiliate_proj.API.Controllers
         [HttpDelete("delete-user")]
         public async Task<ActionResult<UserDTO>> DeleteUser([FromBody] UserRequest request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _accountService.DeleteUser(request.UserId);
+                return user;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
         }
         
         [HttpPost("update-email")]
