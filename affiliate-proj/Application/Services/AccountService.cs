@@ -176,9 +176,37 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<UserDTO?> DeleteUser(Guid userId)
+    /*
+     * Update record and anonymise or replace PID with random, unrelated, data to remain compliant with GDPR.
+     * TODO: Review in the future to ensure GDPR compliance.
+     */
+    public async Task<UserDTO?> DeleteUser(Guid userId)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        
+        var piiReplacement = Guid.NewGuid();
+        var user = await _postgresDbContext.Users.FindAsync(userId);
+        if (user == null) return null;
+        
+        user.Email = $"deleted_{piiReplacement}";
+        user.Username = $"deleted_{piiReplacement}";
+        user.PhoneNumber = $"deleted_{piiReplacement}";
+        user.DeletedAt = DateTime.Now;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        
+        user = await _postgresDbContext.Users.FindAsync(userId);
+
+        return new UserDTO
+        {
+            UserId = user.UserId,
+            Username = user.Username,
+            PhoneNumber = user.PhoneNumber,
+            CreatedAt = user.CreatedAt,
+            Email = user.Email,
+            DeletedAt = user.DeletedAt,
+        };
     }
 
     /*
