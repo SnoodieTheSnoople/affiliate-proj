@@ -35,6 +35,7 @@ namespace affiliate_proj.API.Controllers
             }
         }
 
+        /* Use only for testing. Do not use in production. */
         [HttpPost("by-email")]
         public async Task<ActionResult<UserDTO>> GetUserByEmail([FromBody] UserRequest request)
         {
