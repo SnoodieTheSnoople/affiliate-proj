@@ -175,6 +175,12 @@ public class AccountService : IAccountService
             Email = user.Email,
         };
     }
+    
+    /*
+     *
+     * Below is Creator related.
+     * 
+     */
 
     public Task<CreatorDTO?> SetFirstNameAsync(string firstname)
     {
