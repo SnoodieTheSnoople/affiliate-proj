@@ -73,6 +73,12 @@ namespace affiliate_proj.API.Controllers
                 return Unauthorized(ex);
             }
         }
+
+        [HttpDelete("delete-user")]
+        public async Task<ActionResult<UserDTO>> DeleteUser([FromBody] UserRequest request)
+        {
+            throw new NotImplementedException();
+        }
         
         [HttpPost("update-email")]
         public async Task<ActionResult<UserDTO>> UpdateUserEmail([FromBody] UserRequest request)
