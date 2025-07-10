@@ -192,7 +192,7 @@ public class AccountService : IAccountService
         user.Email = $"deleted_{piiReplacement}";
         user.Username = $"deleted_{piiReplacement}";
         user.PhoneNumber = $"deleted_{piiReplacement}";
-        user.DeletedAt = DateTime.Now;
+        user.DeletedAt = DateTime.UtcNow;
         
         await _postgresDbContext.SaveChangesAsync();
         
