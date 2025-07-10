@@ -175,7 +175,12 @@ public class AccountService : IAccountService
             Email = user.Email,
         };
     }
-    
+
+    public Task<UserDTO?> DeleteUser(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
     /*
      *
      * Below is Creator related.
