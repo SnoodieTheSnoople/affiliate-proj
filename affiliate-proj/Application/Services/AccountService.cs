@@ -238,7 +238,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public async Task<CreatorDTO?> UpdateLastNameAsync(string surname, Guid userId)
+    public async Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId)
     {
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
