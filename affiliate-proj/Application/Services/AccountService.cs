@@ -238,12 +238,12 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> UpdateLastNameAsync(string lastname)
+    public Task<CreatorDTO?> UpdateLastNameAsync(string lastname, Guid userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth)
+    public Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid  userId)
     {
         throw new NotImplementedException();
     }
