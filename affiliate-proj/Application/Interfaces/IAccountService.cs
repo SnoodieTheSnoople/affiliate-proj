@@ -13,7 +13,7 @@ public interface IAccountService
     Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId);
     Task<UserDTO?> DeleteUser(Guid userId);
     
-    Task<CreatorDTO?> UpdateFirstNameAsync(string firstname);
+    Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId);
     Task<CreatorDTO?> UpdateLastNameAsync(string lastname);
     Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth);
     Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);

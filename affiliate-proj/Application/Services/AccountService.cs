@@ -215,7 +215,7 @@ public class AccountService : IAccountService
      * 
      */
 
-    public Task<CreatorDTO?> UpdateFirstNameAsync(string firstname)
+    public Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId)
     {
         throw new NotImplementedException();
     }
