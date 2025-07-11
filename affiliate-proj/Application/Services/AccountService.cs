@@ -215,17 +215,17 @@ public class AccountService : IAccountService
      * 
      */
 
-    public Task<CreatorDTO?> SetFirstNameAsync(string firstname)
+    public Task<CreatorDTO?> UpdateFirstNameAsync(string firstname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO?> SetLastNameAsync(string lastname)
+    public Task<CreatorDTO?> UpdateLastNameAsync(string lastname)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO?> SetDateOfBirthAsync(DateTime dateofbirth)
+    public Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth)
     {
         throw new NotImplementedException();
     }

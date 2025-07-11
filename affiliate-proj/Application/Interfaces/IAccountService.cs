@@ -13,9 +13,9 @@ public interface IAccountService
     Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId);
     Task<UserDTO?> DeleteUser(Guid userId);
     
-    Task<CreatorDTO?> SetFirstNameAsync(string firstname);
-    Task<CreatorDTO?> SetLastNameAsync(string lastname);
-    Task<CreatorDTO?> SetDateOfBirthAsync(DateTime dateofbirth);
+    Task<CreatorDTO?> UpdateFirstNameAsync(string firstname);
+    Task<CreatorDTO?> UpdateLastNameAsync(string lastname);
+    Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth);
     Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);
     Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator);
 }
