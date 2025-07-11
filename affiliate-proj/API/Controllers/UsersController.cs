@@ -150,5 +150,22 @@ namespace affiliate_proj.API.Controllers
                 return Unauthorized(ex);
             }
         }
+
+        [HttpPost("/update-firstname")]
+        public async Task<ActionResult<CreatorDTO>> UpdateFirstName([FromBody] CreatorRequest request)
+        {
+            if (request.UserId == Guid.Empty) return NotFound();
+            if (String.IsNullOrEmpty(request.Firstname)) return NotFound();
+
+            try
+            {
+                var creator = await _accountService.UpdateFirstNameAsync(request.Firstname, request.UserId);
+                return Ok(creator);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
     }
 }
