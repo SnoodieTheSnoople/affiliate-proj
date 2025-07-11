@@ -215,9 +215,27 @@ public class AccountService : IAccountService
      * 
      */
 
-    public Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId)
+    public async Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        
+        var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        if (creator == null) return null;
+        
+        creator.Firstname = firstname;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        creator =  await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        return new CreatorDTO
+        {
+            CreatorId = creator.CreatorId,
+            Firstname = creator.Firstname,
+            Surname = creator.Surname,
+            Dob = creator.Dob,
+            StripeId = creator.StripeId,
+            UserId = creator.UserId,
+        };
     }
 
     public Task<CreatorDTO?> UpdateLastNameAsync(string lastname)
