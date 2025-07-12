@@ -184,5 +184,23 @@ namespace affiliate_proj.API.Controllers
                 return Unauthorized(ex);
             }
         }
+
+        [HttpPost("/update-dob")]
+        public async Task<ActionResult<CreatorDTO>> UpdateDob([FromBody] CreatorRequest request)
+        {
+            if (request.UserId == Guid.Empty) return NotFound();
+            if (request.Dob == null) return NotFound();
+            var castedDob = (DateTime)request.Dob;
+
+            try
+            {
+                var creator = await _accountService.UpdateDateOfBirthAsync(castedDob, request.UserId);
+                return Ok(creator);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
     }
 }
