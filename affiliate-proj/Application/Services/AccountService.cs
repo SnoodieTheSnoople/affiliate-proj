@@ -261,9 +261,27 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid  userId)
+    public async Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid  userId)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+
+        var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        if (creator == null) return null;
+        
+        creator.Dob = dateofbirth;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        creator = await  _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        return new CreatorDTO
+        {
+            CreatorId = creator.CreatorId,
+            Firstname = creator.Firstname,
+            Surname = creator.Surname,
+            Dob = creator.Dob,
+            StripeId = creator.StripeId,
+            UserId = creator.UserId,
+        };
     }
 
     public async Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId)
