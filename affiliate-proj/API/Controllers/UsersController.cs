@@ -203,6 +203,12 @@ namespace affiliate_proj.API.Controllers
             }
         }
 
+        [HttpPost("/set-creator")]
+        public async Task<ActionResult<CreatorDTO>> SetCreator([FromBody] CreatorRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete("/delete-creator")]
         public async Task<ActionResult<CreatorDTO>> DeleteCreator([FromBody] CreatorRequest request)
         {
