@@ -304,7 +304,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator)
+    public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
         throw new NotImplementedException();
     }
