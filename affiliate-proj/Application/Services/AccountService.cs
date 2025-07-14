@@ -304,8 +304,36 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
+    public async Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+
+        var newCreatorRecord = new Creator
+        {
+            Firstname = creatorDto.Firstname,
+            Surname = creatorDto.Surname,
+            Dob = creatorDto.Dob,
+            StripeId = creatorDto.StripeId,
+            UserId = creatorDto.UserId,
+        };
+        
+        var checkCreator =  await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        if (checkCreator != null) return null;
+        
+        await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        checkCreator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        return new CreatorDTO
+        {
+            CreatorId = checkCreator.CreatorId,
+            CreatedAt = checkCreator.CreatedAt,
+            Firstname = checkCreator.Firstname,
+            Surname = checkCreator.Surname,
+            Dob = checkCreator.Dob,
+            StripeId = checkCreator.StripeId,
+            UserId = checkCreator.UserId,
+        };
     }
 }
