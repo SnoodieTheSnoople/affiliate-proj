@@ -337,7 +337,7 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> DeleteCreator(Guid userId)
+    public Task<CreatorDTO?> DeleteCreator(Guid userId, Guid piiReplacement)
     {
         throw new NotImplementedException();
     }

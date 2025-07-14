@@ -18,5 +18,5 @@ public interface IAccountService
     Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid userId);
     Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);
     Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId);
-    Task<CreatorDTO?> DeleteCreator(Guid userId);
+    Task<CreatorDTO?> DeleteCreator(Guid userId, Guid piiReplacement);
 }
