@@ -337,8 +337,29 @@ public class AccountService : IAccountService
         };
     }
 
-    public Task<CreatorDTO?> DeleteCreator(Guid userId, Guid piiReplacement)
+    public async Task<CreatorDTO?> DeleteCreator(Guid userId, Guid piiReplacement)
     {
-        throw new NotImplementedException();
+        if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        
+        var creator =  await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        if (creator == null) return null;
+
+        creator.Firstname = $"deleted_{piiReplacement}";
+        creator.Surname = $"deleted_{piiReplacement}";
+        creator.Dob = new DateTime(1970, 1, 1);
+        await _postgresDbContext.SaveChangesAsync();
+
+        creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
+        return new CreatorDTO
+        {
+            CreatorId = creator.CreatorId,
+            CreatedAt = creator.CreatedAt,
+            Firstname = creator.Firstname,
+            Surname = creator.Surname,
+            Dob = creator.Dob,
+            StripeId = creator.StripeId,
+            UserId = creator.UserId,
+        };
     }
 }
