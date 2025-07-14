@@ -336,4 +336,9 @@ public class AccountService : IAccountService
             UserId = checkCreator.UserId,
         };
     }
+
+    public Task<CreatorDTO?> DeleteCreator(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
 }
