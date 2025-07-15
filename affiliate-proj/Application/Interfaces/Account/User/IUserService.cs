@@ -4,7 +4,7 @@ namespace affiliate_proj.Application.Interfaces.User;
 
 public interface IUserService
 {
-    Task<UserDTO?> SetUserAsync(UserDTO user, Guid userId);
+    Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid userId);
     Task<UserDTO?> GetUserByUserIdAsync(Guid userId);
     Task<UserDTO?> DeleteUser(Guid userId, Guid piiReplacementId);
     Task<UserDTO?> UpdateEmailAsync(string email, Guid userId);
