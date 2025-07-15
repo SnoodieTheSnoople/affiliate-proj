@@ -86,7 +86,7 @@ public class AccountService : IAccountService
     {
         if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString())) 
             throw new UnauthorizedAccessException("User ID mismatch.");
-        if (CheckUserExists(userId)) return null;
+        if (_accountHelper.CheckUserExists(userId)) return null;
 
         var user = new Core.Entities.User
         {
@@ -114,7 +114,7 @@ public class AccountService : IAccountService
     public async Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() !=  userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) return null;
+        if (!_accountHelper.CheckUserExists(userId)) return null;
 
         var user = await _postgresDbContext.Users.FindAsync(userId);
 
@@ -138,7 +138,7 @@ public class AccountService : IAccountService
     public async Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) return null; 
+        if (!_accountHelper.CheckUserExists(userId)) return null; 
         
         var user = await _postgresDbContext.Users.FindAsync(userId);
         if (user == null) return null;
@@ -161,7 +161,7 @@ public class AccountService : IAccountService
     public async Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
         
         var user = await _postgresDbContext.Users.FindAsync(userId);
         if (user == null) return null;
@@ -188,7 +188,7 @@ public class AccountService : IAccountService
     public async Task<UserDTO?> DeleteUser(Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
         
         var piiReplacement = Guid.NewGuid();
         var user = await _postgresDbContext.Users.FindAsync(userId);
@@ -223,7 +223,7 @@ public class AccountService : IAccountService
     public async Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
         
         var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
         if (creator == null) return null;
@@ -246,7 +246,7 @@ public class AccountService : IAccountService
     public async Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
         
         var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
         if (creator == null) return null;
@@ -269,7 +269,7 @@ public class AccountService : IAccountService
     public async Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid  userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
 
         var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
         if (creator == null) return null;
@@ -312,7 +312,7 @@ public class AccountService : IAccountService
     public async Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
 
         var newCreatorRecord = new Core.Entities.Creator
         {
@@ -345,7 +345,7 @@ public class AccountService : IAccountService
     public async Task<CreatorDTO?> DeleteCreator(Guid userId, Guid piiReplacement)
     {
         if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
         
         var creator =  await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
         if (creator == null) return null;
