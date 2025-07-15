@@ -1,6 +1,8 @@
-﻿namespace affiliate_proj.Application.Services;
+﻿using affiliate_proj.Application.Interfaces;
 
-public class AccountHelper
+namespace affiliate_proj.Application.Services;
+
+public class AccountHelper : IAccountHelper
 {
     
 }
