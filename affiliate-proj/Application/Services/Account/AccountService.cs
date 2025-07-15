@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Interfaces.Creator;
+using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,14 +14,19 @@ public class AccountService : IAccountService
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAccountHelper _accountHelper;
+    private readonly IUserService _userService;
+    private readonly ICreatorService _creatorService;
 
     public AccountService(SupabaseAccessor supabaseAccessor,  PostgresDbContext postgresDbContext,  
-        IHttpContextAccessor httpContextAccessor, IAccountHelper accountHelper)
+        IHttpContextAccessor httpContextAccessor, IAccountHelper accountHelper, IUserService userService, 
+        ICreatorService creatorService)
     {
         _supabaseAccessor = supabaseAccessor;
         _postgresDbContext = postgresDbContext;
         _httpContextAccessor = httpContextAccessor;
         _accountHelper = accountHelper;
+        _userService = userService;
+        _creatorService = creatorService;
     }
 
     private string GetUserEmailFromAcessToken()
