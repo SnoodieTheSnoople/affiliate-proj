@@ -62,25 +62,6 @@ public class AccountService : IAccountService
         }
     }
 
-    /* Use only for testing. Do not use in production. */
-    public async Task<UserDTO?> GetUserByEmailAsync(string email)
-    {
-        if (!GetUserEmailFromAcessToken().Equals(email)) throw new UnauthorizedAccessException("Email mismatch.");
-
-        var user = await _postgresDbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
-
-        if (user == null) return null;
-
-        return new UserDTO
-        {
-            UserId = user.UserId,
-            Username = user.Username,
-            PhoneNumber = user.PhoneNumber,
-            CreatedAt = user.CreatedAt,
-            Email = user.Email,
-        };
-    }
-
     public async Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid  userId)
     {
         if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString())) 
