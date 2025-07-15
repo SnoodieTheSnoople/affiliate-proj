@@ -27,15 +27,7 @@ public class AccountService : IAccountService
         return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value ??
                throw new UnauthorizedAccessException("User not authenticated.");
     }
-
-    private bool CheckUserExists(Guid userId)
-    {
-        var user = _postgresDbContext.Users.Find(userId);
-        if (user == null) return false;
-        
-        return true;
-    }
-
+    
     public async Task<UserDTO?> GetUserByIdAsync(Guid userId)
     {
         try
