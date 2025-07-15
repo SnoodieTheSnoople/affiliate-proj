@@ -70,6 +70,7 @@ public class Program
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ICreatorService, CreatorService>();
+        builder.Services.AddScoped<IAccountHelper, AccountHelper>();
         
         var app = builder.Build();
 
