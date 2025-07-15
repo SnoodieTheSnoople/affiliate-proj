@@ -20,6 +20,14 @@ public class CreatorService : ICreatorService
         _accountHelper = accountHelper;
     }
 
+    private bool CheckCreatorExists(Guid userId)
+    {
+        var creator = _postgresDbContext.Creators.FirstOrDefault(c => c.UserId == userId);
+        if (creator == null) return false;
+        
+        return true;
+    }
+
     public async Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
         if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
@@ -36,16 +44,13 @@ public class CreatorService : ICreatorService
             StripeId = creatorDto.StripeId,
             UserId = creatorDto.UserId,
         };
-        
-        var checkCreatorExists = await _postgresDbContext.Creators.FirstOrDefaultAsync( 
-            creator => creator.UserId == userId);
 
-        if (checkCreatorExists != null) return null;
+        if (!CheckCreatorExists(userId)) return null;
         
         await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
         await _postgresDbContext.SaveChangesAsync();
         
-        checkCreatorExists = await _postgresDbContext.Creators.FirstOrDefaultAsync(
+        var checkCreatorExists = await _postgresDbContext.Creators.FirstOrDefaultAsync(
             creator =>  creator.UserId == userId);
 
         return new CreatorDTO
