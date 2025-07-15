@@ -24,9 +24,28 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public Task<UserDTO?> GetUserByUserIdAsync(Guid userId)
+    public async Task<UserDTO?> GetUserByUserIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (String.IsNullOrEmpty(_accountHelper.GetUserIdFromAccessToken()))
+                throw new UnauthorizedAccessException("User not authenticated.");
+
+            var user = await _postgresDbContext.Users.FindAsync(userId);
+            if (user == null) return null;
+
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
     public Task<UserDTO?> DeleteUser(Guid userId)
