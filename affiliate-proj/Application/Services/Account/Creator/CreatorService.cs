@@ -1,10 +1,14 @@
-﻿using affiliate_proj.Application.Interfaces.Creator;
+﻿using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces.Creator;
 using affiliate_proj.Core.DTOs.Account;
 
 namespace affiliate_proj.Application.Services.Creator;
 
 public class CreatorService : ICreatorService
 {
+    private readonly PostgresDbContext _postgresDbContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
     public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator, Guid userId)
     {
         throw new NotImplementedException();

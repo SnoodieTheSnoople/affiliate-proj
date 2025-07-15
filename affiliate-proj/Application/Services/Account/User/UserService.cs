@@ -1,10 +1,14 @@
-﻿using affiliate_proj.Application.Interfaces.User;
+﻿using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
 
 namespace affiliate_proj.Application.Services.User;
 
 public class UserService : IUserService
 {
+    private readonly PostgresDbContext _postgresDbContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
     public Task<UserDTO?> SetUserAsync(UserDTO user, Guid userId)
     {
         throw new NotImplementedException();
