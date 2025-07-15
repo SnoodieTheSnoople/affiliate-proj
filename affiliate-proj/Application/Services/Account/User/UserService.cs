@@ -82,37 +82,73 @@ public class UserService : IUserService
 
     public async Task<UserDTO?> DeleteUser(Guid userId, Guid piiReplacementId)
     {
-        if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
-            throw new UnauthorizedAccessException("User ID mismatch.");
-        
-        if (!_accountHelper.CheckUserExists(userId))
-            throw new UnauthorizedAccessException("User not found.");
-        
-        var user = await _postgresDbContext.Users.FindAsync(userId);
-        if (user == null) return null;
-
-        user.Email = $"deleted_{piiReplacementId}";
-        user.Username = $"deleted_{piiReplacementId}";
-        user.PhoneNumber = $"deleted_{piiReplacementId}";
-        user.DeletedAt = DateTime.UtcNow;
-        await _postgresDbContext.SaveChangesAsync();
-        
-        user = await _postgresDbContext.Users.FindAsync(userId);
-
-        return new UserDTO
+        try
         {
-            UserId = user.UserId,
-            Username = user.Username,
-            PhoneNumber = user.PhoneNumber,
-            Email = user.Email,
-            CreatedAt = user.CreatedAt,
-            DeletedAt = user.DeletedAt,
-        };
+            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
+
+            if (!_accountHelper.CheckUserExists(userId))
+                throw new UnauthorizedAccessException("User not found.");
+
+            var user = await _postgresDbContext.Users.FindAsync(userId);
+            if (user == null) return null;
+
+            user.Email = $"deleted_{piiReplacementId}";
+            user.Username = $"deleted_{piiReplacementId}";
+            user.PhoneNumber = $"deleted_{piiReplacementId}";
+            user.DeletedAt = DateTime.UtcNow;
+            await _postgresDbContext.SaveChangesAsync();
+
+            user = await _postgresDbContext.Users.FindAsync(userId);
+
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt,
+                DeletedAt = user.DeletedAt,
+            };
+        }
+        catch (Exception ex)
+        {
+            return null;
+        }
     }
 
-    public Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
+    public async Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
+
+            if (!_accountHelper.CheckUserExists(userId)) return null;
+            
+            var user = await _postgresDbContext.Users.FindAsync(userId);
+            if (user == null) return null;
+            /*TODO: Consider a way to differentiate between internal error, or issue with no user found.*/
+            
+            user.Email = email;
+            await _postgresDbContext.SaveChangesAsync();
+            
+            user = await _postgresDbContext.Users.FindAsync(userId);
+
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                CreatedAt = user.CreatedAt,
+                Email = user.Email,
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     public Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId)
