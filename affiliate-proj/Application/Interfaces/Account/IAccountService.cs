@@ -5,11 +5,6 @@ namespace affiliate_proj.Application.Interfaces;
 
 public interface IAccountService
 { 
-    Task<UserDTO?> GetUserByIdAsync(Guid userId);
-    Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid  userId);
-    Task<UserDTO?> UpdateEmailAsync(string email, Guid userId);
-    Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId);
-    Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId);
     Task<UserDTO?> DeleteUser(Guid userId);
     
     Task<CreatorDTO?> UpdateFirstNameAsync(string firstname, Guid userId);
