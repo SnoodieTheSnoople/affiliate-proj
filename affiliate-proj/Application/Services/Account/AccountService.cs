@@ -29,13 +29,6 @@ public class AccountService : IAccountService
         _creatorService = creatorService;
     }
 
-    private string GetUserEmailFromAcessToken()
-    {
-        return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value ??
-               throw new UnauthorizedAccessException("User not authenticated.");
-    }
-    
-
     /*
      * Update record and anonymise or replace PID with random, unrelated, data to remain compliant with GDPR.
      * TODO: Review in the future to ensure GDPR compliance.
