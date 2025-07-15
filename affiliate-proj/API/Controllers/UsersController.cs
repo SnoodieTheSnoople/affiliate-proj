@@ -25,21 +25,6 @@ namespace affiliate_proj.API.Controllers
             _creatorService = creatorService;
             _userService = userService;
         }
-        
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<UserDTO>> GetUserById(Guid userId)
-        {
-            if (userId == Guid.Empty) return NotFound();
-            try
-            {
-                var user = await _userService.GetUserByUserIdAsync(userId);
-                return Ok(user);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex);
-            }
-        }
 
         [HttpPost("set-user")]
         public async Task<ActionResult<UserDTO>> SetUser([FromBody] UserRequest request)
@@ -56,6 +41,21 @@ namespace affiliate_proj.API.Controllers
 
                 var returnedUserFromRequest = await _accountService.SetUserAsync(newUserObjectMap, request.UserId);
                 return returnedUserFromRequest;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex);
+            }
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<UserDTO>> GetUserById(Guid userId)
+        {
+            if (userId == Guid.Empty) return NotFound();
+            try
+            {
+                var user = await _userService.GetUserByUserIdAsync(userId);
+                return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
             {
