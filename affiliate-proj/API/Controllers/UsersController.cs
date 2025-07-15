@@ -41,23 +41,6 @@ namespace affiliate_proj.API.Controllers
             }
         }
 
-        /* Use only for testing. Do not use in production. */
-        [HttpPost("by-email")]
-        public async Task<ActionResult<UserDTO>> GetUserByEmail([FromBody] UserRequest request)
-        {
-            if (String.IsNullOrEmpty(request.Email)) return NotFound();
-
-            try
-            {
-                var user = await _accountService.GetUserByEmailAsync(request.Email);
-                return Ok(user);
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex);
-            }
-        }
-
         [HttpPost("set-user")]
         public async Task<ActionResult<UserDTO>> SetUser([FromBody] UserRequest request)
         {
