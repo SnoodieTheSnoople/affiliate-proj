@@ -21,32 +21,39 @@ public class UserService : IUserService
     
     public async Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid userId)
     {
-        if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
-            throw new UnauthorizedAccessException("User ID mismatch");
-
-        if (_accountHelper.CheckUserExists(userId)) return null;
-
-        var user = new Core.Entities.User
+        try
         {
-            UserId = userId,
-            Username = userDto.Username,
-            PhoneNumber = userDto.PhoneNumber,
-            Email = userDto.Email,
-            DeletedAt = null
-        };
-        
-        _postgresDbContext.Users.Add(user);
-        await _postgresDbContext.SaveChangesAsync();
-        
-        var returnUserEntry = await _postgresDbContext.Users.FindAsync(userId);
-        return new UserDTO
+            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch");
+
+            if (_accountHelper.CheckUserExists(userId)) return null;
+
+            var user = new Core.Entities.User
+            {
+                UserId = userId,
+                Username = userDto.Username,
+                PhoneNumber = userDto.PhoneNumber,
+                Email = userDto.Email,
+                DeletedAt = null
+            };
+
+            _postgresDbContext.Users.Add(user);
+            await _postgresDbContext.SaveChangesAsync();
+
+            var returnUserEntry = await _postgresDbContext.Users.FindAsync(userId);
+            return new UserDTO
+            {
+                UserId = returnUserEntry.UserId,
+                Username = returnUserEntry.Username,
+                PhoneNumber = returnUserEntry.PhoneNumber,
+                Email = returnUserEntry.Email,
+                CreatedAt = returnUserEntry.CreatedAt,
+            };
+        }
+        catch (Exception ex)
         {
-            UserId = returnUserEntry.UserId,
-            Username = returnUserEntry.Username,
-            PhoneNumber = returnUserEntry.PhoneNumber,
-            Email = returnUserEntry.Email,
-            CreatedAt = returnUserEntry.CreatedAt,
-        };
+            return null;
+        }
     }
 
     public async Task<UserDTO?> GetUserByUserIdAsync(Guid userId)
