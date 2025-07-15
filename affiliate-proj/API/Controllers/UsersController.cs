@@ -39,7 +39,7 @@ namespace affiliate_proj.API.Controllers
                     Username = request.Username,
                 };
 
-                var returnedUserFromRequest = await _accountService.SetUserAsync(newUserObjectMap, request.UserId);
+                var returnedUserFromRequest = await _userService.SetUserAsync(newUserObjectMap, request.UserId);
                 return returnedUserFromRequest;
             }
             catch (UnauthorizedAccessException ex)
