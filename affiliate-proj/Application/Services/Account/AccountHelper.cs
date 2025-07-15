@@ -26,6 +26,8 @@ public class AccountHelper : IAccountHelper
 
     public bool CheckUserExists(Guid userId)
     {
-        throw new NotImplementedException();
+        var user = _postgresDbContext.Users.Find(userId);
+        if (user == null) return false;
+        return true;
     }
 }
