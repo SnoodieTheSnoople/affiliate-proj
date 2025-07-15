@@ -101,7 +101,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var user = await _accountService.UpdateUserNameAsync(request.Username, request.UserId);
+                var user = await _userService.UpdateUserNameAsync(request.Username, request.UserId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
