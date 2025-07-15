@@ -29,7 +29,7 @@ public class CreatorService : ICreatorService
         throw new NotImplementedException();
     }
 
-    public Task<CreatorDTO?> DeleteCreatorAsync(Guid userId)
+    public Task<CreatorDTO?> DeleteCreatorAsync(Guid userId, Guid piiReplacementId)
     {
         throw new NotImplementedException();
     }
