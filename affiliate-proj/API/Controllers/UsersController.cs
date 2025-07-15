@@ -117,7 +117,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var user = await _accountService.UpdatePhoneNumberAsync(request.PhoneNumber, request.UserId);
+                var user = await _userService.UpdatePhoneNumberAsync(request.PhoneNumber, request.UserId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
