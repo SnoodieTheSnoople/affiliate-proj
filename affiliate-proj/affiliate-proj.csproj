@@ -27,7 +27,6 @@
 
     <ItemGroup>
       <Folder Include="API\" />
-      <Folder Include="Application\Services\Account\User\" />
     </ItemGroup>
 
 </Project>
