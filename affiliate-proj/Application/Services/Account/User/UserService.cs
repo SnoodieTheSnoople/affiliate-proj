@@ -151,9 +151,37 @@ public class UserService : IUserService
         }
     }
 
-    public Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId)
+    public async Task<UserDTO?> UpdateUserNameAsync(string username, Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
+            
+            if (!_accountHelper.CheckUserExists(userId)) return null;
+            
+            var user = await _postgresDbContext.Users.FindAsync(userId);
+            if (user == null) return null;
+            
+            user.Username = username;
+            await _postgresDbContext.SaveChangesAsync();
+            
+            user = await _postgresDbContext.Users.FindAsync(userId);
+            
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                CreatedAt = user.CreatedAt,
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     public Task<UserDTO?> UpdatePhoneNumberAsync(string phoneNumber, Guid userId)
