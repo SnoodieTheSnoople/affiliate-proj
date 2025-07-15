@@ -19,9 +19,34 @@ public class UserService : IUserService
         _accountHelper = accountHelper;
     }
     
-    public Task<UserDTO?> SetUserAsync(UserDTO user, Guid userId)
+    public async Task<UserDTO?> SetUserAsync(UserDTO userDto, Guid userId)
     {
-        throw new NotImplementedException();
+        if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            throw new UnauthorizedAccessException("User ID mismatch");
+
+        if (_accountHelper.CheckUserExists(userId)) return null;
+
+        var user = new Core.Entities.User
+        {
+            UserId = userId,
+            Username = userDto.Username,
+            PhoneNumber = userDto.PhoneNumber,
+            Email = userDto.Email,
+            DeletedAt = null
+        };
+        
+        _postgresDbContext.Users.Add(user);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        var returnUserEntry = await _postgresDbContext.Users.FindAsync(userId);
+        return new UserDTO
+        {
+            UserId = returnUserEntry.UserId,
+            Username = returnUserEntry.Username,
+            PhoneNumber = returnUserEntry.PhoneNumber,
+            Email = returnUserEntry.Email,
+            CreatedAt = returnUserEntry.CreatedAt,
+        };
     }
 
     public async Task<UserDTO?> GetUserByUserIdAsync(Guid userId)
