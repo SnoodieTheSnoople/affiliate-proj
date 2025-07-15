@@ -32,7 +32,7 @@ namespace affiliate_proj.API.Controllers
             if (userId == Guid.Empty) return NotFound();
             try
             {
-                var user = await _accountService.GetUserByIdAsync(userId);
+                var user = await _userService.GetUserByUserIdAsync(userId);
                 return Ok(user);
             }
             catch (UnauthorizedAccessException ex)
