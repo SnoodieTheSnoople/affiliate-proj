@@ -68,6 +68,7 @@ namespace affiliate_proj.API.Controllers
         {
             try
             {
+                /*TODO: Leave as AccountService. AccountService.DeleteAccount will be composite function.*/
                 var user = await _accountService.DeleteUser(request.UserId);
                 return user;
             }
