@@ -75,8 +75,8 @@ public class UserService : IUserService
 
     public async Task<UserDTO?> DeleteUser(Guid userId, Guid piiReplacementId)
     {
-        if (String.IsNullOrEmpty(_accountHelper.GetUserIdFromAccessToken()))
-            throw new UnauthorizedAccessException("User not authenticated.");
+        if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            throw new UnauthorizedAccessException("User ID mismatch.");
         
         if (!_accountHelper.CheckUserExists(userId))
             throw new UnauthorizedAccessException("User not found.");
