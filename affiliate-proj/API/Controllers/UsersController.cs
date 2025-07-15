@@ -19,9 +19,11 @@ namespace affiliate_proj.API.Controllers
         private readonly ICreatorService _creatorService;
         private readonly IUserService _userService;
 
-        public UsersController(IAccountService accountService)
+        public UsersController(IAccountService accountService, ICreatorService creatorService, IUserService userService)
         {
             _accountService = accountService;
+            _creatorService = creatorService;
+            _userService = userService;
         }
         
         [HttpGet("{userId}")]
