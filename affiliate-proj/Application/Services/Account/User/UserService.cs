@@ -53,8 +53,8 @@ public class UserService : IUserService
     {
         try
         {
-            if (String.IsNullOrEmpty(_accountHelper.GetUserIdFromAccessToken()))
-                throw new UnauthorizedAccessException("User not authenticated.");
+            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
 
             var user = await _postgresDbContext.Users.FindAsync(userId);
             if (user == null) return null;
