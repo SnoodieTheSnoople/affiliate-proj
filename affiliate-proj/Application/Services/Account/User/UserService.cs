@@ -8,6 +8,12 @@ public class UserService : IUserService
 {
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public UserService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor)
+    {
+        _postgresDbContext = postgresDbContext;
+        _httpContextAccessor = httpContextAccessor;
+    }
     
     public Task<UserDTO?> SetUserAsync(UserDTO user, Guid userId)
     {

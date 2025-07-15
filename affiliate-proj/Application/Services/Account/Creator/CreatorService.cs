@@ -8,7 +8,13 @@ public class CreatorService : ICreatorService
 {
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    
+
+    public CreatorService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor)
+    {
+        _postgresDbContext = postgresDbContext;
+        _httpContextAccessor = httpContextAccessor;
+    }
+
     public Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator, Guid userId)
     {
         throw new NotImplementedException();
