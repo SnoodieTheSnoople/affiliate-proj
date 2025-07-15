@@ -14,11 +14,12 @@ public class AccountService : IAccountService
     private readonly IAccountHelper _accountHelper;
 
     public AccountService(SupabaseAccessor supabaseAccessor,  PostgresDbContext postgresDbContext,  
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor, IAccountHelper accountHelper)
     {
         _supabaseAccessor = supabaseAccessor;
         _postgresDbContext = postgresDbContext;
         _httpContextAccessor = httpContextAccessor;
+        _accountHelper = accountHelper;
     }
 
     // private string GetUserIdFromAccessToken()
@@ -43,20 +44,30 @@ public class AccountService : IAccountService
 
     public async Task<UserDTO?> GetUserByIdAsync(Guid userId)
     {
-        if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
-        
-        var user = await _postgresDbContext.Users.FindAsync(userId);
-        
-        if (user == null) return null;
-
-        return new UserDTO
+        // if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
+        try
         {
-            UserId = user.UserId,
-            Username = user.Username,
-            PhoneNumber = user.PhoneNumber,
-            CreatedAt = user.CreatedAt,
-            Email = user.Email,
-        };
+
+            if (string.IsNullOrEmpty(_accountHelper.GetUserIdFromAccessToken()))
+                throw new UnauthorizedAccessException("User not authenticated.");
+
+            var user = await _postgresDbContext.Users.FindAsync(userId);
+
+            if (user == null) return null;
+
+            return new UserDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                CreatedAt = user.CreatedAt,
+                Email = user.Email,
+            };
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error getting user details", ex);
+        }
     }
 
     /* Use only for testing. Do not use in production. */
