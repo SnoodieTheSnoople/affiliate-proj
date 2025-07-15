@@ -2,7 +2,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Core.DTOs.Account;
-using affiliate_proj.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services;
@@ -83,7 +82,7 @@ public class AccountService : IAccountService
         if (!GetUserIdFromAccessToken().Equals(userId.ToString())) throw new UnauthorizedAccessException("User ID mismatch.");
         if (CheckUserExists(userId)) return null;
 
-        var user = new User
+        var user = new Core.Entities.User
         {
             UserId = userId,
             Username = userDto.Username,
@@ -309,7 +308,7 @@ public class AccountService : IAccountService
         if (GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         if (!CheckUserExists(userId)) throw new UnauthorizedAccessException("User ID mismatch.");
 
-        var newCreatorRecord = new Creator
+        var newCreatorRecord = new Core.Entities.Creator
         {
             Firstname = creatorDto.Firstname,
             Surname = creatorDto.Surname,
