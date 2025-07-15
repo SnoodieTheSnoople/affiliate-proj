@@ -1,4 +1,5 @@
-﻿using affiliate_proj.Accessors.DatabaseAccessors;
+﻿using System.Security.Claims;
+using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 
 namespace affiliate_proj.Application.Services;
@@ -16,7 +17,11 @@ public class AccountHelper : IAccountHelper
 
     public string GetUserIdFromAccessToken()
     {
-        throw new NotImplementedException();
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null || String.IsNullOrEmpty(userId)) 
+            throw new UnauthorizedAccessException("User not authenticated.");
+        
+        return userId;
     }
 
     public bool CheckUserExists(Guid userId)
