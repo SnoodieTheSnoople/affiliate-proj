@@ -1,4 +1,5 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
 
@@ -8,11 +9,14 @@ public class UserService : IUserService
 {
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IAccountHelper _accountHelper;
 
-    public UserService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor)
+    public UserService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor, 
+        IAccountHelper accountHelper)
     {
         _postgresDbContext = postgresDbContext;
         _httpContextAccessor = httpContextAccessor;
+        _accountHelper = accountHelper;
     }
     
     public Task<UserDTO?> SetUserAsync(UserDTO user, Guid userId)
