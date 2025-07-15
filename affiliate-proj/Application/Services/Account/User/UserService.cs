@@ -48,9 +48,34 @@ public class UserService : IUserService
         }
     }
 
-    public Task<UserDTO?> DeleteUser(Guid userId)
+    public async Task<UserDTO?> DeleteUser(Guid userId, Guid piiReplacementId)
     {
-        throw new NotImplementedException();
+        if (String.IsNullOrEmpty(_accountHelper.GetUserIdFromAccessToken()))
+            throw new UnauthorizedAccessException("User not authenticated.");
+        
+        if (!_accountHelper.CheckUserExists(userId))
+            throw new UnauthorizedAccessException("User not found.");
+        
+        var user = await _postgresDbContext.Users.FindAsync(userId);
+        if (user == null) return null;
+
+        user.Email = $"deleted_{piiReplacementId}";
+        user.Username = $"deleted_{piiReplacementId}";
+        user.PhoneNumber = $"deleted_{piiReplacementId}";
+        user.DeletedAt = DateTime.UtcNow;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        user = await _postgresDbContext.Users.FindAsync(userId);
+
+        return new UserDTO
+        {
+            UserId = user.UserId,
+            Username = user.Username,
+            PhoneNumber = user.PhoneNumber,
+            Email = user.Email,
+            CreatedAt = user.CreatedAt,
+            DeletedAt = user.DeletedAt,
+        };
     }
 
     public Task<UserDTO?> UpdateEmailAsync(string email, Guid userId)
