@@ -23,7 +23,7 @@ public class UserService : IUserService
     {
         try
         {
-            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
                 throw new UnauthorizedAccessException("User ID mismatch");
 
             if (_accountHelper.CheckUserExists(userId)) return null;
@@ -60,7 +60,7 @@ public class UserService : IUserService
     {
         try
         {
-            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
                 throw new UnauthorizedAccessException("User ID mismatch.");
 
             var user = await _postgresDbContext.Users.FindAsync(userId);
@@ -84,7 +84,7 @@ public class UserService : IUserService
     {
         try
         {
-            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
                 throw new UnauthorizedAccessException("User ID mismatch.");
 
             if (!_accountHelper.CheckUserExists(userId))
@@ -121,10 +121,11 @@ public class UserService : IUserService
     {
         try
         {
-            if (_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
                 throw new UnauthorizedAccessException("User ID mismatch.");
 
-            if (!_accountHelper.CheckUserExists(userId)) return null;
+            if (!_accountHelper.CheckUserExists(userId))
+                throw new UnauthorizedAccessException("User not found.");
             
             var user = await _postgresDbContext.Users.FindAsync(userId);
             if (user == null) return null;
@@ -158,7 +159,8 @@ public class UserService : IUserService
             if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
                 throw new UnauthorizedAccessException("User ID mismatch.");
             
-            if (!_accountHelper.CheckUserExists(userId)) return null;
+            if (!_accountHelper.CheckUserExists(userId)) 
+                throw new UnauthorizedAccessException("User not found.");
             
             var user = await _postgresDbContext.Users.FindAsync(userId);
             if (user == null) return null;
