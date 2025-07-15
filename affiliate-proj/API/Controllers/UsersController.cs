@@ -1,4 +1,6 @@
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Interfaces.Creator;
+using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.RequestModels;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +16,8 @@ namespace affiliate_proj.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly ICreatorService _creatorService;
+        private readonly IUserService _userService;
 
         public UsersController(IAccountService accountService)
         {
