@@ -4,7 +4,7 @@ namespace affiliate_proj.Application.Interfaces.Creator;
 
 public interface ICreatorService
 {
-    Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creator, Guid userId);
+    Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId);
     Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId);
     Task<CreatorDTO?> DeleteCreatorAsync (Guid userId, Guid piiReplacementId);
     Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId);
