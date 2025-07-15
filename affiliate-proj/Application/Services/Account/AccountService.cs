@@ -22,12 +22,6 @@ public class AccountService : IAccountService
         _accountHelper = accountHelper;
     }
 
-    // private string GetUserIdFromAccessToken()
-    // {
-    //     return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value ??
-    //            throw new UnauthorizedAccessException("User not authenticated.");
-    // }
-
     private string GetUserEmailFromAcessToken()
     {
         return _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value ??
@@ -44,7 +38,6 @@ public class AccountService : IAccountService
 
     public async Task<UserDTO?> GetUserByIdAsync(Guid userId)
     {
-        // if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) throw new UnauthorizedAccessException("User ID mismatch.");
         try
         {
 
