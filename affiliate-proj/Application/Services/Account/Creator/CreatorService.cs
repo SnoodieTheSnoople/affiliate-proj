@@ -30,39 +30,47 @@ public class CreatorService : ICreatorService
 
     public async Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
-        if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
-            throw new  UnauthorizedAccessException("User ID mismatch.");
-            
-        if (!_accountHelper.CheckUserExists(userId))
-            throw new  UnauthorizedAccessException("User not found.");
-
-        var newCreatorRecord = new Core.Entities.Creator
+        try
         {
-            Firstname = creatorDto.Firstname,
-            Surname = creatorDto.Surname,
-            Dob = creatorDto.Dob,
-            StripeId = creatorDto.StripeId,
-            UserId = creatorDto.UserId,
-        };
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
 
-        if (!CheckCreatorExists(userId)) return null;
-        
-        await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
-        await _postgresDbContext.SaveChangesAsync();
-        
-        var checkCreatorExists = await _postgresDbContext.Creators.FirstOrDefaultAsync(
-            creator =>  creator.UserId == userId);
+            if (!_accountHelper.CheckUserExists(userId))
+                throw new UnauthorizedAccessException("User not found.");
 
-        return new CreatorDTO
+            var newCreatorRecord = new Core.Entities.Creator
+            {
+                Firstname = creatorDto.Firstname,
+                Surname = creatorDto.Surname,
+                Dob = creatorDto.Dob,
+                StripeId = creatorDto.StripeId,
+                UserId = creatorDto.UserId,
+            };
+
+            if (!CheckCreatorExists(userId)) return null;
+
+            await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
+            await _postgresDbContext.SaveChangesAsync();
+
+            var checkCreatorExists =
+                await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+
+            return new CreatorDTO
+            {
+                CreatorId = checkCreatorExists.CreatorId,
+                CreatedAt = checkCreatorExists.CreatedAt,
+                Firstname = checkCreatorExists.Firstname,
+                Surname = checkCreatorExists.Surname,
+                Dob = checkCreatorExists.Dob,
+                StripeId = checkCreatorExists.StripeId,
+                UserId = checkCreatorExists.UserId
+            };
+        }
+        catch (Exception ex)
         {
-            CreatorId = checkCreatorExists.CreatorId,
-            CreatedAt = checkCreatorExists.CreatedAt,
-            Firstname = checkCreatorExists.Firstname,
-            Surname = checkCreatorExists.Surname,
-            Dob = checkCreatorExists.Dob,
-            StripeId = checkCreatorExists.StripeId,
-            UserId = checkCreatorExists.UserId
-        };
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     public Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId)
