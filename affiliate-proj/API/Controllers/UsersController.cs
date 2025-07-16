@@ -149,7 +149,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var creator = await _accountService.UpdateFirstNameAsync(request.Firstname, request.UserId);
+                var creator = await _creatorService.UpdateFirstNameAsync(request.Firstname, request.UserId);
                 return Ok(creator);
             }
             catch (UnauthorizedAccessException ex)
