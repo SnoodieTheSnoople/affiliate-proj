@@ -222,7 +222,7 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public async Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid userId)
+    public async Task<CreatorDTO?> UpdateDateOfBirthAsync(DateOnly dateofbirth, Guid userId)
     {
         try
         {
@@ -231,8 +231,7 @@ public class CreatorService : ICreatorService
             var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
             if (creator == null) return null;
             
-            DateOnly replacementDob = DateOnly.FromDateTime(dateofbirth);
-            creator.Dob = replacementDob;
+            creator.Dob = dateofbirth;
             await _postgresDbContext.SaveChangesAsync();
             
             creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
