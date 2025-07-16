@@ -122,7 +122,8 @@ public class AccountService : IAccountService
         var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
         if (creator == null) return null;
         
-        creator.Dob = dateofbirth;
+        DateOnly replacementDob = DateOnly.FromDateTime(dateofbirth);
+        creator.Dob = replacementDob;
         await _postgresDbContext.SaveChangesAsync();
         
         creator = await  _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
@@ -200,7 +201,7 @@ public class AccountService : IAccountService
 
         creator.Firstname = $"deleted_{piiReplacement}";
         creator.Surname = $"deleted_{piiReplacement}";
-        creator.Dob = new DateTime(1970, 1, 1);
+        creator.Dob = new DateOnly(1970, 1, 1);
         await _postgresDbContext.SaveChangesAsync();
 
         creator = await _postgresDbContext.Creators.FirstOrDefaultAsync( creator => creator.UserId == userId);
