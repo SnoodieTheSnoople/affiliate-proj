@@ -141,9 +141,42 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId)
+    public async Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new UnauthorizedAccessException("User ID mismatch.");
+
+            if (!_accountHelper.CheckUserExists(userId))
+                throw new UnauthorizedAccessException("User ID not found.");
+
+            if (!CheckCreatorExists(userId))
+                throw new UnauthorizedAccessException("Creator not found.");
+
+            var creator = _postgresDbContext.Creators.FirstOrDefault(creator => creator.UserId == userId);
+            if (creator == null) return null;
+
+            creator.Firstname = firstName;
+            await _postgresDbContext.SaveChangesAsync();
+
+            creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            return new CreatorDTO
+            {
+                CreatorId = creator.CreatorId,
+                CreatedAt = creator.CreatedAt,
+                Firstname = creator.Firstname,
+                Surname = creator.Surname,
+                Dob = creator.Dob,
+                StripeId = creator.StripeId,
+                UserId = creator.UserId
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     public Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId)
