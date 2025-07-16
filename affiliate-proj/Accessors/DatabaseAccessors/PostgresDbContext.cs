@@ -30,7 +30,7 @@ public class PostgresDbContext : DbContext
             builder.ToTable("creators");
             builder.Property(creator => creator.CreatorId).HasColumnName("creator_id");
             builder.Property(creator => creator.UserId).HasColumnName("user_id");
-            builder.Property(creator => creator.CreatedAt).HasColumnName("created_at");
+            builder.Property(creator => creator.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
             builder.Property(creator => creator.Firstname).HasColumnName("firstname");
             builder.Property(creator => creator.Surname).HasColumnName("surname");
             builder.Property(creator => creator.StripeId).HasColumnName("stripe_id");
