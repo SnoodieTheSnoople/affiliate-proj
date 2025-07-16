@@ -184,7 +184,7 @@ namespace affiliate_proj.API.Controllers
 
             try
             {
-                var creator = await _accountService.UpdateDateOfBirthAsync(castedDob, request.UserId);
+                var creator = await _creatorService.UpdateDateOfBirthAsync(castedDob, request.UserId);
                 return Ok(creator);
             }
             catch (UnauthorizedAccessException ex)
