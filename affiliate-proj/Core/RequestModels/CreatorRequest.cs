@@ -8,7 +8,7 @@ public class CreatorRequest
     
     public string? Surname { get; set; }
     
-    public DateTime? Dob { get; set; }
+    public DateOnly? Dob { get; set; }
     
     public string? StripeId  { get; set; }
     
