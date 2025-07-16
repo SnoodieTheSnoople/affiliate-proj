@@ -28,6 +28,15 @@ public class CreatorService : ICreatorService
         return true;
     }
 
+    private bool ValidateUser(Guid userId)
+    {
+        if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString())) return false;
+        if (!_accountHelper.CheckUserExists(userId)) return false;
+        if (!CheckCreatorExists(userId)) return false;
+        
+        return true;
+    }
+
     public async Task<CreatorDTO?> SetCreatorAsync(CreatorDTO creatorDto, Guid userId)
     {
         try
