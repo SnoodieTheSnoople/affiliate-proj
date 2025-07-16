@@ -30,9 +30,12 @@ public class CreatorService : ICreatorService
 
     private bool ValidateUser(Guid userId)
     {
-        if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString())) return false;
-        if (!_accountHelper.CheckUserExists(userId)) return false;
-        if (!CheckCreatorExists(userId)) return false;
+        if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+            throw new UnauthorizedAccessException("User ID mismatch.");
+        if (!_accountHelper.CheckUserExists(userId))
+            throw new UnauthorizedAccessException("User not found.");
+        if (!CheckCreatorExists(userId))
+            throw new UnauthorizedAccessException("Creator not found.");
         
         return true;
     }
