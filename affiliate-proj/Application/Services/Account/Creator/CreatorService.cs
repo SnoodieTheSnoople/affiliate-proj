@@ -101,9 +101,44 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public Task<CreatorDTO?> DeleteCreatorAsync(Guid userId, Guid piiReplacementId)
+    public async Task<CreatorDTO?> DeleteCreatorAsync(Guid userId, Guid piiReplacementId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new  UnauthorizedAccessException("User ID mismatch.");
+            
+            if (!_accountHelper.CheckUserExists(userId))
+                throw new  UnauthorizedAccessException("User not found.");
+            
+            if (!CheckCreatorExists(userId))
+                throw new  UnauthorizedAccessException("Creator not found.");
+            
+            var creator = _postgresDbContext.Creators.FirstOrDefault(creator => creator.UserId == userId);
+            if (creator == null) return null;
+            
+            creator.Firstname = $"deleted_{piiReplacementId}";
+            creator.Surname = $"deleted_{piiReplacementId}";
+            creator.Dob = new DateTime(1970,1,1);
+            await _postgresDbContext.SaveChangesAsync();
+            
+            creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            return new CreatorDTO
+            {
+                CreatorId = creator.CreatorId,
+                CreatedAt = creator.CreatedAt,
+                Firstname = creator.Firstname,
+                Surname = creator.Surname,
+                Dob = creator.Dob,
+                StripeId = creator.StripeId,
+                UserId = creator.UserId
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     public Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId)
