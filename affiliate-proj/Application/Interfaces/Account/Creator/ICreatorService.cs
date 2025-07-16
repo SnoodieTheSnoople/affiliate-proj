@@ -9,5 +9,5 @@ public interface ICreatorService
     Task<CreatorDTO?> DeleteCreatorAsync (Guid userId, Guid piiReplacementId);
     Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId);
     Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId);
-    Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid userId);
+    Task<CreatorDTO?> UpdateDateOfBirthAsync(DateOnly dateofbirth, Guid userId);
 }
