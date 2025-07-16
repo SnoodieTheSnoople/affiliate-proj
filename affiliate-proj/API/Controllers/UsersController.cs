@@ -180,16 +180,20 @@ namespace affiliate_proj.API.Controllers
         {
             if (request.UserId == Guid.Empty) return NotFound();
             if (request.Dob == null) return NotFound();
-            DateOnly castedDob = request.Dob.Value;
 
             try
             {
+                DateOnly castedDob = request.Dob.Value;
                 var creator = await _creatorService.UpdateDateOfBirthAsync(castedDob, request.UserId);
                 return Ok(creator);
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Unauthorized(ex);
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
