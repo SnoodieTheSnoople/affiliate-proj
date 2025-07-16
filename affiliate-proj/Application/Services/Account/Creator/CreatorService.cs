@@ -47,7 +47,7 @@ public class CreatorService : ICreatorService
                 UserId = creatorDto.UserId,
             };
 
-            if (!CheckCreatorExists(userId)) return null;
+            if (CheckCreatorExists(userId)) return null;
 
             await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
             await _postgresDbContext.SaveChangesAsync();
