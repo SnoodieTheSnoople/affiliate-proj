@@ -73,9 +73,32 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId)
+    public async Task<CreatorDTO?> GetCreatorByUserIdAsync(Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!_accountHelper.GetUserIdFromAccessToken().Equals(userId.ToString()))
+                throw new  UnauthorizedAccessException("User ID mismatch.");
+            
+            var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            if (creator == null) return null;
+
+            return new CreatorDTO
+            {
+                CreatorId = creator.CreatorId,
+                CreatedAt = creator.CreatedAt,
+                Firstname = creator.Firstname,
+                Surname = creator.Surname,
+                Dob = creator.Dob,
+                StripeId = creator.StripeId,
+                UserId = creator.UserId
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     public Task<CreatorDTO?> DeleteCreatorAsync(Guid userId, Guid piiReplacementId)
