@@ -180,7 +180,7 @@ namespace affiliate_proj.API.Controllers
         {
             if (request.UserId == Guid.Empty) return NotFound();
             if (request.Dob == null) return NotFound();
-            DateTime castedDob = request.Dob.Value;
+            DateOnly castedDob = request.Dob.Value;
 
             try
             {
