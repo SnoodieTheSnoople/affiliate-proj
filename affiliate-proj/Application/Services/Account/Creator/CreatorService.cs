@@ -188,9 +188,35 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId)
+    public async Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (!ValidateUser(userId)) return null;
+            
+            var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            if (creator == null) return null;
+            
+            creator.Surname = surname;
+            await _postgresDbContext.SaveChangesAsync();
+            
+            creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            return new CreatorDTO
+            {
+                CreatorId = creator.CreatorId,
+                CreatedAt = creator.CreatedAt,
+                Dob = creator.Dob,
+                Firstname = creator.Firstname,
+                Surname = creator.Surname,
+                StripeId = creator.StripeId,
+                UserId = creator.UserId
+            };
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
     }
 
     public Task<CreatorDTO?> UpdateDateOfBirthAsync(DateTime dateofbirth, Guid userId)
