@@ -200,7 +200,41 @@ namespace affiliate_proj.API.Controllers
         [HttpPost("/set-creator")]
         public async Task<ActionResult<CreatorDTO>> SetCreator([FromBody] CreatorRequest request)
         {
-            throw new NotImplementedException();
+            if (request.UserId == Guid.Empty) return NotFound();
+            if (String.IsNullOrEmpty(request.Firstname)) 
+                return NotFound();
+            
+            if (String.IsNullOrEmpty(request.Surname))
+                return NotFound();
+            
+            if (request.Dob == null) return NotFound();
+
+            if (String.IsNullOrEmpty(request.StripeId))
+                return NotFound();
+
+            try
+            {
+                DateOnly castedDob = request.Dob.Value;
+                var setCreator = new CreatorDTO
+                {
+                    Firstname = request.Firstname,
+                    Surname = request.Surname,
+                    Dob = castedDob,
+                    StripeId = request.StripeId,
+                    UserId = request.UserId
+                };
+
+                var creator = await _creatorService.SetCreatorAsync(setCreator, request.UserId);
+                return Ok(creator);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("/delete-creator")]
