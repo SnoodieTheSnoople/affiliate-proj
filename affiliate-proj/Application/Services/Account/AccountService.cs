@@ -62,14 +62,14 @@ public class AccountService : IAccountService
         };
     }
 
-    public async Task<ProfileDTO?> DeleteUserProfile(Guid userId)
+    public async Task<ProfileDTO?> DeleteUserProfileAsync(Guid userId)
     {
         try
         {
             if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) return null;
 
             var piiReplacement = Guid.NewGuid();
-            var user = await _userService.DeleteUser(userId, piiReplacement);
+            var user = await _userService.DeleteUserAsync(userId, piiReplacement);
             var creator = await _creatorService.DeleteCreatorAsync(userId, piiReplacement);
 
             return new ProfileDTO

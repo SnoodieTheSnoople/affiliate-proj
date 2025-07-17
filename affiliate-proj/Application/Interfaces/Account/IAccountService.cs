@@ -6,5 +6,5 @@ namespace affiliate_proj.Application.Interfaces;
 public interface IAccountService
 { 
     Task<UserDTO?> DeleteUser(Guid userId);
-    Task<ProfileDTO?> DeleteUserProfile(Guid userId);
+    Task<ProfileDTO?> DeleteUserProfileAsync(Guid userId);
 }

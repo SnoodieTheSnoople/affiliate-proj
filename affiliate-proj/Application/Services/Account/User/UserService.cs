@@ -80,7 +80,7 @@ public class UserService : IUserService
         }
     }
 
-    public async Task<UserDTO?> DeleteUser(Guid userId, Guid piiReplacementId)
+    public async Task<UserDTO?> DeleteUserAsync(Guid userId, Guid piiReplacementId)
     {
         try
         {
