@@ -61,4 +61,9 @@ public class AccountService : IAccountService
             DeletedAt = user.DeletedAt,
         };
     }
+
+    public async Task<ProfileDTO?> DeleteUserProfile(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
 }
