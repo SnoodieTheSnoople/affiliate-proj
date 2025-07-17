@@ -249,7 +249,7 @@ namespace affiliate_proj.API.Controllers
             if (request.UserId == Guid.Empty) return BadRequest();
             try
             {
-                var deletedProfile = _accountService.DeleteUserProfileAsync(request.UserId);
+                var deletedProfile = await _accountService.DeleteUserProfileAsync(request.UserId);
                 return Ok(deletedProfile);
             }
             catch (UnauthorizedAccessException ex)
