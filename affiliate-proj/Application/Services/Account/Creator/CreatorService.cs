@@ -121,20 +121,20 @@ public class CreatorService : ICreatorService
                 throw new  UnauthorizedAccessException("User ID mismatch.");
             
             if (!_accountHelper.CheckUserExists(userId))
-                throw new  UnauthorizedAccessException("User not found.");
+                throw new  KeyNotFoundException("User not found.");
             
             if (!CheckCreatorExists(userId))
-                throw new  UnauthorizedAccessException("Creator not found.");
+                throw new  KeyNotFoundException("Creator not found.");
             
-            var creator = _postgresDbContext.Creators.FirstOrDefault(creator => creator.UserId == userId);
-            if (creator == null) return null;
+            var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            if (creator == null) throw new KeyNotFoundException("Creator not found.");
             
             creator.Firstname = $"deleted_{piiReplacementId}";
             creator.Surname = $"deleted_{piiReplacementId}";
             creator.Dob = new DateOnly(1970,1,1);
             await _postgresDbContext.SaveChangesAsync();
             
-            creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
+            creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(c => c.UserId == userId);
             return new CreatorDTO
             {
                 CreatorId = creator.CreatorId,
