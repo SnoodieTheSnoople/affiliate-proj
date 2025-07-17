@@ -64,6 +64,32 @@ public class AccountService : IAccountService
 
     public async Task<ProfileDTO?> DeleteUserProfile(Guid userId)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (_accountHelper.GetUserIdFromAccessToken() != userId.ToString()) return null;
+
+            var piiReplacement = Guid.NewGuid();
+            var user = await _userService.DeleteUser(userId, piiReplacement);
+            var creator = await _creatorService.DeleteCreatorAsync(userId, piiReplacement);
+
+            return new ProfileDTO
+            {
+                UserId = user.UserId,
+                Username = user.Username,
+                PhoneNumber = user.PhoneNumber,
+                DeletedAt = user.DeletedAt,
+                Email = user.Email,
+                CreatorId = creator.CreatorId,
+                Firstname = creator.Firstname,
+                Surname = creator.Surname,
+                Dob = creator.Dob,
+                StripeId = creator.StripeId,
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 }
