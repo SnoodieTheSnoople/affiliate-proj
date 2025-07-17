@@ -246,7 +246,16 @@ namespace affiliate_proj.API.Controllers
         [HttpDelete("/delete-profile")]
         public async Task<ActionResult<ProfileDTO>> DeleteProfile([FromBody] UserRequest request)
         {
-            throw new NotImplementedException();
+            if (request.UserId == Guid.Empty) return NotFound();
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
