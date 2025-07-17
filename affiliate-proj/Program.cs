@@ -30,18 +30,17 @@ public class Program
         });
 
         // Add services to the container.
-
         builder.Services.AddControllers();
         
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
         // Exposing keys to test presence of keys.
-        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:Url"));
+        /*Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:Url"));
         Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:AnonPublicKey"));
         Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:ServiceRoleKey"));
         Console.WriteLine(builder.Configuration.GetValue<string>("Postgres:ConnectionString"));
-        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:JWTSecret"));
+        Console.WriteLine(builder.Configuration.GetValue<string>("Supabase:JWTSecret"));*/
         
         builder.Services.AddSingleton<Supabase.Client>( _ =>
             new Supabase.Client(builder.Configuration.GetValue<string>("Supabase:Url"),
