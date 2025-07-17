@@ -70,7 +70,10 @@ public class AccountService : IAccountService
 
             var piiReplacement = Guid.NewGuid();
             var user = await _userService.DeleteUserAsync(userId, piiReplacement);
+            if (user == null) throw new NullReferenceException("User failed deletion.");
+            
             var creator = await _creatorService.DeleteCreatorAsync(userId, piiReplacement);
+            if (creator == null) throw new NullReferenceException("Creator failed deletion.");
 
             return new ProfileDTO
             {
