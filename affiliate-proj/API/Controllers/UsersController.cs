@@ -246,15 +246,20 @@ namespace affiliate_proj.API.Controllers
         [HttpDelete("/delete-profile")]
         public async Task<ActionResult<ProfileDTO>> DeleteProfile([FromBody] UserRequest request)
         {
-            if (request.UserId == Guid.Empty) return NotFound();
+            if (request.UserId == Guid.Empty) return BadRequest();
             try
             {
-                return Ok();
+                var deletedProfile = _accountService.DeleteUserProfileAsync(request.UserId);
+                return Ok(deletedProfile);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return BadRequest(e.Message);
             }
         }
     }
