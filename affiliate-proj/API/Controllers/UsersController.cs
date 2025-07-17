@@ -242,5 +242,11 @@ namespace affiliate_proj.API.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpDelete("/delete-profile")]
+        public async Task<ProfileDTO> DeleteProfile([FromBody] UserRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
