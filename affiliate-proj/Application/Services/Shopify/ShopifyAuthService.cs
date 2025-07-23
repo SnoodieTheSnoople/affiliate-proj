@@ -8,11 +8,14 @@ public class ShopifyAuthService :  IShopifyAuthService
 {
     private readonly ShopifyConfig _shopifyConfig;
     private readonly ILogger<ShopifyAuthService> _logger;
+    private readonly ShopifyDomainUtility _shopifyDomainUtility;
 
-    public ShopifyAuthService(ShopifyConfig shopifyConfig, ILogger<ShopifyAuthService> logger)
+    public ShopifyAuthService(ShopifyConfig shopifyConfig, ILogger<ShopifyAuthService> logger,
+        ShopifyDomainUtility shopifyDomainUtility)
     {
         _shopifyConfig = shopifyConfig;
         _logger = logger;
+        _shopifyDomainUtility = shopifyDomainUtility;
     }
     public string BuildAuthUrl(string shopDomain, string state)
     {
@@ -21,7 +24,13 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         var formattedShopDomain = FormatShopDomain(shopDomain);
 
-        return null;
+        var authUrl = $"https://{formattedShopDomain}/admin/oauth/authorize?" +
+                      $"client_id={_shopifyConfig.ApiKey}&" +
+                      $"scope={Uri.EscapeDataString(scopes)}&" +
+                      $"redirect_uri={Uri.EscapeDataString(redirectUrl)}&" +
+                      $"state={state}";
+
+        return authUrl;
     }
 
     public Task<string> AuthorizeAsync(string code, string shopDomain)
