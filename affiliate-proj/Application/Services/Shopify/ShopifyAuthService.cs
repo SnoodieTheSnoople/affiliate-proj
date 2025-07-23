@@ -34,7 +34,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authUrl;
     }
 
-    public async Task<string> AuthorizeAsync(string code, string shopDomain)
+    public async Task<string> AuthoriseAsync(string code, string shopDomain)
     {
         try
         {
