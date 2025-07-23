@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Core.Entities.Shopify;
 using Microsoft.AspNetCore.Authentication.BearerToken;
@@ -71,10 +73,21 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     public Task<bool> IsValidWebhookAsync(string requestBody, string shopifyHmacHeader)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var computedHmac = ComputeHmacSha256(_shopifyConfig.ApiSecret, requestBody);
+            var providedHmac = shopifyHmacHeader.Replace("sha256=", "");
+
+            return Task.FromResult(String.Equals(computedHmac, providedHmac, StringComparison.OrdinalIgnoreCase));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return Task.FromResult(false);
+        }
     }
 
-    private static string FormatShopDomain(string shopDomain)
+    private string FormatShopDomain(string shopDomain)
     {
         shopDomain = shopDomain.Replace("https://", "").Replace("http://", "");
 
@@ -84,5 +97,12 @@ public class ShopifyAuthService :  IShopifyAuthService
         }
         
         return shopDomain;
+    }
+
+    private string ComputeHmacSha256(string apiSecret, string data)
+    {
+        var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(apiSecret));
+        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+        return Convert.ToBase64String(hash);
     }
 }
