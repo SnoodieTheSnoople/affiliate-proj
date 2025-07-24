@@ -71,14 +71,14 @@ namespace affiliate_proj.API.Controllers.Shopify
             return String.Equals(computedHmac, receivedHmac, StringComparison.Ordinal);
         }
 
-        private async Task<string?> GetAccessToken(string shop, string code)
+        private async Task<string?> GetAccessToken(string shop, string authCode)
         {
             var tokenUrl = $"https://{shop}/admin/oauth/access_token";
             var payload = new
             {
                 client_id = _configuration.GetValue<string>("Shopify:ClientId"),
                 client_secret = _configuration.GetValue<string>("Shopify:ApiSecret"),
-                code
+                authCode
             };
             
             var response = await _client.PostAsJsonAsync(tokenUrl, payload);
