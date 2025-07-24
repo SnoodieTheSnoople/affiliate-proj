@@ -14,10 +14,10 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
 
-        public ShopifyController(IConfiguration configuration, HttpClient client)
+        public ShopifyController(IConfiguration configuration, IHttpClientFactory clientFactory)
         {
             _configuration = configuration;
-            _client = client;
+            _client = clientFactory.CreateClient();
         }
 
         [HttpGet("install")]
