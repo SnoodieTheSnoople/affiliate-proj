@@ -28,5 +28,12 @@ namespace affiliate_proj.API.Controllers.Shopify
             
             return Redirect(authUrl);
         }
+
+        [HttpGet("callback")]
+        public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery] string code,
+            [FromQuery] string hmac)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
