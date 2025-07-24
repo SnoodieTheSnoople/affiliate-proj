@@ -36,13 +36,17 @@ namespace affiliate_proj.API.Controllers.Shopify
         }
 
         [HttpGet("callback")]
-        public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery] string code,
+        public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery] string authCode,
             [FromQuery] string hmac)
         {
-            if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret"))
+            if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret")))
                 return Unauthorized("HMAC validation failed.");
+
+            var accessToken = await GetAccessToken(shop, authCode);
             
-            
+            if (String.IsNullOrEmpty(accessToken)) return Unauthorized("Invalid access token.");
+
+            return Ok(new { shop, accessToken });
         }
 
         private bool IsValidShopDomain(string domain)
