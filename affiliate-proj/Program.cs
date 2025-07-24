@@ -65,6 +65,7 @@ public class Program
             };
         });
 
+        builder.Services.AddHttpClient();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IUserService, UserService>();
