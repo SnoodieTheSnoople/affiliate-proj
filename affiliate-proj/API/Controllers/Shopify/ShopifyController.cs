@@ -20,6 +20,8 @@ namespace affiliate_proj.API.Controllers.Shopify
         [HttpGet("install")]
         public IActionResult Install([FromQuery] string shop)
         {
+            if (!IsValidShopDomain(shop)) return BadRequest("Invalid domain.");
+            
             var scopes = _configuration.GetSection("Shopify:Scopes").Get<string[]>();
             var clientId = _configuration.GetValue<string>("Shopify:ClientId");
             var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
