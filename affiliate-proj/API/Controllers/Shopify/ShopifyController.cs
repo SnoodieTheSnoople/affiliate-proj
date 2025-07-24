@@ -7,5 +7,7 @@ namespace affiliate_proj.API.Controllers.Shopify
     [ApiController]
     public class ShopifyController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _client;
     }
 }
