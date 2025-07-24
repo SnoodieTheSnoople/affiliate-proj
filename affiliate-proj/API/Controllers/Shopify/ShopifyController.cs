@@ -38,7 +38,10 @@ namespace affiliate_proj.API.Controllers.Shopify
         public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery] string code,
             [FromQuery] string hmac)
         {
-            throw new NotImplementedException();
+            if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret"))
+                return Unauthorized("HMAC validation failed.");
+            
+            
         }
 
         private bool IsValidShopDomain(string domain)
@@ -61,6 +64,11 @@ namespace affiliate_proj.API.Controllers.Shopify
             var receivedHmac = query["hmac"].ToString();
             
             return String.Equals(computedHmac, receivedHmac, StringComparison.Ordinal);
+        }
+
+        private async Task<string?> GetAccessToken(string shop, string code)
+        {
+            
         }
     }
 }
