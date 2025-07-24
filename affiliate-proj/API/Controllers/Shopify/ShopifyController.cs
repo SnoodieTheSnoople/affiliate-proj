@@ -43,5 +43,10 @@ namespace affiliate_proj.API.Controllers.Shopify
         {
             return Regex.IsMatch(domain, @"^[a-zA-Z0-9-_][a-zA-Z0-9-_]*\.myshopify\.com$");
         }
+
+        private bool IsValidHmac(IQueryCollection query, string secret)
+        {
+            
+        }
     }
 }
