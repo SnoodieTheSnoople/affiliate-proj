@@ -19,7 +19,14 @@ namespace affiliate_proj.API.Controllers.Shopify
         [HttpGet("install")]
         public IActionResult Install([FromQuery] string shop)
         {
+            var scopes = _configuration.GetSection("Shopify:Scopes").Get<string[]>();
+            var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+            var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
+
+            var authUrl =
+                $"https://{shop}/admin/oauth/authorize?client_id={clientId}&scope={scopes}&redirect_uri={redirectUrl}";
             
+            return Redirect(authUrl);
         }
     }
 }
