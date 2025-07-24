@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -68,7 +69,19 @@ namespace affiliate_proj.API.Controllers.Shopify
 
         private async Task<string?> GetAccessToken(string shop, string code)
         {
+            var tokenUrl = $"https://{shop}/admin/oauth/access_token";
+            var payload = new
+            {
+                client_id = _configuration.GetValue<string>("Shopify:ClientId"),
+                client_secret = _configuration.GetValue<string>("Shopify:ApiSecret"),
+                code
+            };
             
+            var response = await _client.PostAsJsonAsync(tokenUrl, payload);
+            var content = await response.Content.ReadFromJsonAsync<JsonElement>();
+            
+            return content.TryGetProperty("access_token", out var accessToken) ? 
+                accessToken.GetString() : null;
         }
     }
 }
