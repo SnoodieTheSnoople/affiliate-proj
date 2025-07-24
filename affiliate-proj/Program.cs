@@ -19,7 +19,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        
+
+        builder.Configuration.AddJsonFile("appsettings.Development.json");
         builder.Logging.AddSimpleConsole(options => options.SingleLine = true);
         
         builder.Services.AddDbContext<PostgresDbContext>((sp, options) =>
