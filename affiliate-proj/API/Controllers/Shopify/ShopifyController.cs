@@ -15,5 +15,11 @@ namespace affiliate_proj.API.Controllers.Shopify
             _configuration = configuration;
             _client = client;
         }
+
+        [HttpGet("install")]
+        public IActionResult Install([FromQuery] string shop)
+        {
+            
+        }
     }
 }
