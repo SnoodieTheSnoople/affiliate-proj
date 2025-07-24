@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +48,19 @@ namespace affiliate_proj.API.Controllers.Shopify
 
         private bool IsValidHmac(IQueryCollection query, string secret)
         {
+            var getParameters = query.Where(param => param.Key != "hmac" && param.Key != "signature")
+                .OrderBy(param => param.Key, StringComparer.Ordinal)
+                .Select(param => $"{param.Key}={param.Value}");
             
+            var parameterAsString = string.Join("&", getParameters);
+            
+            var hmacHasher = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
+            var computedHash = hmacHasher.ComputeHash(Encoding.UTF8.GetBytes(parameterAsString));
+            
+            var computedHmac = BitConverter.ToString(computedHash).Replace("-", "").ToLower();
+            var receivedHmac = query["hmac"].ToString();
+            
+            return String.Equals(computedHmac, receivedHmac, StringComparison.Ordinal);
         }
     }
 }
