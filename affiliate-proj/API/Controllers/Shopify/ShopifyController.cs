@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,11 @@ namespace affiliate_proj.API.Controllers.Shopify
             [FromQuery] string hmac)
         {
             throw new NotImplementedException();
+        }
+
+        private bool IsValidShopDomain(string domain)
+        {
+            return Regex.IsMatch(domain, @"^[a-zA-Z0-9-_][a-zA-Z0-9-_]*\.myshopify\.com$");
         }
     }
 }
