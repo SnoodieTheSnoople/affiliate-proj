@@ -13,13 +13,13 @@ namespace affiliate_proj.API.Controllers.Shopify
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
-
+        
         public ShopifyController(IConfiguration configuration, IHttpClientFactory clientFactory)
         {
             _configuration = configuration;
             _client = clientFactory.CreateClient();
         }
-
+        
         [HttpGet("install")]
         public IActionResult Install([FromQuery] string shop)
         {
@@ -36,7 +36,7 @@ namespace affiliate_proj.API.Controllers.Shopify
         }
 
         [HttpGet("callback")]
-        public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery] string authCode,
+        public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery(Name = "code")] string authCode,
             [FromQuery] string hmac)
         {
             if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret")))
