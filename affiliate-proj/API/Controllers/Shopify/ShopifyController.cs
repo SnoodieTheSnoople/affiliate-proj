@@ -2,7 +2,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers.Shopify
@@ -39,14 +38,21 @@ namespace affiliate_proj.API.Controllers.Shopify
         public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery(Name = "code")] string authCode,
             [FromQuery] string hmac)
         {
-            if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret")))
-                return Unauthorized("HMAC validation failed.");
+            try
+            {
+                if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret")))
+                    return Unauthorized("HMAC validation failed.");
 
-            var accessToken = await GetAccessToken(shop, authCode);
-            
-            if (String.IsNullOrEmpty(accessToken)) return Unauthorized("Invalid access token.");
+                var accessToken = await GetAccessToken(shop, authCode);
 
-            return Ok(new { shop, accessToken });
+                if (String.IsNullOrEmpty(accessToken)) return Unauthorized("Invalid access token.");
+
+                return Ok(new { shop, accessToken });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         private bool IsValidShopDomain(string domain)
@@ -73,19 +79,27 @@ namespace affiliate_proj.API.Controllers.Shopify
 
         private async Task<string?> GetAccessToken(string shop, string authCode)
         {
-            var tokenUrl = $"https://{shop}/admin/oauth/access_token";
-            var payload = new
+            try
             {
-                client_id = _configuration.GetValue<string>("Shopify:ClientId"),
-                client_secret = _configuration.GetValue<string>("Shopify:ApiSecret"),
-                authCode
-            };
-            
-            var response = await _client.PostAsJsonAsync(tokenUrl, payload);
-            var content = await response.Content.ReadFromJsonAsync<JsonElement>();
-            
-            return content.TryGetProperty("access_token", out var accessToken) ? 
-                accessToken.GetString() : null;
+                var tokenUrl = $"https://{shop}/admin/oauth/access_token";
+                var payload = new
+                {
+                    client_id = _configuration.GetValue<string>("Shopify:ClientId"),
+                    client_secret = _configuration.GetValue<string>("Shopify:ApiSecret"),
+                    code = authCode
+                };
+                // Console.WriteLine("URL: " + tokenUrl);
+                // Console.WriteLine("Payload: " + payload + "\n");
+                
+                var response = await _client.PostAsJsonAsync(tokenUrl, payload);
+                var content = await response.Content.ReadFromJsonAsync<JsonElement>();
+                
+                return content.TryGetProperty("access_token", out var accessToken) ? accessToken.GetString() : null;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
     }
 }
