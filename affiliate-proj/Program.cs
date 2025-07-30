@@ -65,6 +65,14 @@ public class Program
                 IssuerSigningKey = GetSupabaseSigningKey(builder.Configuration, bytes)
             };
         });
+        
+        builder.Services.AddDistributedMemoryCache();
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(20);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
         builder.Services.AddHttpClient();
         builder.Services.AddHttpContextAccessor();
@@ -84,6 +92,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseSession();
         
         app.UseAuthentication();
         app.UseAuthorization();
