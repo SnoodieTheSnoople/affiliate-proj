@@ -24,7 +24,9 @@ namespace affiliate_proj.API.Controllers.Shopify
         {
             if (!IsValidShopDomain(shop)) return BadRequest("Invalid domain.");
             
-            var scopes = _configuration.GetSection("Shopify:Scopes").Get<string[]>();
+            var scopes = _configuration.GetValue<string>("Shopify:Scopes");
+            scopes = Uri.EscapeDataString(scopes!);
+            
             var clientId = _configuration.GetValue<string>("Shopify:ClientId");
             var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
 
