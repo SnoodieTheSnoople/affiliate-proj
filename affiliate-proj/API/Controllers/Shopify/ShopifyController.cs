@@ -31,6 +31,7 @@ namespace affiliate_proj.API.Controllers.Shopify
             var clientId = _configuration.GetValue<string>("Shopify:ClientId");
             var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
             
+            /*TODO: Add better nonce/state generation for security*/
             var state = Guid.NewGuid().ToString();
             Console.WriteLine(state);
             HttpContext.Session.SetString(StateSessionKey, state);
