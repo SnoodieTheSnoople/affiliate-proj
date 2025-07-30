@@ -12,6 +12,7 @@ namespace affiliate_proj.API.Controllers.Shopify
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
+        private const string StateSessionKey = "Shopify_OAuthState";
         
         public ShopifyController(IConfiguration configuration, IHttpClientFactory clientFactory)
         {
@@ -31,24 +32,32 @@ namespace affiliate_proj.API.Controllers.Shopify
             var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
             
             var state = Guid.NewGuid().ToString();
-            HttpContext.Session.SetString("Shopify_OAuthState", state);
+            Console.WriteLine(state);
+            HttpContext.Session.SetString(StateSessionKey, state);
 
             var authUrl =
                 $"https://{shop}/admin/oauth/authorize?client_id={clientId}" +
                 $"&scope={scopes}" +
                 $"&redirect_uri={redirectUrl}" +
-                $"state={state}" +
-                $"grant_options[]=per-user";
+                $"&state={state}" +
+                $"&grant_options[]=per-user";
             
             return Redirect(authUrl);
         }
 
         [HttpGet("callback")]
         public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery(Name = "code")] string authCode,
-            [FromQuery] string hmac, [FromQuery] string? scope)
+            [FromQuery] string hmac, [FromQuery] string? scope, [FromQuery] string state)
         {
             try
             {
+                Console.WriteLine(Request.QueryString.Value);
+                var savedState = HttpContext.Session.GetString("Shopify_OAuthState");
+                Console.WriteLine(savedState);
+                Console.WriteLine(state);
+                if (!String.Equals(savedState, state))
+                    return BadRequest("Invalid state parameter.");
+                
                 if (!IsValidHmac(Request.Query, _configuration.GetValue<string>("Shopify:ApiSecret")))
                     return Unauthorized("HMAC validation failed.");
 
