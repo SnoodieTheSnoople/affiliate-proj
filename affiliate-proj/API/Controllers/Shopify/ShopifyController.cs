@@ -29,16 +29,23 @@ namespace affiliate_proj.API.Controllers.Shopify
             
             var clientId = _configuration.GetValue<string>("Shopify:ClientId");
             var redirectUrl = Uri.EscapeDataString(_configuration.GetValue<string>("Shopify:RedirectUrl")!);
+            
+            var state = Guid.NewGuid().ToString();
+            HttpContext.Session.SetString("Shopify_OAuthState", state);
 
             var authUrl =
-                $"https://{shop}/admin/oauth/authorize?client_id={clientId}&scope={scopes}&redirect_uri={redirectUrl}";
+                $"https://{shop}/admin/oauth/authorize?client_id={clientId}" +
+                $"&scope={scopes}" +
+                $"&redirect_uri={redirectUrl}" +
+                $"state={state}" +
+                $"grant_options[]=per-user";
             
             return Redirect(authUrl);
         }
 
         [HttpGet("callback")]
         public async Task<IActionResult> Callback([FromQuery] string shop, [FromQuery(Name = "code")] string authCode,
-            [FromQuery] string hmac)
+            [FromQuery] string hmac, [FromQuery] string? scope)
         {
             try
             {
