@@ -52,23 +52,8 @@ public class ShopifyAuthService :  IShopifyAuthService
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
         Dictionary<string, string> queryParams)
     {
-        if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
-            throw new Exception("Internal Error 002: Invalid code or shop");
-        
-        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
-        if(!isValidDomain) 
-            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
-        
-        var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
-        if (String.IsNullOrEmpty(savedState)) 
-            throw new Exception("Internal Error 003: No saved state");
-        
-        Console.WriteLine($"Saved State: {savedState}");
-        
-        if (!String.Equals(savedState, state)) 
-            throw new Exception("Internal Error 004: Invalid state");
-        
-        _memoryCache.Remove("ShopifyOAuthState");
+        if (await ValidateKeyProperties(code, shop, state)) 
+            _memoryCache.Remove("ShopifyOAuthState");
         
         var clientId = _configuration.GetValue<string>("Shopify:ClientId");
         var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
@@ -87,5 +72,26 @@ public class ShopifyAuthService :  IShopifyAuthService
         _logger.LogInformation($"Obtained access_token: {authorisation.AccessToken}");
         
         return authorisation;
+    }
+
+    private async Task<bool> ValidateKeyProperties(string code, string shop, string state)
+    {
+        if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
+            throw new Exception("Internal Error 002: Invalid code or shop");
+        
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if(!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
+        
+        var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
+        if (String.IsNullOrEmpty(savedState)) 
+            throw new Exception("Internal Error 003: No saved state");
+        
+        Console.WriteLine($"Saved State: {savedState}");
+        
+        if (!String.Equals(savedState, state)) 
+            throw new Exception("Internal Error 004: Invalid state");
+        
+        return true;
     }
 }
