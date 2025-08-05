@@ -56,7 +56,27 @@ namespace affiliate_proj.API.Controllers.Shopify
                 var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
                 if(!isValidDomain) return BadRequest("Invalid shop domain");
                 
+                var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+                var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
                 
+                var isValidRequest = _shopifyRequestValidationUtility.IsAuthenticRequest(
+                    Request.QueryString.ToString(), apiSecret);
+
+                if (!isValidRequest)
+                {
+                    Console.WriteLine("Invalid request");
+                    return BadRequest("Invalid request");
+                }
+                
+                var authorisation = await _shopifyOauthUtility.AuthorizeAsync(code, shop, clientId, apiSecret);
+                
+                if (string.IsNullOrEmpty(authorisation.AccessToken)) return BadRequest("Invalid access_token");
+                Console.WriteLine($"Obtained access_token: {authorisation.AccessToken}");
+                Console.WriteLine($"Obtained access scope: {authorisation.GrantedScopes}");
+                
+                return Ok(new {
+                    shop, authorisation.AccessToken, authorisation.GrantedScopes
+                });
             }
             catch (Exception ex)
             {
