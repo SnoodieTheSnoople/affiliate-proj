@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopifySharp.Utilities;
 
 namespace affiliate_proj.API.Controllers.Shopify
 {
@@ -7,9 +8,24 @@ namespace affiliate_proj.API.Controllers.Shopify
     [ApiController]
     public class ShopifyController : ControllerBase
     {
-        [HttpGet("install")]
-        public IActionResult Install()
+        private readonly IShopifyRequestValidationUtility _shopifyRequestValidationUtility;
+        private readonly IShopifyDomainUtility _shopifyDomainUtility;
+
+        public ShopifyController(IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
+            IShopifyDomainUtility shopifyDomainUtility)
         {
+            _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
+            _shopifyDomainUtility = shopifyDomainUtility;
+        }
+        
+        [HttpGet("install")]
+        public async Task<IActionResult> Install([FromQuery] string shop)
+        {
+            var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+            if (!isValidDomain) return BadRequest("Invalid shop domain");
+            
+            Console.WriteLine("Validated shop domain");
+            return Ok();
             throw new NotImplementedException();
         }
     }
