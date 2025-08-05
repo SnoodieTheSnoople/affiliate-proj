@@ -29,7 +29,8 @@ public class ShopifyAuthService :  IShopifyAuthService
     public async Task<string> GenerateInstallUrlAsync(string shop)
     {
         var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
-        if (!isValidDomain) throw new Exception("Shopify Domain Not Valid");
+        if (!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
         _logger.LogInformation("Validated shop domain");
         
         var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
