@@ -123,7 +123,31 @@ namespace affiliate_proj.API.Controllers.Shopify
 
         private async Task<List<string>> GetScopes(string shop, string accessToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var url = $"https://{shop}/admin/oauth/access_token";
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
+                request.Headers.Add("X-Shopify-Access-Token", accessToken);
+
+                var response = await _client.SendAsync(request);
+                var content = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"{response.StatusCode} : Failed to retrieve scope.\n{content}");
+                    throw new NullReferenceException();
+                }
+
+                using var doc = JsonDocument.Parse(content);
+                return doc.RootElement.GetProperty("scopes").EnumerateArray()
+                    .Select(scope => scope.GetProperty("handle").GetString()!)
+                    .ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<string>();
+            }
         }
     }
 }
