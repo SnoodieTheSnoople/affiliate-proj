@@ -1,3 +1,4 @@
+using affiliate_proj.Application.Interfaces.Shopify;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,17 +16,19 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IShopifyDomainUtility _shopifyDomainUtility;
         private readonly IShopifyOauthUtility _shopifyOauthUtility;
         private readonly IMemoryCache _memoryCache;
+        private readonly IShopifyAuthService _shopifyAuthService;
 
         public ShopifyController(IConfiguration configuration, 
             IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
             IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache, IShopifyAuthService shopifyAuthService)
         {
             _configuration = configuration;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _shopifyDomainUtility = shopifyDomainUtility;
             _shopifyOauthUtility = shopifyOauthUtility;
             _memoryCache = memoryCache;
+            _shopifyAuthService = shopifyAuthService;
         }
         
         [HttpGet("install")]
