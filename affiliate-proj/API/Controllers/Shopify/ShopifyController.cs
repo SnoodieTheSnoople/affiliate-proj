@@ -38,8 +38,11 @@ namespace affiliate_proj.API.Controllers.Shopify
             Console.WriteLine($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
             
             var scopeAsList = configScopes.Split(",").ToList();
+            
+            var state = Guid.NewGuid().ToString();
 
-            var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, clientId, redirectUrl);
+            var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
+                clientId, redirectUrl, state);
             
             return Redirect(authUrl.ToString());
         }
