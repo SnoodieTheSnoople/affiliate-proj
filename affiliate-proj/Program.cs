@@ -2,15 +2,17 @@ using System.Text;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Creator;
-using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Creator;
-using affiliate_proj.Application.Services.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using ShopifySharp;
+using ShopifySharp.Utilities;
 using Supabase;
+using IUserService = affiliate_proj.Application.Interfaces.User.IUserService;
+using UserService = affiliate_proj.Application.Services.User.UserService;
 
 namespace affiliate_proj;
 
@@ -70,6 +72,9 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ICreatorService, CreatorService>();
         builder.Services.AddScoped<IAccountHelper, AccountHelper>();
+
+        builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
+        builder.Services.AddScoped<IShopifyDomainUtility, ShopifyDomainUtility>();
         
         var app = builder.Build();
 
