@@ -2,8 +2,10 @@ using System.Text;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Creator;
+using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Creator;
+using affiliate_proj.Application.Services.Shopify;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -70,11 +72,16 @@ public class Program
         builder.Services.AddMemoryCache();
         
         builder.Services.AddHttpContextAccessor();
+        /* Account Service */
         builder.Services.AddScoped<IAccountService, AccountService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ICreatorService, CreatorService>();
         builder.Services.AddScoped<IAccountHelper, AccountHelper>();
 
+        /* Shopify Service*/
+        builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
+        
+        /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
         builder.Services.AddScoped<IShopifyDomainUtility, ShopifyDomainUtility>();
         builder.Services.AddScoped<IShopifyOauthUtility, ShopifyOauthUtility>();
