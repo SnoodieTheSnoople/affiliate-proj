@@ -34,26 +34,29 @@ namespace affiliate_proj.API.Controllers.Shopify
         [HttpGet("install")]
         public async Task<IActionResult> Install([FromQuery] string shop)
         {
-            var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
-            if (!isValidDomain) return BadRequest("Invalid shop domain");
+            // var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+            // if (!isValidDomain) return BadRequest("Invalid shop domain");
+            //
+            // Console.WriteLine("Validated shop domain");
+            //
+            // var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
+            // var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+            // var redirectUrl =  _configuration.GetValue<string>("Shopify:RedirectUrl");
+            // Console.WriteLine($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
+            //
+            // var scopeAsList = configScopes.Split(",").ToList();
+            //
+            // var state = Guid.NewGuid().ToString();
+            //
+            // _memoryCache.Set("ShopifyOAuthState", state);
+            //
+            // var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
+            //     clientId, redirectUrl, state);
+            //
+            // return Redirect(authUrl.ToString());
             
-            Console.WriteLine("Validated shop domain");
-            
-            var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
-            var clientId = _configuration.GetValue<string>("Shopify:ClientId");
-            var redirectUrl =  _configuration.GetValue<string>("Shopify:RedirectUrl");
-            Console.WriteLine($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
-            
-            var scopeAsList = configScopes.Split(",").ToList();
-            
-            var state = Guid.NewGuid().ToString();
-            
-            _memoryCache.Set("ShopifyOAuthState", state);
-
-            var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
-                clientId, redirectUrl, state);
-            
-            return Redirect(authUrl.ToString());
+            var redirectUrl = await _shopifyAuthService.GenerateInstallUrlAsync(shop);
+            return Redirect(redirectUrl);
         }
 
         [HttpGet("callback")]
