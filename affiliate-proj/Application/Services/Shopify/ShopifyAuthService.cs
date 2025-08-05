@@ -26,9 +26,27 @@ public class ShopifyAuthService :  IShopifyAuthService
         _memoryCache = memoryCache;
         _logger = logger;
     }
-    public Task<string> GenerateInstallUrlAsync(string shop)
+    public async Task<string> GenerateInstallUrlAsync(string shop)
     {
-        throw new NotImplementedException();
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if (!isValidDomain) throw new Exception("Shopify Domain Not Valid");
+        _logger.LogInformation("Validated shop domain");
+        
+        var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
+        var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+        var redirectUrl =  _configuration.GetValue<string>("Shopify:RedirectUrl");
+        _logger.LogInformation($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
+        
+        var scopeAsList = configScopes.Split(",").ToList();
+        
+        var state = Guid.NewGuid().ToString();
+        
+        _memoryCache.Set("ShopifyOAuthState", state);
+
+        var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
+            clientId, redirectUrl, state);
+        
+        return authUrl.ToString();
     }
 
     public Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state)
