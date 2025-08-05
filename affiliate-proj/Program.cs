@@ -75,6 +75,7 @@ public class Program
 
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
         builder.Services.AddScoped<IShopifyDomainUtility, ShopifyDomainUtility>();
+        builder.Services.AddScoped<IShopifyOauthUtility, ShopifyOauthUtility>();
         
         var app = builder.Build();
 
