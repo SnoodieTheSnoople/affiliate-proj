@@ -44,6 +44,8 @@ namespace affiliate_proj.API.Controllers.Shopify
             var scopeAsList = configScopes.Split(",").ToList();
             
             var state = Guid.NewGuid().ToString();
+            
+            _memoryCache.Set("ShopifyOAuthState", state);
 
             var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
                 clientId, redirectUrl, state);
@@ -62,6 +64,13 @@ namespace affiliate_proj.API.Controllers.Shopify
                 
                 var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
                 if(!isValidDomain) return BadRequest("Invalid shop domain");
+                
+                var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
+                if (String.IsNullOrEmpty(savedState)) return StatusCode(500, "No saved state");
+                
+                Console.WriteLine($"Saved State: {savedState}");
+                
+                if (!String.Equals(savedState, state)) return BadRequest("Invalid state");
                 
                 var clientId = _configuration.GetValue<string>("Shopify:ClientId");
                 var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
