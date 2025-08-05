@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using ShopifySharp.Enums;
 using ShopifySharp.Utilities;
 
@@ -13,15 +14,18 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IShopifyRequestValidationUtility _shopifyRequestValidationUtility;
         private readonly IShopifyDomainUtility _shopifyDomainUtility;
         private readonly IShopifyOauthUtility _shopifyOauthUtility;
+        private readonly IMemoryCache _memoryCache;
 
         public ShopifyController(IConfiguration configuration, 
             IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
-            IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility)
+            IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
+            IMemoryCache memoryCache)
         {
             _configuration = configuration;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _shopifyDomainUtility = shopifyDomainUtility;
             _shopifyOauthUtility = shopifyOauthUtility;
+            _memoryCache = memoryCache;
         }
         
         [HttpGet("install")]
@@ -75,7 +79,11 @@ namespace affiliate_proj.API.Controllers.Shopify
                 
                 if (string.IsNullOrEmpty(authorisation.AccessToken)) return BadRequest("Invalid access_token");
                 Console.WriteLine($"Obtained access_token: {authorisation.AccessToken}");
-                Console.WriteLine($"Obtained access scope: {authorisation.GrantedScopes}");
+                Console.WriteLine($"Obtained access scope: ");
+                foreach (string obtainedScope in authorisation.GrantedScopes)
+                {
+                    Console.WriteLine(obtainedScope);
+                }
                 
                 return Ok(new {
                     shop, authorisation.AccessToken, authorisation.GrantedScopes
@@ -86,7 +94,6 @@ namespace affiliate_proj.API.Controllers.Shopify
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, ex.Message);
             }
-            throw new NotImplementedException();
         }
     }
 }
