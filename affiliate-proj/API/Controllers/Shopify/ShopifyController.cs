@@ -65,40 +65,43 @@ namespace affiliate_proj.API.Controllers.Shopify
         {
             try
             {
-                if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
-                    return BadRequest("Missing parameters.");
-                
-                var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
-                if(!isValidDomain) return BadRequest("Invalid shop domain");
-                
-                var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
-                if (String.IsNullOrEmpty(savedState)) return StatusCode(500, "No saved state");
-                
-                Console.WriteLine($"Saved State: {savedState}");
-                
-                if (!String.Equals(savedState, state)) return BadRequest("Invalid state");
-                
-                var clientId = _configuration.GetValue<string>("Shopify:ClientId");
-                var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
-                
-                var isValidRequest = _shopifyRequestValidationUtility.IsAuthenticRequest(
-                    Request.QueryString.ToString(), apiSecret);
+                // if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
+                //     return BadRequest("Missing parameters.");
+                //
+                // var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+                // if(!isValidDomain) return BadRequest("Invalid shop domain");
+                //
+                // var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
+                // if (String.IsNullOrEmpty(savedState)) return StatusCode(500, "No saved state");
+                //
+                // Console.WriteLine($"Saved State: {savedState}");
+                //
+                // if (!String.Equals(savedState, state)) return BadRequest("Invalid state");
+                //
+                // var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+                // var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
+                //
+                // var isValidRequest = _shopifyRequestValidationUtility.IsAuthenticRequest(
+                //     Request.QueryString.ToString(), apiSecret);
+                //
+                // if (!isValidRequest)
+                // {
+                //     Console.WriteLine("Invalid request");
+                //     return BadRequest("Invalid request");
+                // }
+                //
+                // var authorisation = await _shopifyOauthUtility.AuthorizeAsync(code, shop, clientId, apiSecret);
+                //
+                // if (string.IsNullOrEmpty(authorisation.AccessToken)) return BadRequest("Invalid access_token");
+                // Console.WriteLine($"Obtained access_token: {authorisation.AccessToken}");
+                // Console.WriteLine($"Obtained access scope: ");
+                // foreach (string obtainedScope in authorisation.GrantedScopes)
+                // {
+                //     Console.WriteLine(obtainedScope);
+                // }
 
-                if (!isValidRequest)
-                {
-                    Console.WriteLine("Invalid request");
-                    return BadRequest("Invalid request");
-                }
-                
-                var authorisation = await _shopifyOauthUtility.AuthorizeAsync(code, shop, clientId, apiSecret);
-                
-                if (string.IsNullOrEmpty(authorisation.AccessToken)) return BadRequest("Invalid access_token");
-                Console.WriteLine($"Obtained access_token: {authorisation.AccessToken}");
-                Console.WriteLine($"Obtained access scope: ");
-                foreach (string obtainedScope in authorisation.GrantedScopes)
-                {
-                    Console.WriteLine(obtainedScope);
-                }
+                var authorisation = await _shopifyAuthService.HandleCallbackAsync(code, shop, state,
+                    Request.QueryString.ToString());
                 
                 return Ok(new {
                     shop, authorisation.AccessToken, authorisation.GrantedScopes
