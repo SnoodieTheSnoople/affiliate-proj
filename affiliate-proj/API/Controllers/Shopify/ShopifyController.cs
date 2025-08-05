@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopifySharp.Enums;
 using ShopifySharp.Utilities;
 
 namespace affiliate_proj.API.Controllers.Shopify
@@ -28,6 +29,14 @@ namespace affiliate_proj.API.Controllers.Shopify
             if (!isValidDomain) return BadRequest("Invalid shop domain");
             
             Console.WriteLine("Validated shop domain");
+            
+            var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
+            var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+            var redirectUrl =  _configuration.GetValue<string>("Shopify:RedirectUrl");
+            Console.WriteLine($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
+            
+            var scopeAsList = configScopes.Split(",").ToList();
+            
             return Ok();
             throw new NotImplementedException();
         }
