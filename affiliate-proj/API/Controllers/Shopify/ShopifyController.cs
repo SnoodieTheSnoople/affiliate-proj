@@ -54,9 +54,17 @@ namespace affiliate_proj.API.Controllers.Shopify
             //     clientId, redirectUrl, state);
             //
             // return Redirect(authUrl.ToString());
-            
-            var redirectUrl = await _shopifyAuthService.GenerateInstallUrlAsync(shop);
-            return Redirect(redirectUrl);
+            try
+            {
+                var redirectUrl = await _shopifyAuthService.GenerateInstallUrlAsync(shop);
+                return Redirect(redirectUrl);
+            }
+            catch (Exception e)
+            {
+                // TODO: Create exception handling system according to custom codes.
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         [HttpGet("callback")]
