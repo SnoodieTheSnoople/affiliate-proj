@@ -12,14 +12,16 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IConfiguration _configuration;
         private readonly IShopifyRequestValidationUtility _shopifyRequestValidationUtility;
         private readonly IShopifyDomainUtility _shopifyDomainUtility;
+        private readonly IShopifyOauthUtility _shopifyOauthUtility;
 
         public ShopifyController(IConfiguration configuration, 
             IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
-            IShopifyDomainUtility shopifyDomainUtility)
+            IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility)
         {
             _configuration = configuration;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _shopifyDomainUtility = shopifyDomainUtility;
+            _shopifyOauthUtility = shopifyOauthUtility;
         }
         
         [HttpGet("install")]
