@@ -120,5 +120,10 @@ namespace affiliate_proj.API.Controllers.Shopify
                 return e.Message;
             }
         }
+
+        private async Task<List<string>> GetScopes(string shop, string accessToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
