@@ -7,5 +7,10 @@ namespace affiliate_proj.API.Controllers.Shopify
     [ApiController]
     public class ShopifyController : ControllerBase
     {
+        [HttpGet("install")]
+        public IActionResult Install()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
