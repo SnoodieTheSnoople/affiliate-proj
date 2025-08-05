@@ -48,6 +48,21 @@ namespace affiliate_proj.API.Controllers.Shopify
         public async Task<IActionResult> Callback([FromQuery] string code, [FromQuery] string shop, 
             [FromQuery] string state)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
+                    return BadRequest("Missing parameters.");
+                
+                var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+                if(!isValidDomain) return BadRequest("Invalid shop domain");
+                
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
             throw new NotImplementedException();
         }
     }
