@@ -50,7 +50,7 @@ public class ShopifyAuthService :  IShopifyAuthService
     }
 
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
-        Dictionary<string, string> queryParams)
+        string queryParams)
     {
         if (await ValidateKeyProperties(code, shop, state)) 
             _memoryCache.Remove("ShopifyOAuthState");
