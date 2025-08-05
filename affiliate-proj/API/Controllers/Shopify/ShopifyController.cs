@@ -42,6 +42,12 @@ namespace affiliate_proj.API.Controllers.Shopify
             var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, clientId, redirectUrl);
             
             return Redirect(authUrl.ToString());
+        }
+
+        [HttpGet("callback")]
+        public async Task<IActionResult> Callback([FromQuery] string code, [FromQuery] string shop, 
+            [FromQuery] string state)
+        {
             throw new NotImplementedException();
         }
     }
