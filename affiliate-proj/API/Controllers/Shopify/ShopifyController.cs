@@ -8,12 +8,15 @@ namespace affiliate_proj.API.Controllers.Shopify
     [ApiController]
     public class ShopifyController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly IShopifyRequestValidationUtility _shopifyRequestValidationUtility;
         private readonly IShopifyDomainUtility _shopifyDomainUtility;
 
-        public ShopifyController(IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
+        public ShopifyController(IConfiguration configuration, 
+            IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
             IShopifyDomainUtility shopifyDomainUtility)
         {
+            _configuration = configuration;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _shopifyDomainUtility = shopifyDomainUtility;
         }
