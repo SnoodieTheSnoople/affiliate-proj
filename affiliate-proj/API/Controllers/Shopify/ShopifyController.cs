@@ -12,9 +12,10 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IShopifyAuthService _shopifyAuthService;
         private readonly IShopifyDataService _shopifyDataService;
 
-        public ShopifyController(IShopifyAuthService shopifyAuthService)
+        public ShopifyController(IShopifyAuthService shopifyAuthService, IShopifyDataService shopifyDataService)
         {
             _shopifyAuthService = shopifyAuthService;
+            _shopifyDataService = shopifyDataService;
         }
         
         [HttpGet("install")]
@@ -109,11 +110,11 @@ namespace affiliate_proj.API.Controllers.Shopify
         }
 
         [HttpGet("get-products")]
-        public async Task<IActionResult> GetProducts([FromQuery] string shop, [FromQuery] string code)
+        public async Task<IActionResult> GetProductsAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
             try
             {
-                return Ok(await _shopifyDataService.GetProductsAsync(shop, code));
+                return Ok(await _shopifyDataService.GetProductsAsync(shop, accessToken));
             }
             catch (Exception e)
             {
