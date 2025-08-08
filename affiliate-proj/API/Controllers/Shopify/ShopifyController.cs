@@ -10,6 +10,7 @@ namespace affiliate_proj.API.Controllers.Shopify
     public class ShopifyController : ControllerBase
     {
         private readonly IShopifyAuthService _shopifyAuthService;
+        private readonly IShopifyDataService _shopifyDataService;
 
         public ShopifyController(IShopifyAuthService shopifyAuthService)
         {
@@ -104,6 +105,20 @@ namespace affiliate_proj.API.Controllers.Shopify
             {
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("get-products")]
+        public async Task<IActionResult> GetProducts([FromQuery] string shop, [FromQuery] string code)
+        {
+            try
+            {
+                return Ok(await _shopifyDataService.GetProductsAsync(shop, code));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
             }
         }
     }
