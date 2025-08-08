@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using ShopifySharp;
 using ShopifySharp.Utilities;
 using Supabase;
 using IUserService = affiliate_proj.Application.Interfaces.User.IUserService;
@@ -80,6 +79,7 @@ public class Program
 
         /* Shopify Service*/
         builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
+        builder.Services.AddScoped<IShopifyDataService, ShopifyDataService>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
