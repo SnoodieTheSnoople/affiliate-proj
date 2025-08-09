@@ -9,8 +9,8 @@ using UserDTO = affiliate_proj.Core.DTOs.Account.UserDTO;
 
 namespace affiliate_proj.API.Controllers
 {
-    // [Route("api/[controller]")]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    // [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class UsersController : ControllerBase
