@@ -16,7 +16,7 @@ public class ShopifyDataService : IShopifyDataService
         int limit = 250)
     {
         // TODO: Change to factory pattern for GraphService instatiation.
-        var graphSerivce = new GraphService(shopDomain, accessToken);
+        var graphService = new GraphService(shopDomain, accessToken);
         var request = new GraphRequest
         {
             Query =
@@ -48,7 +48,7 @@ public class ShopifyDataService : IShopifyDataService
             }
         };
         
-        var graphResult = await graphSerivce.PostAsync<ListProductsResult>(request);
+        var graphResult = await graphService.PostAsync<ListProductsResult>(request);
 
         foreach (var node in graphResult.Data.Products.nodes)
         {
