@@ -31,8 +31,10 @@ public class Store
     [Required]
     public string ShopifyOwnerEmail { get; set; }
     
-    public string ShopifyOwnerPhone { get; set; }
+    public string? ShopifyOwnerPhone { get; set; }
     
     [Required]
     public string ShopifyCountry { get; set; }
+    
+    public string? ShopifyGrantedScopes { get; set; }
 }
