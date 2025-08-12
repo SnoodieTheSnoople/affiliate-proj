@@ -1,6 +1,7 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -97,9 +98,42 @@ public class ShopifyAuthService :  IShopifyAuthService
         return shopInfo;
     }
 
-    public Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult)
+    public async Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var authToken =  authorizationResult.AccessToken;
+            if (authToken == null)
+                throw new Exception("Internal Error 007: Invalid access token");
+            
+            var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
+                store => store.ShopifyToken == authToken);
+            if (checkStoreExists != null)
+                throw new NullReferenceException("Shopify store already exists");
+
+            var newStore = new Store
+            {
+                ShopifyId = (long)shopDetails.Id,
+                ShopifyToken = authToken,
+                StoreUrl = shopDetails.Domain,
+                ShopifyStoreName = shopDetails.Name,
+                ShopifyOwnerName = shopDetails.ShopOwner,
+                ShopifyOwnerEmail = shopDetails.Email,
+                ShopifyOwnerPhone = shopDetails.Phone,
+                ShopifyCountry = shopDetails.Country,
+            };
+            
+            await _postgresDbContext.Stores.AddAsync(newStore);
+            await _postgresDbContext.SaveChangesAsync();
+            
+            newStore = await _postgresDbContext.Stores.FirstOrDefaultAsync(store => store.ShopifyToken == authToken);
+            return newStore;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
