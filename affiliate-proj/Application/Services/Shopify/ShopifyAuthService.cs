@@ -1,3 +1,4 @@
+using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
 using Microsoft.Extensions.Caching.Memory;
 using ShopifySharp;
@@ -13,11 +14,12 @@ public class ShopifyAuthService :  IShopifyAuthService
     private readonly IShopifyOauthUtility _shopifyOauthUtility;
     private readonly IMemoryCache _memoryCache;
     private readonly ILogger<ShopifyAuthService> _logger;
+    private readonly PostgresDbContext _postgresDbContext;
 
     public ShopifyAuthService(IConfiguration configuration,
         IShopifyRequestValidationUtility shopifyRequestValidationUtility,
         IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
-        IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger)
+        IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext)
     {
         _configuration = configuration;
         _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -25,6 +27,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         _shopifyOauthUtility = shopifyOauthUtility;
         _memoryCache = memoryCache;
         _logger = logger;
+        _postgresDbContext = postgresDbContext;
     }
     public async Task<string> GenerateInstallUrlAsync(string shop)
     {
