@@ -7,6 +7,8 @@ public class PostgresDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Creator> Creators { get; set; }
+    
+    public DbSet<Store> Stores { get; set; }
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
 
