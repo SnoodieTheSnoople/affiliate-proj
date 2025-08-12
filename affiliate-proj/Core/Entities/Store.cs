@@ -14,7 +14,7 @@ public class Store
     public string? StoreName { get; set; }
     
     [Required]
-    public string ShopifyId { get; set; }
+    public long ShopifyId { get; set; }
     
     [Required]
     public string ShopifyToken { get; set; }

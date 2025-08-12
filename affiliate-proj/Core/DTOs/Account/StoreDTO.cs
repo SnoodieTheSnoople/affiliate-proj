@@ -5,7 +5,7 @@ public class StoreDTO
     public Guid StoreId { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? StoreName { get; set; }
-    public string ShopifyId { get; set; }
+    public long ShopifyId { get; set; }
     public string ShopifyToken { get; set; }
     public string StoreUrl { get; set; }
     public string ShopifyStoreName { get; set; }
