@@ -53,7 +53,7 @@ public class ShopifyAuthService :  IShopifyAuthService
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
         string queryParams)
     {
-        if (await ValidateKeyProperties(code, shop, state)) 
+        if (await ValidateOAuthProperties(code, shop, state)) 
             _memoryCache.Remove("ShopifyOAuthState");
         
         var clientId = _configuration.GetValue<string>("Shopify:ClientId");
@@ -75,12 +75,29 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
-    public async Task<string> GetShopifyStoreId(string shop, string accessToken)
+    public async Task<Shop> GetShopifyStoreId(string shop, string accessToken)
     {
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if(!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
         
+        if (string.IsNullOrEmpty(accessToken))
+            throw new Exception("Internal Error 007: Invalid access token");
+        
+        var shopService = new ShopService(shop, accessToken);
+        var shopInfo = await shopService.GetAsync();
+        
+        // var propertyList = typeof(Shop).GetProperties().ToList();
+        // foreach (var property in propertyList)
+        // {
+        //     var value = property.GetValue(shopInfo);
+        //     Console.WriteLine($"{property} - {value}");
+        // }
+        
+        return shopInfo;
     }
 
-    private async Task<bool> ValidateKeyProperties(string code, string shop, string state)
+    private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
     {
         if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
             throw new Exception("Internal Error 002: Invalid code or shop");
@@ -100,4 +117,6 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         return true;
     }
+    
+    
 }
