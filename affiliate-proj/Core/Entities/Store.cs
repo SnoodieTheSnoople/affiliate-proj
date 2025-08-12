@@ -7,12 +7,11 @@ public class Store
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public System.Guid StoreId { get; set; }
+    public Guid StoreId { get; set; }
     
     public DateTime CreatedAt { get; set; }
     
-    [Required]
-    public string StoreName { get; set; }
+    public string? StoreName { get; set; }
     
     [Required]
     public string ShopifyId { get; set; }
@@ -22,7 +21,19 @@ public class Store
     
     [Required]
     public string StoreUrl { get; set; }
-
-    // TODO: Review entity on ER diagram.
-    // TODO: Ensure complies with user flow for authentication utilising User entity.
+    
+    [Required]
+    public string ShopifyStoreName { get; set; }
+    
+    [Required]
+    public string ShopifyOwnerName { get; set; }
+    
+    [Required]
+    public string ShopifyOwnerEmail { get; set; }
+    
+    [Required]
+    public string ShopifyOwnerPhone { get; set; }
+    
+    [Required]
+    public string ShopifyCountry { get; set; }
 }
