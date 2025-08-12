@@ -75,7 +75,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
-    public async Task<Shop?> GetShopifyStoreId(string shop, string accessToken)
+    public async Task<Shop?> GetShopifyStoreIdAsync(string shop, string accessToken)
     {
         if (!await ValidateKeyProperties(shop, accessToken))
             return null;
