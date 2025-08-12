@@ -118,5 +118,43 @@ public class ShopifyAuthService :  IShopifyAuthService
         return true;
     }
     
+    private async Task<bool> ValidateOAuthProperties(string shop, string state)
+    {
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if(!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
+        
+        var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
+        if (String.IsNullOrEmpty(savedState)) 
+            throw new Exception("Internal Error 003: No saved state");
+        
+        Console.WriteLine($"Saved State: {savedState}");
+        
+        if (!String.Equals(savedState, state)) 
+            throw new Exception("Internal Error 004: Invalid state");
+        
+        return true;
+    }
     
+    private async Task<bool> ValidateKeyProperties(string shop, string accessToken)
+    {
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if(!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
+        
+        if (string.IsNullOrEmpty(accessToken))
+            throw new Exception("Internal Error 007: Invalid access token");
+        
+        return true;
+    }
+    
+    private async Task<bool> ValidateKeyProperties(string shop)
+    {
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if(!isValidDomain) 
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
+        
+        
+        return true;
+    }
 }
