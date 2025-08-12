@@ -75,6 +75,11 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
+    public async Task<string> GetShopifyStoreId(string shop, string accessToken)
+    {
+        
+    }
+
     private async Task<bool> ValidateKeyProperties(string code, string shop, string state)
     {
         if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))
