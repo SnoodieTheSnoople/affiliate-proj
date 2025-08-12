@@ -2,6 +2,7 @@ using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Creator;
 using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
+using affiliate_proj.Core.Entities;
 using affiliate_proj.Core.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -261,6 +262,12 @@ namespace affiliate_proj.API.Controllers
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpPost("/set-store")]
+        public async Task<ActionResult<Store>> SetStoreProfile()
+        {
+            throw new NotImplementedException();
         }
     }
 }
