@@ -97,9 +97,14 @@ namespace affiliate_proj.API.Controllers.Shopify
 
                 var authorisation = await _shopifyAuthService.HandleCallbackAsync(code, shop, state,
                     Request.QueryString.ToString());
+
+                var shopInfo = await _shopifyAuthService.GetShopifyStoreIdAsync(shop, authorisation.AccessToken);
+                if (shopInfo == null)
+                    return BadRequest("Invalid Shopify Store ID");
                 
                 return Ok(new {
-                    shop, authorisation.AccessToken, authorisation.GrantedScopes
+                    shop, authorisation.AccessToken, authorisation.GrantedScopes,shopInfo.Name, shopInfo.Email,
+                    shopInfo.Country, shopInfo.Domain, shopInfo.Id, shopInfo.Phone, shopInfo.Description
                 });
             }
             catch (Exception ex)
