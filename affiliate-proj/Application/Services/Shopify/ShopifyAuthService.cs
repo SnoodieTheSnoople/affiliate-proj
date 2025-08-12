@@ -75,14 +75,10 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
-    public async Task<Shop> GetShopifyStoreId(string shop, string accessToken)
+    public async Task<Shop?> GetShopifyStoreId(string shop, string accessToken)
     {
-        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
-        if(!isValidDomain) 
-            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
-        
-        if (string.IsNullOrEmpty(accessToken))
-            throw new Exception("Internal Error 007: Invalid access token");
+        if (!await ValidateKeyProperties(shop, accessToken))
+            return null;
         
         var shopService = new ShopService(shop, accessToken);
         var shopInfo = await shopService.GetAsync();
