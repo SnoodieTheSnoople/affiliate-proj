@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Core.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -94,6 +95,11 @@ public class ShopifyAuthService :  IShopifyAuthService
         // }
         
         return shopInfo;
+    }
+
+    public Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult)
+    {
+        throw new NotImplementedException();
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
