@@ -121,7 +121,7 @@ public class ShopifyAuthService :  IShopifyAuthService
                 ShopifyOwnerEmail = shopDetails.Email,
                 ShopifyOwnerPhone = shopDetails.Phone,
                 ShopifyCountry = shopDetails.Country,
-                ShopifyGrantedScopes = authorizationResult.GrantedScopes.ToString(),
+                ShopifyGrantedScopes = String.Join(",", authorizationResult.GrantedScopes),
             };
             
             await _postgresDbContext.Stores.AddAsync(newStore);
