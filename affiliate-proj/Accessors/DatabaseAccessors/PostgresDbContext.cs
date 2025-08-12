@@ -17,7 +17,7 @@ public class PostgresDbContext : DbContext
         modelBuilder.Entity<User>(builder =>
         {
             builder.ToTable("users");
-            builder.Property(user => user.UserId).HasColumnName("user_id");
+            builder.Property(user => user.UserId).HasColumnName("user_id").ValueGeneratedOnAdd();
             builder.Property(user => user.Username).HasColumnName("username");
             builder.Property(user => user.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
             builder.Property(user => user.DeletedAt).HasColumnName("deleted_at");
@@ -28,13 +28,29 @@ public class PostgresDbContext : DbContext
         modelBuilder.Entity<Creator>(builder =>
         {
             builder.ToTable("creators");
-            builder.Property(creator => creator.CreatorId).HasColumnName("creator_id");
+            builder.Property(creator => creator.CreatorId).HasColumnName("creator_id").ValueGeneratedOnAdd();
             builder.Property(creator => creator.UserId).HasColumnName("user_id");
             builder.Property(creator => creator.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
             builder.Property(creator => creator.Firstname).HasColumnName("firstname");
             builder.Property(creator => creator.Surname).HasColumnName("surname");
             builder.Property(creator => creator.StripeId).HasColumnName("stripe_id");
             builder.Property(creator => creator.Dob).HasColumnName("dob");
+        });
+
+        modelBuilder.Entity<Store>(builder =>
+        {
+            builder.ToTable("stores");
+            builder.Property(store => store.StoreId).HasColumnName("store_id").ValueGeneratedOnAdd();
+            builder.Property(store => store.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+            builder.Property(store => store.StoreName).HasColumnName("store_name");
+            builder.Property(store => store.ShopifyId).HasColumnName("shopify_id");
+            builder.Property(store => store.ShopifyToken).HasColumnName("shopify_token");
+            builder.Property(store => store.StoreUrl).HasColumnName("store_url");
+            builder.Property(store => store.ShopifyStoreName).HasColumnName("shopify_store_name");
+            builder.Property(store => store.ShopifyOwnerName).HasColumnName("shopify_owner_name");
+            builder.Property(store => store.ShopifyOwnerEmail).HasColumnName("shopify_owner_email");
+            builder.Property(store => store.ShopifyOwnerPhone).HasColumnName("shopify_owner_phone");
+            builder.Property(store => store.ShopifyCountry).HasColumnName("shopify_country");
         });
     }
 
