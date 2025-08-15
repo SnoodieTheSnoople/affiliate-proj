@@ -18,7 +18,7 @@ namespace affiliate_proj.API.Controllers.Account
         }
         
         [HttpPost("/set-store")]
-        public async Task<ActionResult<Store>> SetStoreProfile([FromBody] StoreDTO request)
+        public async Task<ActionResult<Store>> SetStoreProfileAsync([FromBody] StoreDTO request)
         {
             if (request.UserId == Guid.Empty || String.IsNullOrEmpty(request.StoreName) 
                                              || request.ShopifyId == null 
