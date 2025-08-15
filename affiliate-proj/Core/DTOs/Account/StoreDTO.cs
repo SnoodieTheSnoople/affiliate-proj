@@ -14,4 +14,5 @@ public class StoreDTO
     public string? ShopifyOwnerPhone { get; set; }
     public string ShopifyCountry { get; set; }
     public string? ShopifyGrantedScopes { get; set; }
+    public Guid UserId { get; set; }
 }

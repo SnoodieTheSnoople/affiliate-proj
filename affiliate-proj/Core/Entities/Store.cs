@@ -37,4 +37,10 @@ public class Store
     public string ShopifyCountry { get; set; }
     
     public string? ShopifyGrantedScopes { get; set; }
+    
+    [Required]
+    public Guid UserId { get; set; }
+    
+    [ForeignKey(nameof(UserId))]
+    public User User  { get; set; }
 }

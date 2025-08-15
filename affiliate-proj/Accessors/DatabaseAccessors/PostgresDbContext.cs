@@ -54,6 +54,7 @@ public class PostgresDbContext : DbContext
             builder.Property(store => store.ShopifyOwnerPhone).HasColumnName("shopify_owner_phone");
             builder.Property(store => store.ShopifyCountry).HasColumnName("shopify_country");
             builder.Property(store => store.ShopifyGrantedScopes).HasColumnName("shopify_granted_scopes");
+            builder.Property(store => store.UserId).HasColumnName("user_id");
         });
     }
 
