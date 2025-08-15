@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -135,6 +136,11 @@ public class ShopifyAuthService :  IShopifyAuthService
             Console.WriteLine(e);
             return null;
         }
+    }
+
+    public async Task<Store?> SetShopifyStoreAsync(StoreDTO storeDto)
+    {
+        throw new NotImplementedException();
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)

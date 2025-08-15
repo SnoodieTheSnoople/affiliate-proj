@@ -1,3 +1,4 @@
+using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using ShopifySharp;
 
@@ -9,5 +10,6 @@ public interface IShopifyAuthService
     Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state,
         string queryParams);
     Task<Shop?> GetShopifyStoreIdAsync(string shopDomain, string accessToken);
-    Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult); 
+    Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult);
+    Task<Store?> SetShopifyStoreAsync(StoreDTO storeDto);
 }
