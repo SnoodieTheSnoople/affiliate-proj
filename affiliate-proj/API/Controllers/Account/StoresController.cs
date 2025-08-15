@@ -1,3 +1,4 @@
+using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,13 @@ namespace affiliate_proj.API.Controllers.Account
     [ApiController]
     public class StoresController : ControllerBase
     {
+        private readonly IShopifyAuthService _shopifyAuthService;
+
+        public StoresController(IShopifyAuthService shopifyAuthService)
+        {
+            _shopifyAuthService = shopifyAuthService;
+        }
+        
         [HttpPost("/set-store")]
         public async Task<ActionResult<Store>> SetStoreProfile([FromBody] StoreDTO request)
         {
@@ -25,7 +33,7 @@ namespace affiliate_proj.API.Controllers.Account
 
             try
             {
-                
+                var addedStore = _shopifyAuthService.SetShopifyStoreAsync(request);
             }
             catch (Exception e)
             {
