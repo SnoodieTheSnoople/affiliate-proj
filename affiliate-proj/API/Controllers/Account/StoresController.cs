@@ -17,7 +17,7 @@ namespace affiliate_proj.API.Controllers.Account
             _shopifyAuthService = shopifyAuthService;
         }
         
-        [HttpPost("/set-store")]
+        [HttpPost("set-store")]
         public async Task<ActionResult<Store>> SetStoreProfileAsync([FromBody] StoreDTO request)
         {
             if (request.UserId == Guid.Empty || String.IsNullOrEmpty(request.StoreName) 
