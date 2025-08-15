@@ -143,12 +143,13 @@ public class ShopifyAuthService :  IShopifyAuthService
         var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
             store => store.ShopifyId == storeDto.ShopifyId);
         
-        if (checkStoreExists == null)
+        if (checkStoreExists != null)
             throw new NullReferenceException("Shopify store already exists");
 
         var newStore = new Store
         {
             ShopifyId = storeDto.ShopifyId,
+            StoreName = storeDto.StoreName,
             ShopifyToken = storeDto.ShopifyToken,
             StoreUrl = storeDto.StoreUrl,
             ShopifyStoreName = storeDto.ShopifyStoreName,
