@@ -33,7 +33,8 @@ namespace affiliate_proj.API.Controllers.Account
 
             try
             {
-                var addedStore = _shopifyAuthService.SetShopifyStoreAsync(request);
+                var addedStore = await _shopifyAuthService.SetShopifyStoreAsync(request);
+                return addedStore;
             }
             catch (Exception e)
             {
@@ -53,7 +54,6 @@ namespace affiliate_proj.API.Controllers.Account
                 ShopifyCountry = shopDetails.Country,
                 ShopifyGrantedScopes = String.Join(",", authorizationResult.GrantedScopes),
              */
-            throw new NotImplementedException();
         }
     }
 }
