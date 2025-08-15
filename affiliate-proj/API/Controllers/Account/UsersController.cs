@@ -278,6 +278,16 @@ namespace affiliate_proj.API.Controllers
                                              || String.IsNullOrEmpty(request.ShopifyGrantedScopes)) 
                 return BadRequest();
 
+            try
+            {
+                
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+            
             // Parameters: Guid userId, string storeName, Shop shopInfo, AuthorizationResult auth
             /*
              * ShopifyId = (long)shopDetails.Id,
