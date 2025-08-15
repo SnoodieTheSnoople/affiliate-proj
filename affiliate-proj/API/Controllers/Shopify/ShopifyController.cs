@@ -107,6 +107,7 @@ namespace affiliate_proj.API.Controllers.Shopify
                 return Ok(new {
                     shop, authorisation.AccessToken, authorisation.GrantedScopes,shopInfo.Name, shopInfo.Email,
                     shopInfo.Country, shopInfo.Domain, shopInfo.Id, shopInfo.Phone, shopInfo.Description,
+                    JoinedGrantedScopes = String.Join(",", authorisation.GrantedScopes)
                 });
             }
             catch (Exception ex)
