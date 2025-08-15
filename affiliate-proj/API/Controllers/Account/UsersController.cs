@@ -265,8 +265,31 @@ namespace affiliate_proj.API.Controllers
         }
 
         [HttpPost("/set-store")]
-        public async Task<ActionResult<Store>> SetStoreProfile()
+        public async Task<ActionResult<Store>> SetStoreProfile([FromBody] StoreDTO request)
         {
+            if (request.UserId == Guid.Empty || String.IsNullOrEmpty(request.StoreName) 
+                                             || request.ShopifyId == null 
+                                             || String.IsNullOrEmpty(request.ShopifyToken)
+                                             || String.IsNullOrEmpty(request.StoreUrl) 
+                                             || String.IsNullOrEmpty(request.StoreName)
+                                             || String.IsNullOrEmpty(request.ShopifyOwnerName)
+                                             || String.IsNullOrEmpty(request.ShopifyOwnerEmail)
+                                             || String.IsNullOrEmpty(request.ShopifyCountry)
+                                             || String.IsNullOrEmpty(request.ShopifyGrantedScopes)) 
+                return BadRequest();
+
+            // Parameters: Guid userId, string storeName, Shop shopInfo, AuthorizationResult auth
+            /*
+             * ShopifyId = (long)shopDetails.Id,
+                ShopifyToken = authToken,
+                StoreUrl = shopDetails.Domain,
+                ShopifyStoreName = shopDetails.Name,
+                ShopifyOwnerName = shopDetails.ShopOwner,
+                ShopifyOwnerEmail = shopDetails.Email,
+                ShopifyOwnerPhone = shopDetails.Phone,
+                ShopifyCountry = shopDetails.Country,
+                ShopifyGrantedScopes = String.Join(",", authorizationResult.GrantedScopes), 
+             */
             throw new NotImplementedException();
         }
     }
