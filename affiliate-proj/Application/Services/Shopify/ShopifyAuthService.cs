@@ -140,7 +140,33 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     public async Task<Store?> SetShopifyStoreAsync(StoreDTO storeDto)
     {
-        throw new NotImplementedException();
+        var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
+            store => store.ShopifyId == storeDto.ShopifyId);
+        
+        if (checkStoreExists == null)
+            throw new NullReferenceException("Shopify store already exists");
+
+        var newStore = new Store
+        {
+            ShopifyId = storeDto.ShopifyId,
+            ShopifyToken = storeDto.ShopifyToken,
+            StoreUrl = storeDto.StoreUrl,
+            ShopifyStoreName = storeDto.ShopifyStoreName,
+            ShopifyOwnerName = storeDto.ShopifyOwnerName,
+            ShopifyOwnerEmail = storeDto.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = storeDto.ShopifyOwnerPhone,
+            ShopifyCountry = storeDto.ShopifyCountry,
+            ShopifyGrantedScopes = storeDto.ShopifyGrantedScopes,
+            UserId = storeDto.UserId,
+        };
+        
+        await _postgresDbContext.Stores.AddAsync(newStore);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
+            store => store.ShopifyId == storeDto.ShopifyId);
+        
+        return checkStoreExists;
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
