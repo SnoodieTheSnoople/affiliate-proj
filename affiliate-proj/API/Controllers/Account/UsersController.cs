@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserDTO = affiliate_proj.Core.DTOs.Account.UserDTO;
 
-namespace affiliate_proj.API.Controllers
+namespace affiliate_proj.API.Controllers.Account
 {
     [Route("api/[controller]")]
-    // [Route("[controller]")]
     [ApiController]
     [Authorize]
     public class UsersController : ControllerBase
