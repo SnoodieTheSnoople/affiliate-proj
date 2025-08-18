@@ -19,4 +19,9 @@ public class StoreService : IStoreService
         return stores;
         throw new NotImplementedException();
     }
+
+    public Task<Core.Entities.Store> GetStoreByIdAsync(Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
 }
