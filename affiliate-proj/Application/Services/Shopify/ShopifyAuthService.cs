@@ -138,7 +138,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         }
     }
 
-    public async Task<Core.Entities.Store?> SetShopifyStoreAsync(StoreDTO storeDto)
+    public async Task<Core.Entities.Store?> SetShopifyStoreAsync(Core.Entities.Store storeDto)
     {
         var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
             store => store.ShopifyId == storeDto.ShopifyId);
