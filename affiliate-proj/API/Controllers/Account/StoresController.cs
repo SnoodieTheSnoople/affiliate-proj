@@ -54,8 +54,7 @@ namespace affiliate_proj.API.Controllers.Account
         [HttpGet("get-all-stores")]
         public async Task<ActionResult<List<Store>>> GetAllStoresAsync()
         {
-            var userId = Guid.Parse(_accountHelper.GetUserIdFromAccessToken());
-            if (!_accountHelper.CheckUserExists(userId))
+            if (ValidateUser())
                 return Unauthorized("User does not exist.");
             try
             {
