@@ -70,6 +70,17 @@ namespace affiliate_proj.API.Controllers.Account
         [HttpGet("get-store/{storeId}")]
         public async Task<ActionResult<Store>> GetStoreByIdAsync(Guid storeId)
         {
+            if (!ValidateUser())
+                return Unauthorized("User does not exist.");
+            try
+            {
+                return await _storeService.GetStoreByIdAsync(storeId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                BadRequest(e.Message);
+            }
             throw new NotImplementedException();
         }
 
