@@ -51,7 +51,7 @@ namespace affiliate_proj.API.Controllers.Account
         {
             try
             {
-                
+                return await _storeService.GetAllStoresAsync();
             }
             catch (Exception e)
             {
