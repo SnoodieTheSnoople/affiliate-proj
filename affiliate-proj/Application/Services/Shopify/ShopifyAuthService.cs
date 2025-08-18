@@ -99,7 +99,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return shopInfo;
     }
 
-    public async Task<Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult)
+    public async Task<Core.Entities.Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult)
     {
         try
         {
@@ -112,7 +112,7 @@ public class ShopifyAuthService :  IShopifyAuthService
             if (checkStoreExists != null)
                 throw new NullReferenceException("Shopify store already exists");
 
-            var newStore = new Store
+            var newStore = new Core.Entities.Store
             {
                 ShopifyId = (long)shopDetails.Id,
                 ShopifyToken = authToken,
@@ -138,7 +138,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         }
     }
 
-    public async Task<Store?> SetShopifyStoreAsync(StoreDTO storeDto)
+    public async Task<Core.Entities.Store?> SetShopifyStoreAsync(StoreDTO storeDto)
     {
         var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
             store => store.ShopifyId == storeDto.ShopifyId);
@@ -146,7 +146,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         if (checkStoreExists != null)
             throw new NullReferenceException("Shopify store already exists");
 
-        var newStore = new Store
+        var newStore = new Core.Entities.Store
         {
             ShopifyId = storeDto.ShopifyId,
             StoreName = storeDto.StoreName,

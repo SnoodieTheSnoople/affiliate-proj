@@ -13,11 +13,6 @@ namespace affiliate_proj.Application.Services.Shopify;
 
 public class ShopifyDataService : IShopifyDataService
 {
-    public async Task<Store> GetAllStoresAsync()
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 250)
     {
