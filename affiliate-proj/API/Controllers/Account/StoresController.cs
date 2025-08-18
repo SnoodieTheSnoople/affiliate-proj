@@ -80,9 +80,8 @@ namespace affiliate_proj.API.Controllers.Account
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
-            throw new NotImplementedException();
         }
 
         private bool ValidateUser()
