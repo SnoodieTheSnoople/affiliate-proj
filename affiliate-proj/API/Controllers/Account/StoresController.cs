@@ -1,3 +1,4 @@
+using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
@@ -15,11 +16,13 @@ namespace affiliate_proj.API.Controllers.Account
     {
         private readonly IShopifyAuthService _shopifyAuthService;
         private readonly IStoreService _storeService;
+        private readonly IAccountHelper _accountHelper;
 
-        public StoresController(IShopifyAuthService shopifyAuthService, IStoreService storeService)
+        public StoresController(IShopifyAuthService shopifyAuthService, IStoreService storeService, IAccountHelper accountHelper)
         {
             _shopifyAuthService = shopifyAuthService;
             _storeService = storeService;
+            _accountHelper = accountHelper;
         }
         
         [HttpPost("set-store")]
