@@ -67,5 +67,11 @@ namespace affiliate_proj.API.Controllers.Account
                 return BadRequest(e.Message);
             }
         }
+
+        private bool ValidateUser()
+        {
+            var userId = Guid.Parse(_accountHelper.GetUserIdFromAccessToken());
+            return _accountHelper.CheckUserExists(userId);
+        }
     }
 }
