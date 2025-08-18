@@ -42,5 +42,11 @@ namespace affiliate_proj.API.Controllers.Account
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("get-all-stores")]
+        public async Task<ActionResult<List<Store>>> GetAllStoresAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
