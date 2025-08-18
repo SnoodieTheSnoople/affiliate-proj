@@ -41,19 +41,6 @@ namespace affiliate_proj.API.Controllers.Account
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            
-            // Parameters: Guid userId, string storeName, Shop shopInfo, AuthorizationResult auth
-            /*
-             * ShopifyId = (long)shopDetails.Id,
-                ShopifyToken = authToken,
-                StoreUrl = shopDetails.Domain,
-                ShopifyStoreName = shopDetails.Name,
-                ShopifyOwnerName = shopDetails.ShopOwner,
-                ShopifyOwnerEmail = shopDetails.Email,
-                ShopifyOwnerPhone = shopDetails.Phone,
-                ShopifyCountry = shopDetails.Country,
-                ShopifyGrantedScopes = String.Join(",", authorizationResult.GrantedScopes),
-             */
         }
     }
 }
