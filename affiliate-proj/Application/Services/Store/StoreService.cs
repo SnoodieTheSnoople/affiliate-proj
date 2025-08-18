@@ -44,6 +44,5 @@ public class StoreService : IStoreService
         };
         
         return returnedStore;
-        throw new NotImplementedException();
     }
 }
