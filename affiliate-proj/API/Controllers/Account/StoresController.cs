@@ -2,6 +2,7 @@ using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace affiliate_proj.API.Controllers.Account
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StoresController : ControllerBase
     {
         private readonly IShopifyAuthService _shopifyAuthService;
@@ -58,7 +60,6 @@ namespace affiliate_proj.API.Controllers.Account
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            throw new NotImplementedException();
         }
     }
 }
