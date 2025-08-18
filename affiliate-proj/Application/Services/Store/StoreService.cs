@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Store;
+using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Store;
@@ -13,9 +14,17 @@ public class StoreService : IStoreService
         _postgresDbContext = postgresDbContext;
     }
     
-    public async Task<List<Core.Entities.Store>> GetAllStoresAsync()
+    public async Task<List<StoreDTO>> GetAllStoresAsync()
     {
-        var stores = await _postgresDbContext.Stores.ToListAsync();
+        var stores = await _postgresDbContext.Stores.Select(s => new StoreDTO
+        {
+            StoreId = s.StoreId,
+            StoreName = s.StoreName,
+            CreatedAt = s.CreatedAt,
+            ShopifyCountry = s.ShopifyCountry,
+            StoreUrl = s.StoreUrl,
+        }).ToListAsync();
+        
         return stores;
     }
 

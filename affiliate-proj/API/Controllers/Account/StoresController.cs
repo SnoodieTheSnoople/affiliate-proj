@@ -52,7 +52,7 @@ namespace affiliate_proj.API.Controllers.Account
         }
 
         [HttpGet("get-all-stores")]
-        public async Task<ActionResult<List<Store>>> GetAllStoresAsync()
+        public async Task<ActionResult<List<StoreDTO>>> GetAllStoresAsync()
         {
             if (!ValidateUser())
                 return Unauthorized("User does not exist.");

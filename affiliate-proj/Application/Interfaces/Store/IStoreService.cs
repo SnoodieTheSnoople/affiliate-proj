@@ -4,6 +4,6 @@ namespace affiliate_proj.Application.Interfaces.Store;
 
 public interface IStoreService
 {
-    Task<List<Core.Entities.Store>> GetAllStoresAsync();
+    Task<List<StoreDTO>> GetAllStoresAsync();
     Task<Core.Entities.Store?> GetStoreByIdAsync(Guid storeId);
 }
