@@ -3,9 +3,11 @@ using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Creator;
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Creator;
 using affiliate_proj.Application.Services.Shopify;
+using affiliate_proj.Application.Services.Store;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -76,6 +78,9 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ICreatorService, CreatorService>();
         builder.Services.AddScoped<IAccountHelper, AccountHelper>();
+        
+        /* Store Service */
+        builder.Services.AddScoped<IStoreService, StoreService>();
 
         /* Shopify Service*/
         builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
