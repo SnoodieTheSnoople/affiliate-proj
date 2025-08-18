@@ -67,8 +67,8 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
-        [HttpGet("get-store/{shopifyStoreId}")]
-        public async Task<ActionResult<Store>> GetStoreByIdAsync(long shopifyStoreId)
+        [HttpGet("get-store/{storeId}")]
+        public async Task<ActionResult<Store>> GetStoreByIdAsync(Guid storeId)
         {
             throw new NotImplementedException();
         }
