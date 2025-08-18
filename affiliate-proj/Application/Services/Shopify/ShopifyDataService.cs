@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Core.DataTypes;
+using affiliate_proj.Core.Entities;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
 using ShopifySharp.Services.Graph;
@@ -12,6 +13,11 @@ namespace affiliate_proj.Application.Services.Shopify;
 
 public class ShopifyDataService : IShopifyDataService
 {
+    public async Task<Store> GetAllStoresAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 250)
     {
