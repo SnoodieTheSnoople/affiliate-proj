@@ -138,7 +138,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         }
     }
 
-    public async Task<Core.Entities.Store?> SetShopifyStoreAsync(Core.Entities.Store storeDto)
+    public async Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto)
     {
         var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
             store => store.ShopifyId == storeDto.ShopifyId);
@@ -166,8 +166,23 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
             store => store.ShopifyId == storeDto.ShopifyId);
+
+        CreateStoreDTO returnedStore = new CreateStoreDTO
+        {
+            ShopifyId = checkStoreExists.ShopifyId,
+            StoreName = checkStoreExists.StoreName,
+            ShopifyToken = checkStoreExists.ShopifyToken,
+            StoreUrl = checkStoreExists.StoreUrl,
+            ShopifyStoreName = checkStoreExists.ShopifyStoreName,
+            ShopifyOwnerName = checkStoreExists.ShopifyOwnerName,
+            ShopifyOwnerEmail = checkStoreExists.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = checkStoreExists.ShopifyOwnerPhone,
+            ShopifyCountry = checkStoreExists.ShopifyCountry,
+            ShopifyGrantedScopes = checkStoreExists.ShopifyGrantedScopes,
+            UserId = checkStoreExists.UserId,
+        };
         
-        return checkStoreExists;
+        return returnedStore;
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
