@@ -67,8 +67,9 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
-        [HttpGet("get-store/{storeId}")]
-        public async Task<ActionResult<Store>> GetStoreByIdAsync(Guid storeId)
+        // [HttpGet("get-store/{storeId}")]
+        [HttpGet("get-store")]
+        public async Task<ActionResult<StoreDTO>> GetStoreByIdAsync([FromQuery] Guid storeId)
         {
             if (!ValidateUser())
                 return Unauthorized("User does not exist.");

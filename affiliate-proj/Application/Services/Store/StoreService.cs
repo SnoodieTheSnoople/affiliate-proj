@@ -28,9 +28,21 @@ public class StoreService : IStoreService
         return stores;
     }
 
-    public async Task<Core.Entities.Store?> GetStoreByIdAsync(Guid storeId)
+    public async Task<StoreDTO> GetStoreByIdAsync(Guid storeId)
     {
-        var returnedStore = await _postgresDbContext.Stores.FindAsync(storeId);
+        var store = await _postgresDbContext.Stores.FindAsync(storeId);
+        if (store == null)
+            throw new NullReferenceException("Store not found");
+
+        var returnedStore = new StoreDTO
+        {
+            StoreId = store.StoreId,
+            StoreName = store.StoreName,
+            CreatedAt = store.CreatedAt,
+            ShopifyCountry = store.ShopifyCountry,
+            StoreUrl = store.StoreUrl,
+        };
+        
         return returnedStore;
         throw new NotImplementedException();
     }
