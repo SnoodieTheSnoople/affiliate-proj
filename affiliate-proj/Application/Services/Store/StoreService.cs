@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Store;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Store;
 
@@ -12,8 +13,10 @@ public class StoreService : IStoreService
         _postgresDbContext = postgresDbContext;
     }
     
-    public Task<Core.Entities.Store> GetAllStoresAsync()
+    public async Task<List<Core.Entities.Store>> GetAllStoresAsync()
     {
+        var stores = await _postgresDbContext.Stores.ToListAsync();
+        return stores;
         throw new NotImplementedException();
     }
 }
