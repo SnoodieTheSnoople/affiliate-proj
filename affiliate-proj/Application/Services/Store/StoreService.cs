@@ -17,11 +17,12 @@ public class StoreService : IStoreService
     {
         var stores = await _postgresDbContext.Stores.ToListAsync();
         return stores;
-        throw new NotImplementedException();
     }
 
-    public Task<Core.Entities.Store> GetStoreByIdAsync(Guid storeId)
+    public async Task<Core.Entities.Store?> GetStoreByIdAsync(Guid storeId)
     {
+        var returnedStore = await _postgresDbContext.Stores.FindAsync(storeId);
+        return returnedStore;
         throw new NotImplementedException();
     }
 }
