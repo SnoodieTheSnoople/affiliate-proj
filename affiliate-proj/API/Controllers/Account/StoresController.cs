@@ -67,6 +67,12 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
+        [HttpGet("get-store/{shopifyStoreId}")]
+        public async Task<ActionResult<Store>> GetStoreByIdAsync(long shopifyStoreId)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool ValidateUser()
         {
             var userId = Guid.Parse(_accountHelper.GetUserIdFromAccessToken());
