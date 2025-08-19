@@ -46,7 +46,7 @@ public class StoreService : IStoreService
         return returnedStore;
     }
 
-    public async Task<Core.Entities.Store> GetStoreById(Guid storeId)
+    public async Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId)
     {
         var store = await _postgresDbContext.Stores.FindAsync(storeId);
         if (store == null)
