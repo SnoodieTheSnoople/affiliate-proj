@@ -230,7 +230,6 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         if (!String.Equals(getStore.ShopifyGrantedScopes, shopifyAppScopes, StringComparison.OrdinalIgnoreCase))
             throw new Exception("Error 008: Incorrect/outdated granted scopes. Re-install app");
-        /*TODO: Create redirectUrl to reinstall app.*/
         
         var shopifyInfo = await GetShopifyStoreInfoAsync(getStore.StoreUrl, getStore.ShopifyToken);
         if (shopifyInfo == null)
