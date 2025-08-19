@@ -64,6 +64,21 @@ public class StoreService : IStoreService
 
     public async Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store)
     {
-        throw new NotImplementedException();
+        var dbStore = await _postgresDbContext.Stores.FindAsync(store.StoreId);
+        if (dbStore == null)
+            throw new NullReferenceException("Store not found");
+        
+        dbStore.ShopifyId = store.ShopifyId;
+        dbStore.ShopifyToken = store.ShopifyToken;
+        dbStore.StoreUrl = store.StoreUrl;
+        dbStore.ShopifyStoreName = store.ShopifyStoreName;
+        dbStore.ShopifyOwnerName = store.ShopifyOwnerName;
+        dbStore.ShopifyOwnerEmail = store.ShopifyOwnerEmail;
+        dbStore.ShopifyOwnerPhone = store.ShopifyOwnerPhone;
+        dbStore.ShopifyCountry = store.ShopifyCountry;
+        dbStore.ShopifyGrantedScopes = store.ShopifyGrantedScopes;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        return dbStore;
     }
 }
