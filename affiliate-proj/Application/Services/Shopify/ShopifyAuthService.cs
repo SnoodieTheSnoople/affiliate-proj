@@ -85,7 +85,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
-    public async Task<Shop?> GetShopifyStoreIdAsync(string shop, string accessToken)
+    public async Task<Shop?> GetShopifyStoreInfoAsync(string shop, string accessToken)
     {
         if (!await ValidateKeyProperties(shop, accessToken))
             return null;
@@ -203,7 +203,7 @@ public class ShopifyAuthService :  IShopifyAuthService
             throw new Exception("Error: Incorrect/outdated granted scopes. Re-install app");
         /*TODO: Create redirectUrl to reinstall app.*/
         
-        var shopifyInfo = await GetShopifyStoreIdAsync(getStore.StoreUrl, getStore.ShopifyToken);
+        var shopifyInfo = await GetShopifyStoreInfoAsync(getStore.StoreUrl, getStore.ShopifyToken);
         if (shopifyInfo == null)
             throw new NullReferenceException("Shopify store not found");
 
