@@ -103,6 +103,15 @@ namespace affiliate_proj.API.Controllers.Account
             }
             catch (Exception e)
             {
+                if (e.Message.Contains("Error 008"))
+                {
+                    Console.WriteLine(e.Message);
+                    var shop = await _storeService.GetStoreByIdAsync(storeId);
+                    var url = await _shopifyAuthService.GenerateInstallUrlAsync(shop.StoreUrl);
+                    return Conflict($"{e.Message}\nPlease use RedirectUrl to re-install/re-authorize app scopes." +
+                                      $"\nRedirectUrl: {url}");
+                }
+                
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
