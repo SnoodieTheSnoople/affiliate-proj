@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp.Enums;
@@ -11,11 +12,14 @@ namespace affiliate_proj.API.Controllers.Shopify
     {
         private readonly IShopifyAuthService _shopifyAuthService;
         private readonly IShopifyDataService _shopifyDataService;
+        private readonly IShopifyStoreHelper _shopifyStoreHelper;
 
-        public ShopifyController(IShopifyAuthService shopifyAuthService, IShopifyDataService shopifyDataService)
+        public ShopifyController(IShopifyAuthService shopifyAuthService, IShopifyDataService shopifyDataService,
+            IShopifyStoreHelper shopifyStoreHelper)
         {
             _shopifyAuthService = shopifyAuthService;
             _shopifyDataService = shopifyDataService;
+            _shopifyStoreHelper = shopifyStoreHelper;
         }
         
         [HttpGet("install")]
