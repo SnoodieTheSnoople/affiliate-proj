@@ -61,4 +61,9 @@ public class StoreService : IStoreService
         var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == shopifyStoreId);
         return store;
     }
+
+    public async Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store)
+    {
+        throw new NotImplementedException();
+    }
 }

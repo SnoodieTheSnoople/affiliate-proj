@@ -8,4 +8,5 @@ public interface IStoreService
     Task<StoreDTO> GetStoreByIdAsync(Guid storeId);
     Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId);
     Task<Core.Entities.Store?> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId);
+    Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store);
 }
