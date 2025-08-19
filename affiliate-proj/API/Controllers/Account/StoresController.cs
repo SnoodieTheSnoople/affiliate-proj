@@ -85,7 +85,7 @@ namespace affiliate_proj.API.Controllers.Account
         }
 
         [HttpPatch("update-store")]
-        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreAsync([FromQuery] Guid storeId)
+        public async Task<ActionResult<CreateStoreDTO?>> UpdateStoreAsync([FromQuery] Guid storeId)
         {
             /*
              * 1. Validate user
@@ -94,6 +94,19 @@ namespace affiliate_proj.API.Controllers.Account
              * 4. If scope changed, prompt to reinstall app
              * 5. Update store in db with updated fields
              */
+            if (!ValidateUser())
+                return Unauthorized("User does not exist.");
+
+            try
+            {
+                return await _shopifyAuthService.UpdateStoreAsync(storeId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                BadRequest(e.Message);
+            }
+            
             throw new NotImplementedException();
         }
 
