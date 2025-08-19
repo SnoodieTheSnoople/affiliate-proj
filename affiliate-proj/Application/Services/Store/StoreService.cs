@@ -1,4 +1,5 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,15 @@ namespace affiliate_proj.Application.Services.Store;
 public class StoreService : IStoreService
 {
     private readonly PostgresDbContext _postgresDbContext;
+    private readonly IShopifyAuthService _shopifyAuthService;
+    private readonly IConfiguration _configuration;
 
-    public StoreService(PostgresDbContext postgresDbContext)
+    public StoreService(PostgresDbContext postgresDbContext, IShopifyAuthService shopifyAuthService,
+        IConfiguration configuration)
     {
         _postgresDbContext = postgresDbContext;
+        _shopifyAuthService = shopifyAuthService;
+        _configuration = configuration;
     }
     
     public async Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto)
@@ -101,6 +107,54 @@ public class StoreService : IStoreService
             throw new NullReferenceException("Store not found");
 
         return store;
+    }
+    
+    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId)
+    {
+        var getStore = await GetStoreDetailsByIdAsync(storeId);
+        if (getStore == null)
+            throw new NullReferenceException("Shopify store not found");
+
+        var shopifyAppScopes = _configuration.GetValue<string>("Shopify:Scopes");
+        if (String.IsNullOrEmpty(shopifyAppScopes))
+            throw new NullReferenceException("Shopify app scopes not found");
+        
+        if (!String.Equals(getStore.ShopifyGrantedScopes, shopifyAppScopes, StringComparison.OrdinalIgnoreCase))
+            throw new Exception("Error 008: Incorrect/outdated granted scopes. Re-install app");
+        
+        var shopifyInfo = await _shopifyAuthService.GetShopifyStoreInfoAsync(getStore.StoreUrl, getStore.ShopifyToken);
+        if (shopifyInfo == null)
+            throw new NullReferenceException("Shopify store not found");
+
+        if (shopifyInfo.Id == null)
+            throw new NullReferenceException("Shopify store ID not found");
+        
+        getStore.ShopifyId = (long) shopifyInfo.Id!;
+        getStore.StoreUrl = shopifyInfo.Domain;
+        getStore.ShopifyOwnerName = shopifyInfo.Name;
+        getStore.ShopifyOwnerEmail = shopifyInfo.Email;
+        getStore.ShopifyOwnerPhone = shopifyInfo.Phone;
+        getStore.ShopifyCountry = shopifyInfo.Country;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        
+        getStore = await _postgresDbContext.Stores.FindAsync(storeId);
+
+        return new CreateStoreDTO
+        {
+            StoreId = getStore.StoreId,
+            ShopifyId = getStore.ShopifyId,
+            StoreName = getStore.StoreName,
+            ShopifyToken = getStore.ShopifyToken,
+            StoreUrl = getStore.StoreUrl,
+            ShopifyStoreName = getStore.ShopifyStoreName,
+            ShopifyOwnerName = getStore.ShopifyOwnerName,
+            ShopifyOwnerEmail = getStore.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = getStore.ShopifyOwnerPhone,
+            ShopifyCountry = getStore.ShopifyCountry,
+            ShopifyGrantedScopes = getStore.ShopifyGrantedScopes,
+            UserId = getStore.UserId,
+        };
     }
 
     // Used internally and not exposed to endpoints.
