@@ -55,6 +55,7 @@ public class StoreService : IStoreService
         return store;
     }
 
+    // Used internally and not exposed to endpoints.
     public async Task<Core.Entities.Store?> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId)
     {
         var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == shopifyStoreId);
