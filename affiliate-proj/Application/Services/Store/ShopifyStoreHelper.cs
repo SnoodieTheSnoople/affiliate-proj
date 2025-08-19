@@ -1,4 +1,3 @@
-using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -7,12 +6,10 @@ namespace affiliate_proj.Application.Services.Store;
 
 public class ShopifyStoreHelper : IShopifyStoreHelper
 {
-    private readonly IShopifyAuthService _shopifyAuthService;
     private readonly IShopifyDomainUtility _shopifyDomainUtility;
 
-    public ShopifyStoreHelper(IShopifyAuthService shopifyAuthService, IShopifyDomainUtility shopifyDomainUtility)
+    public ShopifyStoreHelper(IShopifyDomainUtility shopifyDomainUtility)
     {
-        _shopifyAuthService = shopifyAuthService;
         _shopifyDomainUtility = shopifyDomainUtility;
     }
     public async Task<Shop?> GetShopifyStoreInfoAsync(string shop, string accessToken)
