@@ -48,6 +48,10 @@ public class StoreService : IStoreService
 
     public async Task<Core.Entities.Store> GetStoreById(Guid storeId)
     {
-        throw new NotImplementedException();
+        var store = await _postgresDbContext.Stores.FindAsync(storeId);
+        if (store == null)
+            throw new NullReferenceException("Store not found");
+
+        return store;
     }
 }
