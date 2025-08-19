@@ -81,6 +81,7 @@ public class Program
         
         /* Store Service */
         builder.Services.AddScoped<IStoreService, StoreService>();
+        builder.Services.AddScoped<IShopifyStoreHelper, ShopifyStoreHelper>();
 
         /* Shopify Service*/
         builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
