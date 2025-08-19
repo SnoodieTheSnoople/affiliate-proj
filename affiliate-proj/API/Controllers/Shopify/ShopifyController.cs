@@ -47,7 +47,7 @@ namespace affiliate_proj.API.Controllers.Shopify
                 var authorisation = await _shopifyAuthService.HandleCallbackAsync(code, shop, state,
                     Request.QueryString.ToString());
 
-                var shopInfo = await _shopifyAuthService.GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
+                var shopInfo = await _shopifyStoreHelper.GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
                 if (shopInfo == null)
                     return BadRequest("Invalid Shopify Store ID");
                 
