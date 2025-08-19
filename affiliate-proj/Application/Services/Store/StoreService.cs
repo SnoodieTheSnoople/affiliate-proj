@@ -14,6 +14,54 @@ public class StoreService : IStoreService
         _postgresDbContext = postgresDbContext;
     }
     
+    public async Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto)
+    {
+        var checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
+            store => store.ShopifyId == storeDto.ShopifyId);
+        
+        if (checkStoreExists != null)
+            throw new NullReferenceException("Shopify store already exists");
+
+        var newStore = new Core.Entities.Store
+        {
+            ShopifyId = storeDto.ShopifyId,
+            StoreName = storeDto.StoreName,
+            ShopifyToken = storeDto.ShopifyToken,
+            StoreUrl = storeDto.StoreUrl,
+            ShopifyStoreName = storeDto.ShopifyStoreName,
+            ShopifyOwnerName = storeDto.ShopifyOwnerName,
+            ShopifyOwnerEmail = storeDto.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = storeDto.ShopifyOwnerPhone,
+            ShopifyCountry = storeDto.ShopifyCountry,
+            ShopifyGrantedScopes = storeDto.ShopifyGrantedScopes,
+            UserId = storeDto.UserId,
+        };
+        
+        await _postgresDbContext.Stores.AddAsync(newStore);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        checkStoreExists = await _postgresDbContext.Stores.FirstOrDefaultAsync(
+            store => store.ShopifyId == storeDto.ShopifyId);
+
+        CreateStoreDTO returnedStore = new CreateStoreDTO
+        {
+            ShopifyId = checkStoreExists.ShopifyId,
+            StoreName = checkStoreExists.StoreName,
+            ShopifyToken = checkStoreExists.ShopifyToken,
+            StoreUrl = checkStoreExists.StoreUrl,
+            ShopifyStoreName = checkStoreExists.ShopifyStoreName,
+            ShopifyOwnerName = checkStoreExists.ShopifyOwnerName,
+            ShopifyOwnerEmail = checkStoreExists.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = checkStoreExists.ShopifyOwnerPhone,
+            ShopifyCountry = checkStoreExists.ShopifyCountry,
+            ShopifyGrantedScopes = checkStoreExists.ShopifyGrantedScopes,
+            UserId = checkStoreExists.UserId,
+        };
+        
+        return returnedStore;
+    }
+    
+    
     public async Task<List<StoreDTO>> GetAllStoresAsync()
     {
         var stores = await _postgresDbContext.Stores.Select(s => new StoreDTO
