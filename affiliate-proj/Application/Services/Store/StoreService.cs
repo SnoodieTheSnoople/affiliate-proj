@@ -110,7 +110,7 @@ public class StoreService : IStoreService
         return store;
     }
     
-    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId, Shop shopInfo)
+    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId)
     {
         var getStore = await GetStoreDetailsByIdAsync(storeId);
         if (getStore == null)
@@ -123,6 +123,7 @@ public class StoreService : IStoreService
         if (!String.Equals(getStore.ShopifyGrantedScopes, shopifyAppScopes, StringComparison.OrdinalIgnoreCase))
             throw new Exception("Error 008: Incorrect/outdated granted scopes. Re-install app");
         
+        var shopInfo = await _shopifyStoreHelper.GetShopifyStoreInfoAsync(getStore.StoreUrl, getStore.ShopifyToken);
         if (shopInfo == null)
             throw new NullReferenceException("Shopify store not found");
 
