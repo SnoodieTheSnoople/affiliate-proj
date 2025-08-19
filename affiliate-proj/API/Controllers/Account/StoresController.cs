@@ -41,7 +41,7 @@ namespace affiliate_proj.API.Controllers.Account
 
             try
             {
-                var addedStore = await _shopifyAuthService.SetShopifyStoreAsync(request);
+                var addedStore = await _storeService.SetShopifyStoreAsync(request);
                 return addedStore;
             }
             catch (Exception e)
