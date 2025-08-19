@@ -84,8 +84,8 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
-        [HttpPatch("update-store")]
-        public async Task<ActionResult<CreateStoreDTO?>> UpdateStoreAsync([FromQuery] Guid storeId)
+        [HttpPost("sync-store")]
+        public async Task<ActionResult<CreateStoreDTO?>> SyncStoreAsync([FromQuery] Guid storeId)
         {
             /*
              * 1. Validate user
@@ -104,10 +104,8 @@ namespace affiliate_proj.API.Controllers.Account
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                BadRequest(e.Message);
+                return BadRequest(e.Message);
             }
-            
-            throw new NotImplementedException();
         }
 
         private bool ValidateUser()
