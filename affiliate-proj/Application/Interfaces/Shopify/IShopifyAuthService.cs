@@ -10,6 +10,4 @@ public interface IShopifyAuthService
     Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state,
         string queryParams);
     Task<Shop?> GetShopifyStoreInfoAsync(string shopDomain, string accessToken);
-    Task<Core.Entities.Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult);
-    Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto);
 }
