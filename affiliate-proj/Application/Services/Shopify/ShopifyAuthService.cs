@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,13 @@ public class ShopifyAuthService :  IShopifyAuthService
     private readonly IMemoryCache _memoryCache;
     private readonly ILogger<ShopifyAuthService> _logger;
     private readonly PostgresDbContext _postgresDbContext;
+    private readonly IStoreService _storeService;
 
     public ShopifyAuthService(IConfiguration configuration,
         IShopifyRequestValidationUtility shopifyRequestValidationUtility,
         IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
-        IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext)
+        IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext,
+        IStoreService storeService)
     {
         _configuration = configuration;
         _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -31,6 +34,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         _memoryCache = memoryCache;
         _logger = logger;
         _postgresDbContext = postgresDbContext;
+        _storeService = storeService;
     }
     public async Task<string> GenerateInstallUrlAsync(string shop)
     {
@@ -187,6 +191,7 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     public async Task<CreateStoreDTO?> UpdateStoreAsync(Guid storeId)
     {
+        
         throw new NotImplementedException();
     }
 
