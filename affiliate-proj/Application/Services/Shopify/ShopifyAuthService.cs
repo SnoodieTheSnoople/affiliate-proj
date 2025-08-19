@@ -191,8 +191,51 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     public async Task<CreateStoreDTO?> UpdateStoreAsync(Guid storeId)
     {
+        var getStore = await _storeService.GetStoreDetailsByIdAsync(storeId);
+        if (getStore == null)
+            throw new NullReferenceException("Shopify store not found");
+
+        var shopifyAppScopes = _configuration.GetValue<string>("Shopify:Scopes");
+        if (String.IsNullOrEmpty(shopifyAppScopes))
+            throw new NullReferenceException("Shopify app scopes not found");
         
-        throw new NotImplementedException();
+        if (!String.Equals(getStore.ShopifyGrantedScopes, shopifyAppScopes, StringComparison.OrdinalIgnoreCase))
+            throw new Exception("Error: Incorrect/outdated granted scopes. Re-install app");
+        /*TODO: Create redirectUrl to reinstall app.*/
+        
+        var shopifyInfo = await GetShopifyStoreIdAsync(getStore.StoreUrl, getStore.ShopifyToken);
+        if (shopifyInfo == null)
+            throw new NullReferenceException("Shopify store not found");
+
+        if (shopifyInfo.Id == null)
+            throw new NullReferenceException("Shopify store ID not found");
+        
+        getStore.ShopifyId = (long) shopifyInfo.Id!;
+        getStore.StoreUrl = shopifyInfo.Domain;
+        getStore.ShopifyOwnerName = shopifyInfo.Name;
+        getStore.ShopifyOwnerEmail = shopifyInfo.Email;
+        getStore.ShopifyOwnerPhone = shopifyInfo.Phone;
+        getStore.ShopifyCountry = shopifyInfo.Country;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        
+        getStore = await _postgresDbContext.Stores.FindAsync(storeId);
+
+        return new CreateStoreDTO
+        {
+            StoreId = getStore.StoreId,
+            ShopifyId = getStore.ShopifyId,
+            StoreName = getStore.StoreName,
+            ShopifyToken = getStore.ShopifyToken,
+            StoreUrl = getStore.StoreUrl,
+            ShopifyStoreName = getStore.ShopifyStoreName,
+            ShopifyOwnerName = getStore.ShopifyOwnerName,
+            ShopifyOwnerEmail = getStore.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = getStore.ShopifyOwnerPhone,
+            ShopifyCountry = getStore.ShopifyCountry,
+            ShopifyGrantedScopes = getStore.ShopifyGrantedScopes,
+            UserId = getStore.UserId,
+        };
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
