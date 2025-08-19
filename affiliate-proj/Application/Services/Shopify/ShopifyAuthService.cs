@@ -116,24 +116,6 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
-    public async Task<Shop?> GetShopifyStoreInfoAsync(string shop, string accessToken)
-    {
-        if (!await ValidateKeyProperties(shop, accessToken))
-            return null;
-        
-        var shopService = new ShopService(shop, accessToken);
-        var shopInfo = await shopService.GetAsync();
-        
-        // var propertyList = typeof(Shop).GetProperties().ToList();
-        // foreach (var property in propertyList)
-        // {
-        //     var value = property.GetValue(shopInfo);
-        //     Console.WriteLine($"{property} - {value}");
-        // }
-        
-        return shopInfo;
-    }
-
     private async Task UpdateStoreAfterCallback(string shop, AuthorizationResult authorisation)
     {
         var shopDetails = await _shopifyStoreHelper.GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);

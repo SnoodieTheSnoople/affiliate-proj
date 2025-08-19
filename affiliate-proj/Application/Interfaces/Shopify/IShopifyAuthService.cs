@@ -9,5 +9,4 @@ public interface IShopifyAuthService
     Task<string> GenerateInstallUrlAsync(string shop);
     Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state,
         string queryParams);
-    Task<Shop?> GetShopifyStoreInfoAsync(string shopDomain, string accessToken);
 }
