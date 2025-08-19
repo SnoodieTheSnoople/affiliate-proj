@@ -226,7 +226,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         if (shopDetails == null) return;
         _logger.LogInformation($"Obtained shop: {shopDetails.Name} & {shopDetails.Id}");
         
-        var checkStoreExists = await _storeService.GetStoreDetailsByShopifyStoreIdAsync((long) shopDetails.Id);
+        var checkStoreExists = await _shopifyStoreHelper.GetStoreDetailsByShopifyStoreIdAsync((long) shopDetails.Id);
         _logger.LogInformation($"Is null? {checkStoreExists==null}");
 
         if (checkStoreExists == null) return;
@@ -246,7 +246,7 @@ public class ShopifyAuthService :  IShopifyAuthService
             ShopifyCountry = shopDetails.Country,
             ShopifyGrantedScopes = String.Join(",", authorisation.GrantedScopes)
         };
-        await _storeService.UpdateStoreDetailsAsync(updatedStoreInfo);
+        await _shopifyStoreHelper.UpdateStoreDetailsAsync(updatedStoreInfo);
     }
 
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
