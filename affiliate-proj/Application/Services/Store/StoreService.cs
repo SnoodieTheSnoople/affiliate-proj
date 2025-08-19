@@ -11,11 +11,14 @@ public class StoreService : IStoreService
 {
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IConfiguration _configuration;
+    private readonly IShopifyStoreHelper _shopifyStoreHelper;
 
-    public StoreService(PostgresDbContext postgresDbContext, IConfiguration configuration)
+    public StoreService(PostgresDbContext postgresDbContext, IConfiguration configuration, 
+        IShopifyStoreHelper shopifyStoreHelper)
     {
         _postgresDbContext = postgresDbContext;
         _configuration = configuration;
+        _shopifyStoreHelper = shopifyStoreHelper;
     }
     
     public async Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto)
