@@ -92,10 +92,7 @@ namespace affiliate_proj.API.Controllers.Account
 
             try
             {
-                var storeDetailsFromDb = await _storeService.GetStoreDetailsByIdAsync(storeId);
-                var shopInfo = await _shopifyAuthService.GetShopifyStoreInfoAsync(storeDetailsFromDb.StoreUrl, 
-                    storeDetailsFromDb.ShopifyToken);
-                return await _storeService.SyncStoreAsync(storeId, shopInfo);
+                return await _storeService.SyncStoreAsync(storeId);
             }
             catch (Exception e)
             {
