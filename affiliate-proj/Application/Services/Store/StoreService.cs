@@ -54,4 +54,9 @@ public class StoreService : IStoreService
 
         return store;
     }
+
+    public async Task<Core.Entities.Store> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId)
+    {
+        throw new NotImplementedException();
+    }
 }
