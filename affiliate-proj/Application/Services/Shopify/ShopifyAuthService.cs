@@ -270,7 +270,7 @@ public class ShopifyAuthService :  IShopifyAuthService
     private async Task UpdateStoreAfterCallback(string shop, AuthorizationResult authorisation)
     {
         var shopDetails = await GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
-        if (shopDetails != null) return;
+        if (shopDetails == null) return;
         _logger.LogInformation($"Obtained shop: {shopDetails.Name} & {shopDetails.Id}");
         
         var checkStoreExists = await _storeService.GetStoreDetailsByShopifyStoreIdAsync((long) shopDetails.Id);
