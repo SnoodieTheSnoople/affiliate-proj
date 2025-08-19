@@ -84,33 +84,6 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         _logger.LogInformation($"Obtained access_token: {authorisation.AccessToken}");
         
-        // var shopDetails = await GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
-        // if (shopDetails != null)
-        // {
-        //     _logger.LogInformation($"Obtained shop: {shopDetails.Name} & {shopDetails.Id}");
-        //     var checkStoreExists = await _storeService.GetStoreDetailsByShopifyStoreIdAsync((long) shopDetails.Id);
-        //     _logger.LogInformation($"Is null? {checkStoreExists==null}");
-        //     if (checkStoreExists != null)
-        //     {
-        //         _logger.LogInformation($"Obtained store: {checkStoreExists.StoreId}");
-        //         var updatedStoreInfo = new Core.Entities.Store
-        //         {
-        //             StoreId = checkStoreExists.StoreId,
-        //             StoreName = checkStoreExists.StoreName,
-        //             ShopifyId = (long) shopDetails.Id,
-        //             ShopifyToken = authorisation.AccessToken,
-        //             StoreUrl = shopDetails.Domain,
-        //             ShopifyStoreName = shopDetails.Name,
-        //             ShopifyOwnerName = shopDetails.ShopOwner,
-        //             ShopifyOwnerEmail = shopDetails.Email,
-        //             ShopifyOwnerPhone = shopDetails.Phone,
-        //             ShopifyCountry = shopDetails.Country,
-        //             ShopifyGrantedScopes = String.Join(",", authorisation.GrantedScopes)
-        //         };
-        //         await _storeService.UpdateStoreDetailsAsync(updatedStoreInfo);
-        //     }
-        // }
-        
         await UpdateStoreAfterCallback(shop, authorisation);
 
         return authorisation;
