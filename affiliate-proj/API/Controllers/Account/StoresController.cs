@@ -99,7 +99,7 @@ namespace affiliate_proj.API.Controllers.Account
 
             try
             {
-                return await _shopifyAuthService.UpdateStoreAsync(storeId);
+                return await _shopifyAuthService.SyncStoreAsync(storeId);
             }
             catch (Exception e)
             {

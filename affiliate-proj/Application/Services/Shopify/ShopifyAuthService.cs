@@ -189,7 +189,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return returnedStore;
     }
 
-    public async Task<CreateStoreDTO?> UpdateStoreAsync(Guid storeId)
+    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId)
     {
         var getStore = await _storeService.GetStoreDetailsByIdAsync(storeId);
         if (getStore == null)
