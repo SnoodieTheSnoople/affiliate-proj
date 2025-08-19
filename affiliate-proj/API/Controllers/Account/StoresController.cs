@@ -87,19 +87,15 @@ namespace affiliate_proj.API.Controllers.Account
         [HttpPost("sync-store")]
         public async Task<ActionResult<CreateStoreDTO?>> SyncStoreAsync([FromQuery] Guid storeId)
         {
-            /*
-             * 1. Validate user
-             * 2. Get store information from ShopifySharp.Shop in ShopifyAuthService.GetShopifyStoreIdAsync() (issue if domain has changed and access token revoked)
-             * 3. Check all information that is needed and stored
-             * 4. If scope changed, prompt to reinstall app
-             * 5. Update store in db with updated fields
-             */
             if (!ValidateUser())
                 return Unauthorized("User does not exist.");
 
             try
             {
-                return await _shopifyAuthService.SyncStoreAsync(storeId);
+                var storeDetailsFromDb = await _storeService.GetStoreDetailsByIdAsync(storeId);
+                var shopInfo = await _shopifyAuthService.GetShopifyStoreInfoAsync(storeDetailsFromDb.StoreUrl, 
+                    storeDetailsFromDb.ShopifyToken);
+                return await _storeService.SyncStoreAsync(storeId, shopInfo);
             }
             catch (Exception e)
             {
