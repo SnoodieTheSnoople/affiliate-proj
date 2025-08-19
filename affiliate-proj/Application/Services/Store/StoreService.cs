@@ -3,20 +3,18 @@ using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
+using ShopifySharp;
 
 namespace affiliate_proj.Application.Services.Store;
 
 public class StoreService : IStoreService
 {
     private readonly PostgresDbContext _postgresDbContext;
-    private readonly IShopifyAuthService _shopifyAuthService;
     private readonly IConfiguration _configuration;
 
-    public StoreService(PostgresDbContext postgresDbContext, IShopifyAuthService shopifyAuthService,
-        IConfiguration configuration)
+    public StoreService(PostgresDbContext postgresDbContext, IConfiguration configuration)
     {
         _postgresDbContext = postgresDbContext;
-        _shopifyAuthService = shopifyAuthService;
         _configuration = configuration;
     }
     
@@ -109,7 +107,7 @@ public class StoreService : IStoreService
         return store;
     }
     
-    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId)
+    public async Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId, Shop shopInfo)
     {
         var getStore = await GetStoreDetailsByIdAsync(storeId);
         if (getStore == null)
@@ -122,19 +120,18 @@ public class StoreService : IStoreService
         if (!String.Equals(getStore.ShopifyGrantedScopes, shopifyAppScopes, StringComparison.OrdinalIgnoreCase))
             throw new Exception("Error 008: Incorrect/outdated granted scopes. Re-install app");
         
-        var shopifyInfo = await _shopifyAuthService.GetShopifyStoreInfoAsync(getStore.StoreUrl, getStore.ShopifyToken);
-        if (shopifyInfo == null)
+        if (shopInfo == null)
             throw new NullReferenceException("Shopify store not found");
 
-        if (shopifyInfo.Id == null)
+        if (shopInfo.Id == null)
             throw new NullReferenceException("Shopify store ID not found");
         
-        getStore.ShopifyId = (long) shopifyInfo.Id!;
-        getStore.StoreUrl = shopifyInfo.Domain;
-        getStore.ShopifyOwnerName = shopifyInfo.Name;
-        getStore.ShopifyOwnerEmail = shopifyInfo.Email;
-        getStore.ShopifyOwnerPhone = shopifyInfo.Phone;
-        getStore.ShopifyCountry = shopifyInfo.Country;
+        getStore.ShopifyId = (long) shopInfo.Id!;
+        getStore.StoreUrl = shopInfo.Domain;
+        getStore.ShopifyOwnerName = shopInfo.Name;
+        getStore.ShopifyOwnerEmail = shopInfo.Email;
+        getStore.ShopifyOwnerPhone = shopInfo.Phone;
+        getStore.ShopifyCountry = shopInfo.Country;
         
         await _postgresDbContext.SaveChangesAsync();
         
