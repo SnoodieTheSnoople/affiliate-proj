@@ -185,7 +185,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         return returnedStore;
     }
 
-    public async Task<CreateStoreDTO?> UpdateStoreAsync(CreateStoreDTO storeDto)
+    public async Task<CreateStoreDTO?> UpdateStoreAsync(Guid storeId)
     {
         throw new NotImplementedException();
     }
