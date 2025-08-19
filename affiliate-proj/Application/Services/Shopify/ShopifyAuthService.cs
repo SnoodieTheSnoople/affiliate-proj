@@ -20,12 +20,13 @@ public class ShopifyAuthService :  IShopifyAuthService
     private readonly ILogger<ShopifyAuthService> _logger;
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IStoreService _storeService;
+    private readonly IShopifyStoreHelper _shopifyStoreHelper;
 
     public ShopifyAuthService(IConfiguration configuration,
         IShopifyRequestValidationUtility shopifyRequestValidationUtility,
         IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
         IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext,
-        IStoreService storeService)
+        IStoreService storeService, IShopifyStoreHelper shopifyStoreHelper)
     {
         _configuration = configuration;
         _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -35,6 +36,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         _logger = logger;
         _postgresDbContext = postgresDbContext;
         _storeService = storeService;
+        _shopifyStoreHelper = shopifyStoreHelper;
     }
     public async Task<string> GenerateInstallUrlAsync(string shop)
     {
