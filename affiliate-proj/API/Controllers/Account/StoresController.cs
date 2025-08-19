@@ -84,6 +84,19 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
+        [HttpPatch("update-store")]
+        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreAsync([FromQuery] Guid storeId)
+        {
+            /*
+             * 1. Validate user
+             * 2. Get store information from ShopifySharp.Shop in ShopifyAuthService.GetShopifyStoreIdAsync() (issue if domain has changed and access token revoked)
+             * 3. Check all information that is needed and stored
+             * 4. If scope changed, prompt to reinstall app
+             * 5. Update store in db with updated fields
+             */
+            throw new NotImplementedException();
+        }
+
         private bool ValidateUser()
         {
             var userId = Guid.Parse(_accountHelper.GetUserIdFromAccessToken());
