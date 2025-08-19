@@ -185,6 +185,11 @@ public class ShopifyAuthService :  IShopifyAuthService
         return returnedStore;
     }
 
+    public async Task<CreateStoreDTO?> UpdateStoreAsync(CreateStoreDTO storeDto)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task<bool> ValidateOAuthProperties(string code, string shop, string state)
     {
         if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(shop))

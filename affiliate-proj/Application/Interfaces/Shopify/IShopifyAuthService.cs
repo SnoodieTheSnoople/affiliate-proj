@@ -12,4 +12,5 @@ public interface IShopifyAuthService
     Task<Shop?> GetShopifyStoreIdAsync(string shopDomain, string accessToken);
     Task<Core.Entities.Store?> SetShopifyStoreAsync(Shop shopDetails, AuthorizationResult authorizationResult);
     Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto);
+    Task<CreateStoreDTO?> UpdateStoreAsync(CreateStoreDTO storeDto);
 }
