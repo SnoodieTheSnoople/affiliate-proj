@@ -1,3 +1,4 @@
+using affiliate_proj.Core.DataTypes.Store.Shopify;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace affiliate_proj.Application.Services.Shopify;
@@ -13,6 +14,14 @@ public class ShopifyStateManager
 
     public Task SetStoreStateAsync(string state, Guid userId)
     {
-        throw new NotImplementedException();
+        var metadata = new OauthStateMetadata
+        {
+            State = state,
+            UserId = userId,
+            Expires = DateTime.Now.AddMinutes(10)
+        };
+        
+        _memoryCache.Set($"shopifyOAuthState-{state}", metadata);
+        return Task.CompletedTask;
     }
 }
