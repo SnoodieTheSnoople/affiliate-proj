@@ -42,6 +42,8 @@ public class StoreService : IStoreService
             ShopifyCountry = storeDto.ShopifyCountry,
             ShopifyGrantedScopes = storeDto.ShopifyGrantedScopes,
             UserId = storeDto.UserId,
+            IsActive = storeDto.IsActive,
+            DeletedAt = storeDto.DeletedAt,
         };
         
         await _postgresDbContext.Stores.AddAsync(newStore);
@@ -63,6 +65,8 @@ public class StoreService : IStoreService
             ShopifyCountry = checkStoreExists.ShopifyCountry,
             ShopifyGrantedScopes = checkStoreExists.ShopifyGrantedScopes,
             UserId = checkStoreExists.UserId,
+            IsActive = checkStoreExists.IsActive,
+            DeletedAt = checkStoreExists.DeletedAt,
         };
         
         return returnedStore;
@@ -78,6 +82,7 @@ public class StoreService : IStoreService
             CreatedAt = s.CreatedAt,
             ShopifyCountry = s.ShopifyCountry,
             StoreUrl = s.StoreUrl,
+            IsActive = s.IsActive
         }).ToListAsync();
         
         return stores;
@@ -96,6 +101,7 @@ public class StoreService : IStoreService
             CreatedAt = store.CreatedAt,
             ShopifyCountry = store.ShopifyCountry,
             StoreUrl = store.StoreUrl,
+            IsActive = store.IsActive,
         };
         
         return returnedStore;
@@ -155,6 +161,8 @@ public class StoreService : IStoreService
             ShopifyCountry = getStore.ShopifyCountry,
             ShopifyGrantedScopes = getStore.ShopifyGrantedScopes,
             UserId = getStore.UserId,
+            IsActive = getStore.IsActive,
+            DeletedAt = getStore.DeletedAt,
         };
     }
 }
