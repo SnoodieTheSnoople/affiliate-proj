@@ -41,7 +41,7 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
     
     public async Task SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult)
     {
-        throw new NotImplementedException();
+        var shopDetails = await GetShopifyStoreInfoAsync(shop, authorizationResult.AccessToken);
     }
 
     public async Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store)
