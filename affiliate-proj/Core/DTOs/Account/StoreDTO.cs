@@ -7,4 +7,5 @@ public class StoreDTO
     public string? StoreName { get; set; }
     public string StoreUrl { get; set; }
     public string ShopifyCountry { get; set; }
+    public bool IsActive { get; set; }
 }

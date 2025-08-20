@@ -43,4 +43,9 @@ public class Store
     
     [ForeignKey(nameof(UserId))]
     public User User  { get; set; }
+    
+    [Required]
+    public bool IsActive { get; set; }
+    
+    public DateTime? DeletedAt { get; set; }
 }

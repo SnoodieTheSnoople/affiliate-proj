@@ -15,4 +15,6 @@ public class CreateStoreDTO
     public string ShopifyCountry { get; set; }
     public string? ShopifyGrantedScopes { get; set; }
     public Guid UserId { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }
