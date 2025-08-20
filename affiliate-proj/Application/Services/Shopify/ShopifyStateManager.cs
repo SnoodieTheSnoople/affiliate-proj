@@ -21,7 +21,10 @@ public class ShopifyStateManager
             Expires = DateTime.Now.AddMinutes(10)
         };
         
-        _memoryCache.Set($"shopifyOAuthState-{state}", metadata);
+        _memoryCache.Set($"shopifyOAuthState-{state}", metadata, new MemoryCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+        });
         return Task.CompletedTask;
     }
 }
