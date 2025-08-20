@@ -39,9 +39,29 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         return store;
     }
     
-    public async Task SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult, Guid userId)
+    public async Task<bool> SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult, Guid userId)
     {
         var shopDetails = await GetShopifyStoreInfoAsync(shop, authorizationResult.AccessToken);
+        var newStoreEntry = new Core.Entities.Store
+        {
+            ShopifyId = (long) shopDetails.Id,
+            ShopifyToken = authorizationResult.AccessToken,
+            StoreUrl = shop,
+            ShopifyStoreName = shopDetails.Name,
+            ShopifyOwnerName = shopDetails.ShopOwner,
+            ShopifyOwnerEmail = shopDetails.Email,
+            ShopifyOwnerPhone = shopDetails.Phone,
+            ShopifyCountry = shopDetails.Country,
+            ShopifyGrantedScopes = String.Join(",", authorizationResult.GrantedScopes),
+            UserId = userId,
+            IsActive = true
+        };
+        
+        await _postgresDbContext.Stores.AddAsync(newStoreEntry);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        var checkStoreExists = await CheckStoreExistsByDomainAsync(shop);
+        return checkStoreExists;
     }
 
     public async Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store)
