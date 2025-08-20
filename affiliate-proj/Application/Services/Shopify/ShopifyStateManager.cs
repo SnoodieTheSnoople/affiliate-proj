@@ -35,6 +35,9 @@ public class ShopifyStateManager
         
         if (!String.Equals(state, savedMetadata.State))
             throw new Exception("Internal Error 004: Invalid state");
+        
+        if (Guid.Empty == savedMetadata.UserId)
+            throw new Exception("Internal Error 004: Invalid state, userId empty");
 
         return true;
     }
