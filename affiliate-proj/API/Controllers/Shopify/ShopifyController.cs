@@ -1,3 +1,4 @@
+using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Http;
@@ -13,13 +14,15 @@ namespace affiliate_proj.API.Controllers.Shopify
         private readonly IShopifyAuthService _shopifyAuthService;
         private readonly IShopifyDataService _shopifyDataService;
         private readonly IShopifyStoreHelper _shopifyStoreHelper;
+        private readonly IAccountHelper _accountHelper;
 
         public ShopifyController(IShopifyAuthService shopifyAuthService, IShopifyDataService shopifyDataService,
-            IShopifyStoreHelper shopifyStoreHelper)
+            IShopifyStoreHelper shopifyStoreHelper, IAccountHelper accountHelper)
         {
             _shopifyAuthService = shopifyAuthService;
             _shopifyDataService = shopifyDataService;
             _shopifyStoreHelper = shopifyStoreHelper;
+            _accountHelper = accountHelper;
         }
         
         [HttpGet("install")]
