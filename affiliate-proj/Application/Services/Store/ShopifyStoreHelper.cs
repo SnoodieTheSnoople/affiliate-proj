@@ -29,7 +29,8 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
 
     public async Task<bool> CheckStoreExistsByDomainAsync(string shop)
     {
-        throw new NotImplementedException();
+        var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.StoreUrl == shop);
+        return store != null;
     }
     
     public async Task<Core.Entities.Store?> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId)
