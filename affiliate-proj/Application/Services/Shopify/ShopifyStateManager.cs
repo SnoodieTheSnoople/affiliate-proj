@@ -54,4 +54,10 @@ public class ShopifyStateManager : IShopifyStateManager
         
         return savedMetadata.UserId;
     }
+
+    public Task RemoveStoreStateAsync(string state)
+    {
+        _memoryCache.Remove($"shopifyOAuthState-{state}");
+        return Task.CompletedTask;
+    }
 }
