@@ -27,4 +27,9 @@ public class ShopifyStateManager
         });
         return Task.CompletedTask;
     }
+    
+    public bool VerifyStoreState(string state)
+    {
+        throw new NotImplementedException();
+    }
 }
