@@ -107,9 +107,19 @@ public class StoreService : IStoreService
         return returnedStore;
     }
 
-    public async Task<StoreDTO> GetAllActiveStoresAsync()
+    public async Task<List<StoreDTO>> GetAllActiveStoresAsync()
     {
-        throw new NotImplementedException();
+        var stores = await _postgresDbContext.Stores.Where(s => s.IsActive == true)
+            .Select(s => new StoreDTO
+        {
+            StoreId = s.StoreId,
+            StoreName = s.StoreName,
+            CreatedAt = s.CreatedAt,
+            ShopifyCountry = s.ShopifyCountry,
+            StoreUrl = s.StoreUrl,
+            IsActive = s.IsActive
+        }).ToListAsync();
+        return stores;
     }
 
     public async Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId)
