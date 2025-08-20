@@ -54,7 +54,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         
         var state = Guid.NewGuid().ToString();
         
-        _memoryCache.Set("ShopifyOAuthState", state);
+        _memoryCache.Set($"ShopifyOAuthState-{state}", state);
 
         var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
             clientId, redirectUrl, state);
@@ -66,7 +66,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         string queryParams)
     {
         if (await ValidateOAuthProperties(code, shop, state)) 
-            _memoryCache.Remove("ShopifyOAuthState");
+            _memoryCache.Remove($"ShopifyOAuthState-{state}");
         
         var clientId = _configuration.GetValue<string>("Shopify:ClientId");
         var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
@@ -127,7 +127,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         if(!isValidDomain) 
             throw new Exception("Internal Error 001: Shopify Domain Not Valid");
         
-        var savedState = _memoryCache.Get("ShopifyOAuthState").ToString();
+        var savedState = _memoryCache.Get($"ShopifyOAuthState-{state}").ToString();
         if (String.IsNullOrEmpty(savedState)) 
             throw new Exception("Internal Error 003: No saved state");
         
