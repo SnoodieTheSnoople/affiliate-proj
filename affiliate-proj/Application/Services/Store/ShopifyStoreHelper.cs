@@ -27,7 +27,7 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         return shopInfo;
     }
 
-    public async Task<bool> CheckStoreExistsAsync(string shop)
+    public async Task<bool> CheckStoreExistsByDomainAsync(string shop)
     {
         throw new NotImplementedException();
     }
