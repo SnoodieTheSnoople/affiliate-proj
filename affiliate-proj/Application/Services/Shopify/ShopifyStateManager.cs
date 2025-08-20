@@ -30,23 +30,23 @@ public class ShopifyStateManager : IShopifyStateManager
         return Task.CompletedTask;
     }
     
-    public bool VerifyStoreState(string state)
+    public Task<bool> VerifyStoreStateAsync(string state)
     {
         var savedMetadata = _memoryCache.Get<OauthStateMetadata>($"shopifyOAuthState-{state}");
-        if (savedMetadata == null || String.IsNullOrEmpty(savedMetadata.State)) return false;
+        if (savedMetadata == null || String.IsNullOrEmpty(savedMetadata.State)) return Task.FromResult(false);
             // throw new Exception("Internal Error 003: No saved state");
         
-        if (!String.Equals(state, savedMetadata.State)) return false;
+        if (!String.Equals(state, savedMetadata.State)) return Task.FromResult(false);
             // throw new Exception("Internal Error 004: Invalid state");
 
-        if (Guid.Empty == savedMetadata.UserId) return false;
+        if (Guid.Empty == savedMetadata.UserId) return Task.FromResult(false);
             // throw new Exception("Internal Error 004: Invalid state, userId empty");
             
         Console.WriteLine($"State: {savedMetadata.State} | UserId: {savedMetadata.UserId.ToString()}");
-        return true;
+        return Task.FromResult(true);
     }
     
-    public Guid GetUserIdFromStateMetadata(string state)
+    public Task<Guid> GetUserIdFromStateMetadataAsync(string state)
     {
         var savedMetadata = _memoryCache.Get<OauthStateMetadata>($"shopifyOAuthState-{state}");
         if (savedMetadata == null)
@@ -55,7 +55,7 @@ public class ShopifyStateManager : IShopifyStateManager
         if (Guid.Empty ==  savedMetadata.UserId)
             throw new Exception("Internal Error 005: Invalid state, userId empty");
         
-        return savedMetadata.UserId;
+        return Task.FromResult(savedMetadata.UserId);
     }
 
     public Task RemoveStoreStateAsync(string state)
