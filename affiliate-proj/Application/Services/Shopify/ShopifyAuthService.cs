@@ -90,8 +90,7 @@ public class ShopifyAuthService :  IShopifyAuthService
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
         string queryParams)
     {
-        if (await ValidateOAuthProperties(code, shop, state)) 
-            _memoryCache.Remove($"ShopifyOAuthState-{state}");
+        await ValidateOAuthProperties(code, shop, state);
         
         var clientId = _configuration.GetValue<string>("Shopify:ClientId");
         var apiSecret = _configuration.GetValue<string>("Shopify:ApiSecret");
@@ -108,9 +107,17 @@ public class ShopifyAuthService :  IShopifyAuthService
             throw new Exception("Internal Error 006: Invalid access token");
         
         _logger.LogInformation($"Obtained access_token: {authorisation.AccessToken}");
-        
-        await UpdateStoreAfterCallback(shop, authorisation);
 
+        if (await _shopifyStoreHelper.CheckStoreExistsByDomainAsync(shop))
+        {
+            await UpdateStoreAfterCallback(shop, authorisation);
+        }
+        else
+        {
+            var userId = await _shopifyStateManager.GetUserIdFromStateMetadataAsync(state);
+            await _shopifyStoreHelper.SetShopifyStoreAsync(shop, authorisation, userId);
+        }
+        
         return authorisation;
     }
 
@@ -152,14 +159,17 @@ public class ShopifyAuthService :  IShopifyAuthService
         if(!isValidDomain) 
             throw new Exception("Internal Error 001: Shopify Domain Not Valid");
         
-        var savedState = _memoryCache.Get($"ShopifyOAuthState-{state}").ToString();
-        if (String.IsNullOrEmpty(savedState)) 
-            throw new Exception("Internal Error 003: No saved state");
+        // var savedState = _memoryCache.Get($"ShopifyOAuthState-{state}").ToString();
+        // if (String.IsNullOrEmpty(savedState)) 
+        //     throw new Exception("Internal Error 003: No saved state");
+        //
+        // Console.WriteLine($"Saved State: {savedState}");
+        //
+        // if (!String.Equals(savedState, state)) 
+        //     throw new Exception("Internal Error 004: Invalid state");
         
-        Console.WriteLine($"Saved State: {savedState}");
-        
-        if (!String.Equals(savedState, state)) 
-            throw new Exception("Internal Error 004: Invalid state");
+        if (!await _shopifyStateManager.VerifyStoreStateAsync(state))
+            throw new Exception("Internal Error 003: Shopify State Not Valid");
         
         return true;
     }
