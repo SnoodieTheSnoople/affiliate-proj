@@ -26,6 +26,11 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         
         return shopInfo;
     }
+
+    public async Task<bool> CheckStoreExistsAsync(string shop)
+    {
+        throw new NotImplementedException();
+    }
     
     public async Task<Core.Entities.Store?> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId)
     {
