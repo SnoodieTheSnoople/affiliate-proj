@@ -1,9 +1,10 @@
+using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Core.DataTypes.Store.Shopify;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace affiliate_proj.Application.Services.Shopify;
 
-public class ShopifyStateManager
+public class ShopifyStateManager : IShopifyStateManager
 {
     private readonly IMemoryCache _memoryCache;
 
