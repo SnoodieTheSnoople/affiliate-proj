@@ -153,7 +153,7 @@ public class StoreService : IStoreService
         
         getStore.ShopifyId = (long) shopInfo.Id!;
         getStore.StoreUrl = shopInfo.Domain;
-        getStore.ShopifyOwnerName = shopInfo.Name;
+        getStore.ShopifyOwnerName = shopInfo.ShopOwner;
         getStore.ShopifyOwnerEmail = shopInfo.Email;
         getStore.ShopifyOwnerPhone = shopInfo.Phone;
         getStore.ShopifyCountry = shopInfo.Country;
