@@ -62,6 +62,11 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authUrl.ToString();
     }
 
+    public async Task<string> GenerateInstallUrlWithUserIdAsync(string shop, Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
         string queryParams)
     {
