@@ -79,14 +79,12 @@ public class ShopifyAuthService :  IShopifyAuthService
         var scopeAsList = configScopes.Split(",").ToList();
         
         var state = Guid.NewGuid().ToString();
-        
-        _memoryCache.Set($"ShopifyOAuthState-{state}", state);
+        await _shopifyStateManager.SetStoreStateAsync(state, userId);
 
         var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
             clientId, redirectUrl, state);
         
         return authUrl.ToString();
-        throw new NotImplementedException();
     }
 
     public async Task<AuthorizationResult> HandleCallbackAsync(string code, string shop, string state, 
