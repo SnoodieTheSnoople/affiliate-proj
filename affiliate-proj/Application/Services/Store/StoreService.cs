@@ -107,6 +107,11 @@ public class StoreService : IStoreService
         return returnedStore;
     }
 
+    public async Task<StoreDTO> GetAllActiveStoresAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId)
     {
         var store = await _postgresDbContext.Stores.FindAsync(storeId);

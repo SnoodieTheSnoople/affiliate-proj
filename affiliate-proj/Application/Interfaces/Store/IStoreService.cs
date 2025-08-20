@@ -8,6 +8,7 @@ public interface IStoreService
     Task<CreateStoreDTO?> SetShopifyStoreAsync(CreateStoreDTO storeDto);
     Task<List<StoreDTO>> GetAllStoresAsync();
     Task<StoreDTO> GetStoreByIdAsync(Guid storeId);
+    Task<StoreDTO> GetAllActiveStoresAsync();
     Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId);
     Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId);
 }
