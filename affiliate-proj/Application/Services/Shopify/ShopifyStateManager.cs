@@ -10,4 +10,9 @@ public class ShopifyStateManager
     {
         _memoryCache = memoryCache;
     }
+
+    public Task SetStoreStateAsync(string state, Guid userId)
+    {
+        throw new NotImplementedException();
+    }
 }
