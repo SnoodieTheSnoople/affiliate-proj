@@ -3,6 +3,7 @@ using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
+using affiliate_proj.Core.RequestModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,12 @@ namespace affiliate_proj.API.Controllers.Account
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpPost("alt-set-store")]
+        public async Task<ActionResult<CreateStoreDTO>> AltSetStoreProfileAsync([FromBody] SetStoreRequest request)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpGet("get-all-stores")]
