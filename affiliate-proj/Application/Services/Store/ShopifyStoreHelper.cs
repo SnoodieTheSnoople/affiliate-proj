@@ -39,7 +39,7 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         return store;
     }
     
-    public async Task SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult)
+    public async Task SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult, Guid userId)
     {
         var shopDetails = await GetShopifyStoreInfoAsync(shop, authorizationResult.AccessToken);
     }
