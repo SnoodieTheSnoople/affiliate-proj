@@ -24,13 +24,6 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         var shopService = new ShopService(shop, accessToken);
         var shopInfo = await shopService.GetAsync();
         
-        // var propertyList = typeof(Shop).GetProperties().ToList();
-        // foreach (var property in propertyList)
-        // {
-        //     var value = property.GetValue(shopInfo);
-        //     Console.WriteLine($"{property} - {value}");
-        // }
-        
         return shopInfo;
     }
     
