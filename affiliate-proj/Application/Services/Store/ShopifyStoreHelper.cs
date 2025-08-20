@@ -38,6 +38,11 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == shopifyStoreId);
         return store;
     }
+    
+    public async Task SetShopifyStoreAsync()
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<Core.Entities.Store?> UpdateStoreDetailsAsync(Core.Entities.Store store)
     {
