@@ -38,7 +38,6 @@ namespace affiliate_proj.API.Controllers.Shopify
                 var redirectUrl = await _shopifyAuthService.GenerateInstallUrlWithUserIdAsync(shop, 
                     Guid.Parse(userId));
                 // return Redirect(redirectUrl);
-                // TODO: Add check before adding to db
                 return Ok(redirectUrl);
             }
             catch (Exception e)
