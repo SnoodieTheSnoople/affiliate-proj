@@ -42,4 +42,9 @@ public class ShopifyStateManager
 
         return true;
     }
+    
+    public Guid GetUserIdFromStateMetadata(string state)
+    {
+        throw new NotImplementedException();
+    }
 }
