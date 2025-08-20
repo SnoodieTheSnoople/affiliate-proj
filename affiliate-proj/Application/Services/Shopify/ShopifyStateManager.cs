@@ -45,6 +45,13 @@ public class ShopifyStateManager
     
     public Guid GetUserIdFromStateMetadata(string state)
     {
-        throw new NotImplementedException();
+        var savedMetadata = _memoryCache.Get<OauthStateMetadata>($"shopifyOAuthState-{state}");
+        if (savedMetadata == null)
+            throw new Exception("Internal Error 004: No saved state");
+        
+        if (Guid.Empty ==  savedMetadata.UserId)
+            throw new Exception("Internal Error 005: Invalid state, userId empty");
+        
+        return savedMetadata.UserId;
     }
 }
