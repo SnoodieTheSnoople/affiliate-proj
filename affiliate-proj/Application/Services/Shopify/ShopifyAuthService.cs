@@ -21,13 +21,13 @@ public class ShopifyAuthService :  IShopifyAuthService
     private readonly PostgresDbContext _postgresDbContext;
     private readonly IStoreService _storeService;
     private readonly IShopifyStoreHelper _shopifyStoreHelper;
-    private readonly ShopifyStateManager _shopifyStateManager;
+    private readonly IShopifyStateManager _shopifyStateManager;
 
     public ShopifyAuthService(IConfiguration configuration,
         IShopifyRequestValidationUtility shopifyRequestValidationUtility,
         IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
         IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext,
-        IStoreService storeService, IShopifyStoreHelper shopifyStoreHelper, ShopifyStateManager shopifyStateManager)
+        IStoreService storeService, IShopifyStoreHelper shopifyStoreHelper, IShopifyStateManager shopifyStateManager)
     {
         _configuration = configuration;
         _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
