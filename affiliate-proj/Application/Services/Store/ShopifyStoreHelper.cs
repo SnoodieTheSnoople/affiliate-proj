@@ -39,7 +39,7 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         return store;
     }
     
-    public async Task SetShopifyStoreAsync()
+    public async Task SetShopifyStoreAsync(string shop, AuthorizationResult authorizationResult)
     {
         throw new NotImplementedException();
     }
