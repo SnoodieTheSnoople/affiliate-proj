@@ -67,6 +67,23 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
+        [HttpGet("get-all-active-stores")]
+        public async Task<ActionResult<List<StoreDTO>>> GetAllActiveStoresAsync()
+        {
+            if (!ValidateUser())
+                return Unauthorized("User does not exist.");
+
+            try
+            {
+                return await _storeService.GetAllActiveStoresAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+        }
+
         // [HttpGet("get-store/{storeId}")]
         [HttpGet("get-store")]
         public async Task<ActionResult<StoreDTO>> GetStoreByIdAsync([FromQuery] Guid storeId)
