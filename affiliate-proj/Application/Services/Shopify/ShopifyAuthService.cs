@@ -64,6 +64,26 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     public async Task<string> GenerateInstallUrlWithUserIdAsync(string shop, Guid userId)
     {
+        var isValidDomain = await _shopifyDomainUtility.IsValidShopDomainAsync(shop);
+        if (!isValidDomain)
+            throw new Exception("Internal Error 001: Shopify Domain Not Valid");
+        _logger.LogInformation("Validated shop domain");
+        
+        var configScopes = _configuration.GetValue<string>("Shopify:Scopes");
+        var clientId = _configuration.GetValue<string>("Shopify:ClientId");
+        var redirectUrl =  _configuration.GetValue<string>("Shopify:RedirectUrl");
+        _logger.LogInformation($"Scopes: {configScopes}\nClientId: {clientId}\nRedirectUrl: {redirectUrl}");
+        
+        var scopeAsList = configScopes.Split(",").ToList();
+        
+        var state = Guid.NewGuid().ToString();
+        
+        _memoryCache.Set($"ShopifyOAuthState-{state}", state);
+
+        var authUrl = _shopifyOauthUtility.BuildAuthorizationUrl(scopeAsList, shop, 
+            clientId, redirectUrl, state);
+        
+        return authUrl.ToString();
         throw new NotImplementedException();
     }
 
