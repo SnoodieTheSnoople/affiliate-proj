@@ -30,6 +30,16 @@ public class ShopifyStateManager
     
     public bool VerifyStoreState(string state)
     {
-        throw new NotImplementedException();
+        var savedMetadata = _memoryCache.Get<OauthStateMetadata>($"shopifyOAuthState-{state}");
+        if (savedMetadata == null || String.IsNullOrEmpty(savedMetadata.State))
+            throw new Exception("Internal Error 003: No saved state");
+        
+        if (!String.Equals(state, savedMetadata.State))
+            throw new Exception("Internal Error 004: Invalid state");
+        
+        if (DateTime.Now > savedMetadata.Expires)
+            throw new Exception("Internal Error 004: Invalid state, time expired");
+
+        return true;
     }
 }
