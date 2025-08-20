@@ -18,7 +18,6 @@ public class ShopifyStateManager
         {
             State = state,
             UserId = userId,
-            Expires = DateTime.Now.AddMinutes(10)
         };
         
         _memoryCache.Set($"shopifyOAuthState-{state}", metadata, new MemoryCacheEntryOptions
@@ -36,9 +35,6 @@ public class ShopifyStateManager
         
         if (!String.Equals(state, savedMetadata.State))
             throw new Exception("Internal Error 004: Invalid state");
-        
-        if (DateTime.Now > savedMetadata.Expires)
-            throw new Exception("Internal Error 004: Invalid state, time expired");
 
         return true;
     }
