@@ -30,6 +30,10 @@ namespace affiliate_proj.API.Controllers.Shopify
         {
             try
             {
+                var userId = _accountHelper.GetUserIdFromAccessToken();
+                if (String.IsNullOrEmpty(userId)) 
+                    return BadRequest();
+                
                 var redirectUrl = await _shopifyAuthService.GenerateInstallUrlAsync(shop);
                 return Redirect(redirectUrl);
             }
@@ -37,7 +41,7 @@ namespace affiliate_proj.API.Controllers.Shopify
             {
                 // TODO: Create exception handling system according to custom codes.
                 Console.WriteLine(e);
-                throw;
+                return BadRequest(e.Message);
             }
         }
 
