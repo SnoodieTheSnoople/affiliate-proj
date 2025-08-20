@@ -25,21 +25,24 @@ public class ShopifyStateManager : IShopifyStateManager
         {
             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
         });
+        
+        Console.WriteLine($"State: {metadata.State} | UserId: {metadata.UserId.ToString()}");
         return Task.CompletedTask;
     }
     
     public bool VerifyStoreState(string state)
     {
         var savedMetadata = _memoryCache.Get<OauthStateMetadata>($"shopifyOAuthState-{state}");
-        if (savedMetadata == null || String.IsNullOrEmpty(savedMetadata.State))
-            throw new Exception("Internal Error 003: No saved state");
+        if (savedMetadata == null || String.IsNullOrEmpty(savedMetadata.State)) return false;
+            // throw new Exception("Internal Error 003: No saved state");
         
-        if (!String.Equals(state, savedMetadata.State))
-            throw new Exception("Internal Error 004: Invalid state");
-        
-        if (Guid.Empty == savedMetadata.UserId)
-            throw new Exception("Internal Error 004: Invalid state, userId empty");
+        if (!String.Equals(state, savedMetadata.State)) return false;
+            // throw new Exception("Internal Error 004: Invalid state");
 
+        if (Guid.Empty == savedMetadata.UserId) return false;
+            // throw new Exception("Internal Error 004: Invalid state, userId empty");
+            
+        Console.WriteLine($"State: {savedMetadata.State} | UserId: {savedMetadata.UserId.ToString()}");
         return true;
     }
     
