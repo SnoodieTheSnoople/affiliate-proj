@@ -86,6 +86,7 @@ public class Program
         /* Shopify Service*/
         builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
         builder.Services.AddScoped<IShopifyDataService, ShopifyDataService>();
+        builder.Services.AddScoped<IShopifyStateManager, ShopifyStateManager>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
