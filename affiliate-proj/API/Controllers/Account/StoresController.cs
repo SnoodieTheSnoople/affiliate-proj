@@ -26,6 +26,7 @@ namespace affiliate_proj.API.Controllers.Account
             _accountHelper = accountHelper;
         }
         
+        // May not be used. Store is now added on OAuth install
         [HttpPost("set-store")]
         public async Task<ActionResult<CreateStoreDTO>> SetStoreProfileAsync([FromBody] CreateStoreDTO request)
         {
