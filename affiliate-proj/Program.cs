@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using ShopifySharp;
 using ShopifySharp.Utilities;
 using Supabase;
 using IUserService = affiliate_proj.Application.Interfaces.User.IUserService;
@@ -92,6 +93,7 @@ public class Program
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
         builder.Services.AddScoped<IShopifyDomainUtility, ShopifyDomainUtility>();
         builder.Services.AddScoped<IShopifyOauthUtility, ShopifyOauthUtility>();
+        builder.Services.AddScoped<IWebhookService, WebhookService>();
         
         var app = builder.Build();
 
