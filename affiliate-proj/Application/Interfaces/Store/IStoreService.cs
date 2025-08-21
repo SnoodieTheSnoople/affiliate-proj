@@ -1,4 +1,5 @@
 using affiliate_proj.Core.DTOs.Account;
+using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
 
 namespace affiliate_proj.Application.Interfaces.Store;
@@ -12,4 +13,5 @@ public interface IStoreService
     Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId);
     Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId);
     Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName, Guid storeId);
+    Task<CreateStoreDTO?> UpdateStoreActiveStatusAsync(bool isActive, Guid storeId);
 }

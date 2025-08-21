@@ -213,4 +213,9 @@ public class StoreService : IStoreService
             DeletedAt = store.DeletedAt,
         };
     }
+
+    public Task<CreateStoreDTO?> UpdateStoreActiveStatusAsync(bool isActive, Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
 }
