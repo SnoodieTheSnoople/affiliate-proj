@@ -85,12 +85,15 @@ public class Program
         /* Store Service */
         builder.Services.AddScoped<IStoreService, StoreService>();
         builder.Services.AddScoped<IShopifyStoreHelper, ShopifyStoreHelper>();
-
+        
         /* Shopify Service*/
         builder.Services.AddScoped<IShopifyAuthService, ShopifyAuthService>();
         builder.Services.AddScoped<IShopifyDataService, ShopifyDataService>();
         builder.Services.AddScoped<IShopifyStateManager, ShopifyStateManager>();
+        
+        /* Webhook Service */
         builder.Services.AddScoped<IShopifyWebhookService, ShopifyWebhookService>();
+        builder.Services.AddScoped<IShopifyWebhookRepository, ShopifyWebhookRepository>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
