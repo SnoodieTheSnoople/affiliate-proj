@@ -11,4 +11,9 @@ public class ShopifyWebhookService : IShopifyWebhookService
     {
         _webhookService = webhookService;
     }
+
+    public Task RegisterWebhookAsync(string shop, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 }
