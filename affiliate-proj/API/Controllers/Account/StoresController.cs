@@ -132,7 +132,22 @@ namespace affiliate_proj.API.Controllers.Account
         [HttpPut("update-store-name")]
         public async Task<ActionResult<CreateStoreDTO>> UpdateStoreNameAsync([FromBody] CreateStoreDTO request)
         {
-            throw new NotImplementedException();
+            if (request.UserId == Guid.Empty || String.IsNullOrEmpty(request.StoreName))
+                return BadRequest("Missing properties");
+            
+            if (!ValidateUser())
+                return Unauthorized("User does not exist.");
+            
+            try
+            {
+                var updatedStore = await _storeService.UpdateStoreNameAsync(request.StoreName);
+                return updatedStore;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
 
         private bool ValidateUser()
