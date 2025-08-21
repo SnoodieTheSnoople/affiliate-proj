@@ -54,10 +54,11 @@ namespace affiliate_proj.API.Webhooks.Shopify
         }
 
         [HttpDelete("delete-webhook")]
-        public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
+        public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken, [FromQuery] long webhookId)
         {
             try
             {
+                await _shopifyWebhookService.RemoveWebhookAsync(shop, accessToken, webhookId);
                 return Ok();
             }
             catch (Exception e)
