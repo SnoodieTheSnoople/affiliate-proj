@@ -214,8 +214,36 @@ public class StoreService : IStoreService
         };
     }
 
-    public Task<CreateStoreDTO?> UpdateStoreActiveStatusAsync(bool isActive, Guid storeId)
+    public async Task<CreateStoreDTO?> UpdateStoreActiveStatusAsync(bool isActive, Guid storeId)
     {
-        throw new NotImplementedException();
+        if (storeId == Guid.Empty)
+            throw new Exception("Missing properties");
+        
+        var store = await _postgresDbContext.Stores.FindAsync(storeId);
+        
+        if (store == null)
+            throw new NullReferenceException("Store not found");
+        
+        store.IsActive = isActive;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        store = await _postgresDbContext.Stores.FindAsync(storeId);
+        return new CreateStoreDTO
+        {
+            StoreId = store.StoreId,
+            ShopifyId = store.ShopifyId,
+            StoreName = store.StoreName,
+            ShopifyToken = store.ShopifyToken,
+            StoreUrl = store.StoreUrl,
+            ShopifyStoreName = store.ShopifyStoreName,
+            ShopifyOwnerName = store.ShopifyOwnerName,
+            ShopifyOwnerEmail = store.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = store.ShopifyOwnerPhone,
+            ShopifyCountry = store.ShopifyCountry,
+            ShopifyGrantedScopes = store.ShopifyGrantedScopes,
+            UserId = store.UserId,
+            IsActive = store.IsActive,
+            DeletedAt = store.DeletedAt,
+        };
     }
 }
