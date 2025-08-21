@@ -6,10 +6,12 @@ namespace affiliate_proj.Application.Services.Shopify.Webhook;
 public class ShopifyWebhookService : IShopifyWebhookService
 {
     private readonly IWebhookService _webhookService;
+    private readonly IConfiguration _configuration;
 
-    public ShopifyWebhookService(IWebhookService webhookService)
+    public ShopifyWebhookService(IWebhookService webhookService, IConfiguration configuration)
     {
         _webhookService = webhookService;
+        _configuration = configuration;
     }
 
     public Task RegisterWebhookAsync(string shop, string accessToken)
