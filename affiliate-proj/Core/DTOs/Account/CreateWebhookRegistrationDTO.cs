@@ -1,6 +1,6 @@
 namespace affiliate_proj.Core.DTOs.Account;
 
-public class CreateWebhookRegistration
+public class CreateWebhookRegistrationDTO
 {
     public Guid WebhookId { get; set; }
     public DateTime CreatedAt { get; set; }
