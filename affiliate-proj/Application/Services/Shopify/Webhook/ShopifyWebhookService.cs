@@ -1,4 +1,6 @@
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
+using affiliate_proj.Application.Interfaces.Store;
+using affiliate_proj.Core.DTOs.Account;
 using ShopifySharp;
 using ShopifySharp.Lists;
 
@@ -7,10 +9,14 @@ namespace affiliate_proj.Application.Services.Shopify.Webhook;
 public class ShopifyWebhookService : IShopifyWebhookService
 {
     private readonly IConfiguration _configuration;
+    private readonly IShopifyStoreHelper  _shopifyStoreHelper;
+    private readonly IShopifyWebhookRepository _shopifyWebhookRepository;
 
-    public ShopifyWebhookService(IConfiguration configuration)
+    public ShopifyWebhookService(IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, IShopifyWebhookRepository shopifyWebhookRepository)
     {
         _configuration = configuration;
+        _shopifyStoreHelper = shopifyStoreHelper;
+        _shopifyWebhookRepository = shopifyWebhookRepository;
     }
 
     public async Task RegisterWebhookAsync(string shop, string accessToken)
@@ -30,6 +36,26 @@ public class ShopifyWebhookService : IShopifyWebhookService
         };
         
         await webhookService.CreateAsync(appUninstalledWebhook);
+        var webhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
+
+        var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shop);
+
+        using var webhooks = webhooksEnum.Items.GetEnumerator();
+        while (webhooks.MoveNext())
+        {
+            var item = webhooks.Current;
+            var webhookEntry = new CreateWebhookRegistrationDTO
+            {
+                StoreUrl = shop,
+                ShopifyWebhookId = (long)item.Id!,
+                Topic = item.Topic,
+                Format = item.Format,
+                RegisteredAt = item.CreatedAt,
+                StoreId = storeDetails.StoreId,
+            };
+
+            await _shopifyWebhookRepository.SetShopifyWebhook(webhookEntry);
+        }
     }
     
     public async Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
