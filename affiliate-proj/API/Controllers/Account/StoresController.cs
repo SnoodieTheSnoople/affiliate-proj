@@ -52,12 +52,6 @@ namespace affiliate_proj.API.Controllers.Account
             }
         }
 
-        [HttpPost("alt-set-store")]
-        public async Task<ActionResult<CreateStoreDTO>> AltSetStoreProfileAsync([FromBody] SetStoreRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
         [HttpGet("get-all-stores")]
         public async Task<ActionResult<List<StoreDTO>>> GetAllStoresAsync()
         {
