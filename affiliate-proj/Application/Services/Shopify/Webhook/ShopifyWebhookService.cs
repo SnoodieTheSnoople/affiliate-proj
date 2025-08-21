@@ -18,7 +18,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
 
         var appUninstalledWebhook = new ShopifySharp.Webhook()
         {
-            
+            Address = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/shopify-webhook/app/uninstalled",
         };
         throw new NotImplementedException();
     }
