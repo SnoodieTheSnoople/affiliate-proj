@@ -3,6 +3,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
+using ShopifySharp.Utilities;
 
 namespace affiliate_proj.API.Webhooks.Shopify
 {
@@ -11,15 +12,25 @@ namespace affiliate_proj.API.Webhooks.Shopify
     public class ShopifyWebhookController : ControllerBase
     {
         private readonly IShopifyWebhookService _shopifyWebhookService;
+        private readonly IShopifyRequestValidationUtility  _shopifyRequestValidationUtility;
+        private readonly IConfiguration _configuration;
 
-        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService)
+        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, IShopifyRequestValidationUtility shopifyRequestValidationUtility, IConfiguration configuration)
         {
             _shopifyWebhookService = shopifyWebhookService;
+            _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
+            _configuration = configuration;
         }
         
         [HttpPost("app/uninstalled")]
         public async Task<IActionResult> AppUninstalledAsync()
         {
+            var isValid = await _shopifyRequestValidationUtility.IsAuthenticWebhookAsync(Request.Headers, Request.Body,
+                _configuration.GetValue<string>("Shopify:ApiSecret"));
+            
+            if (!isValid)
+                return BadRequest();
+
             throw new NotImplementedException();
         }
 
