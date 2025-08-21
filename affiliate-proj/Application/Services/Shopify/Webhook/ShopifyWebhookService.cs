@@ -26,4 +26,9 @@ public class ShopifyWebhookService : IShopifyWebhookService
         
         await webhookService.CreateAsync(appUninstalledWebhook);
     }
+
+    public async Task<List<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 }
