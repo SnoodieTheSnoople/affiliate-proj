@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Webhooks.Shopify
 {
-    [Route("api/[controller]")]
+    [Route("api/webhooks/[controller]")]
     [ApiController]
     public class ShopifyWebhookController : ControllerBase
     {
