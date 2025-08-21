@@ -130,9 +130,9 @@ namespace affiliate_proj.API.Controllers.Account
         }
         
         [HttpPut("update-store-name")]
-        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreNameAsync([FromBody] CreateStoreDTO request)
+        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreNameAsync([FromBody] SetStoreRequest request)
         {
-            if (request.UserId == Guid.Empty || request.StoreId == Guid.Empty || String.IsNullOrEmpty(request.StoreName))
+            if (request.StoreId == Guid.Empty || String.IsNullOrEmpty(request.StoreName))
                 return BadRequest("Missing properties");
             
             if (!ValidateUser())
@@ -148,6 +148,12 @@ namespace affiliate_proj.API.Controllers.Account
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpPut("update-store-active-status")]
+        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreActiveStatus([FromBody] SetStoreRequest request)
+        {
+            throw new NotImplementedException();
         }
 
         private bool ValidateUser()
