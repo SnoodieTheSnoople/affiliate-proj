@@ -14,6 +14,12 @@ public class ShopifyWebhookService : IShopifyWebhookService
 
     public Task RegisterWebhookAsync(string shop, string accessToken)
     {
+        var webhookService = new WebhookService(shop, accessToken);
+
+        var appUninstalledWebhook = new ShopifySharp.Webhook()
+        {
+            
+        };
         throw new NotImplementedException();
     }
 }
