@@ -183,6 +183,34 @@ public class StoreService : IStoreService
 
     public async Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName, Guid storeId)
     {
-        throw new NotImplementedException();
+        if (String.IsNullOrEmpty(storeName) || storeId == Guid.Empty)
+            throw new Exception("Missing properties");
+        
+        var store = await _postgresDbContext.Stores.FindAsync(storeId);
+        
+        if (store == null)
+            throw new NullReferenceException("Store not found");
+        
+        store.StoreName = storeName;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        store = await _postgresDbContext.Stores.FindAsync(storeId);
+        return new CreateStoreDTO
+        {
+            StoreId = store.StoreId,
+            ShopifyId = store.ShopifyId,
+            StoreName = store.StoreName,
+            ShopifyToken = store.ShopifyToken,
+            StoreUrl = store.StoreUrl,
+            ShopifyStoreName = store.ShopifyStoreName,
+            ShopifyOwnerName = store.ShopifyOwnerName,
+            ShopifyOwnerEmail = store.ShopifyOwnerEmail,
+            ShopifyOwnerPhone = store.ShopifyOwnerPhone,
+            ShopifyCountry = store.ShopifyCountry,
+            ShopifyGrantedScopes = store.ShopifyGrantedScopes,
+            UserId = store.UserId,
+            IsActive = store.IsActive,
+            DeletedAt = store.DeletedAt,
+        };
     }
 }
