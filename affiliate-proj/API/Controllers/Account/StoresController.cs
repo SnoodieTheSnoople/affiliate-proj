@@ -151,14 +151,24 @@ namespace affiliate_proj.API.Controllers.Account
         }
 
         [HttpPut("update-store-active-status")]
-        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreActiveStatus([FromBody] SetStoreRequest request)
+        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreActiveStatusAsync([FromBody] SetStoreRequest request)
         {
             if (request.StoreId == Guid.Empty)
                 return BadRequest("Missing properties");
             
             if (!ValidateUser())
                 return Unauthorized("User does not exist.");
-            throw new NotImplementedException();
+            
+            try
+            {
+                var updatedStore = await _storeService.UpdateStoreActiveStatusAsync(request.IsActive, request.StoreId);
+                return updatedStore;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
 
         private bool ValidateUser()
