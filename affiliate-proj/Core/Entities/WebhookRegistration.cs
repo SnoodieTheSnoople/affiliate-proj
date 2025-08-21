@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace affiliate_proj.Core.Entities;
 
-public class WebhookRegistration
+public class WebhookRegistrations
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
