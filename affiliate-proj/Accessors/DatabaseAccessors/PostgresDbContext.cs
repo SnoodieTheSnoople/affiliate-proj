@@ -58,6 +58,20 @@ public class PostgresDbContext : DbContext
             builder.Property(store => store.IsActive).HasColumnName("is_active");
             builder.Property(store => store.DeletedAt).HasColumnName("deleted_at");
         });
+
+        modelBuilder.Entity<WebhookRegistrations>(builder =>
+        {
+            builder.ToTable("webhook_registrations");
+            builder.Property(registration => registration.WebhookId).HasColumnName("webhook_id").ValueGeneratedOnAdd();
+            builder.Property(registration => registration.CreatedAt).HasColumnName("created_at")
+                .ValueGeneratedOnAddOrUpdate();
+            builder.Property(registration => registration.StoreUrl).HasColumnName("store_url");
+            builder.Property(registration => registration.ShopifyWebhookId).HasColumnName("shopify_webhook_id");
+            builder.Property(registration => registration.Topic).HasColumnName("topic");
+            builder.Property(registration => registration.Format).HasColumnName("format");
+            builder.Property(registration => registration.RegisteredAt).HasColumnName("registered_at");
+            builder.Property(registration => registration.StoreId).HasColumnName("store_id");
+        });
     }
 
 }
