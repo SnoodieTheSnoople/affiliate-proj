@@ -132,7 +132,7 @@ namespace affiliate_proj.API.Controllers.Account
         [HttpPut("update-store-name")]
         public async Task<ActionResult<CreateStoreDTO>> UpdateStoreNameAsync([FromBody] CreateStoreDTO request)
         {
-            if (request.UserId == Guid.Empty || String.IsNullOrEmpty(request.StoreName))
+            if (request.UserId == Guid.Empty || request.StoreId == Guid.Empty || String.IsNullOrEmpty(request.StoreName))
                 return BadRequest("Missing properties");
             
             if (!ValidateUser())
@@ -140,7 +140,7 @@ namespace affiliate_proj.API.Controllers.Account
             
             try
             {
-                var updatedStore = await _storeService.UpdateStoreNameAsync(request.StoreName);
+                var updatedStore = await _storeService.UpdateStoreNameAsync(request.StoreName, request.StoreId);
                 return updatedStore;
             }
             catch (Exception e)
