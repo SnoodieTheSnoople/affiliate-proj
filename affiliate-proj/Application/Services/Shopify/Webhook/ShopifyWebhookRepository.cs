@@ -2,6 +2,7 @@ using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook;
 
@@ -28,7 +29,8 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         await _dbContext.WebhookRegistrations.AddAsync(newRegistration);
         await _dbContext.SaveChangesAsync();
 
-        newRegistration = await _dbContext.WebhookRegistrations.FindAsync(registration.ShopifyWebhookId);
+        newRegistration = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(
+            r => r.ShopifyWebhookId == registration.ShopifyWebhookId);
         return new CreateWebhookRegistrationDTO
         {
             WebhookId = newRegistration.WebhookId,
