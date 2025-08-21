@@ -5,12 +5,10 @@ namespace affiliate_proj.Application.Services.Shopify.Webhook;
 
 public class ShopifyWebhookService : IShopifyWebhookService
 {
-    private readonly IWebhookService _webhookService;
     private readonly IConfiguration _configuration;
 
-    public ShopifyWebhookService(IWebhookService webhookService, IConfiguration configuration)
+    public ShopifyWebhookService(IConfiguration configuration)
     {
-        _webhookService = webhookService;
         _configuration = configuration;
     }
 
