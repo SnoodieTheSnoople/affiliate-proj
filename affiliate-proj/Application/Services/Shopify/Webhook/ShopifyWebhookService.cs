@@ -36,6 +36,8 @@ public class ShopifyWebhookService : IShopifyWebhookService
         };
         
         await webhookService.CreateAsync(appUninstalledWebhook);
+        
+        // TODO: Move to own method to reduce bloat
         var webhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
 
         var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shop);
@@ -67,6 +69,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
 
     public async Task RemoveWebhookAsync(string shop, string accessToken, long webhookId)
     {
+        // TODO: Implement delete webhook functionality for db
         var webhookService = new WebhookService(shop, accessToken);
         await webhookService.DeleteAsync(webhookId);
     }

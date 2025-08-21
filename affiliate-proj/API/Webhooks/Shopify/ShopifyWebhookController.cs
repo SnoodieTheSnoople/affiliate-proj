@@ -72,6 +72,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
         {
             try
             {
+                // TODO: Implement delete webhook functionality for db
                 await _shopifyWebhookService.RemoveWebhookAsync(shop, accessToken, webhookId);
                 return Ok();
             }
