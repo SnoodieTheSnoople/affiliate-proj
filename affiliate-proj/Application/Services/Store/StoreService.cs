@@ -180,4 +180,9 @@ public class StoreService : IStoreService
             DeletedAt = getStore.DeletedAt,
         };
     }
+
+    public async Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName)
+    {
+        throw new NotImplementedException();
+    }
 }
