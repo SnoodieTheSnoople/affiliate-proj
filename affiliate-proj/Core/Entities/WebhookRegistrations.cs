@@ -25,7 +25,7 @@ public class WebhookRegistrations
     public string Format { get; set; }
     
     [Required]
-    public DateTime RegisteredAt { get; set; }
+    public DateTimeOffset? RegisteredAt { get; set; }
     
     [Required]
     public Guid StoreId { get; set; }
