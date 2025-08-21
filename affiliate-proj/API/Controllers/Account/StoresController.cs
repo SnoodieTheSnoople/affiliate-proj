@@ -128,6 +128,12 @@ namespace affiliate_proj.API.Controllers.Account
                 return BadRequest(e.Message);
             }
         }
+        
+        [HttpPut("update-store-name")]
+        public async Task<ActionResult<CreateStoreDTO>> UpdateStoreNameAsync([FromBody] CreateStoreDTO request)
+        {
+            throw new NotImplementedException();
+        }
 
         private bool ValidateUser()
         {
