@@ -7,6 +7,10 @@ namespace affiliate_proj.API.Webhooks.Shopify
     [ApiController]
     public class ShopifyWebhookController : ControllerBase
     {
-        
+        [HttpPost("app/uninstalled")]
+        public async Task<IActionResult> AppUninstalledAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
