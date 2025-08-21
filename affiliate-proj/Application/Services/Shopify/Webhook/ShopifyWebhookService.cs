@@ -50,7 +50,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
                 ShopifyWebhookId = (long)item.Id!,
                 Topic = item.Topic,
                 Format = item.Format,
-                RegisteredAt = item.CreatedAt,
+                RegisteredAt = item.CreatedAt.Value.ToUniversalTime(),
                 StoreId = storeDetails.StoreId,
             };
 
