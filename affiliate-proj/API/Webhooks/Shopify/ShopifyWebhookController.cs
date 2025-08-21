@@ -42,7 +42,15 @@ namespace affiliate_proj.API.Webhooks.Shopify
         [HttpPost("get-webhooks")]
         public async Task<IActionResult> GetWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(await _shopifyWebhookService.GetAllWebhooksAsync(shop, accessToken));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
     }
 }
