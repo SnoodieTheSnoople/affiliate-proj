@@ -181,7 +181,7 @@ public class StoreService : IStoreService
         };
     }
 
-    public async Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName)
+    public async Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName, Guid storeId)
     {
         throw new NotImplementedException();
     }

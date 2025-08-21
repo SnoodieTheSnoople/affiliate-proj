@@ -11,5 +11,5 @@ public interface IStoreService
     Task<List<StoreDTO>> GetAllActiveStoresAsync();
     Task<Core.Entities.Store> GetStoreDetailsByIdAsync(Guid storeId);
     Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId);
-    Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName);
+    Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName, Guid storeId);
 }
