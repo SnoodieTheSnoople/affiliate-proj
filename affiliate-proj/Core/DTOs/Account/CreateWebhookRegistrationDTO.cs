@@ -8,6 +8,6 @@ public class CreateWebhookRegistrationDTO
     public long ShopifyWebhookId { get; set; }
     public string Topic { get; set; }
     public string Format { get; set; }
-    public DateTime RegisteredAt { get; set; }
+    public DateTimeOffset? RegisteredAt { get; set; }
     public Guid StoreId { get; set; }
 }
