@@ -34,6 +34,8 @@ public class ShopifyWebhookService : IShopifyWebhookService
     
     public async Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
     {
-        throw new NotImplementedException();
+        var webhookService = new WebhookService(shop, accessToken);
+        var webhooksEnumerable = await webhookService.ListAsync();
+        return webhooksEnumerable;
     }
 }
