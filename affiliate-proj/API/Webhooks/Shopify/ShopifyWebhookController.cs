@@ -1,6 +1,4 @@
-using System.Text;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -31,7 +29,12 @@ namespace affiliate_proj.API.Webhooks.Shopify
             if (!isValid)
                 return BadRequest();
 
-            throw new NotImplementedException();
+            using var reader = new StreamReader(Request.Body);
+            var body = await reader.ReadToEndAsync();
+            
+            var shop = Newtonsoft.Json.JsonConvert.DeserializeObject<Shop>(body);
+            // TODO: Remove store from database using storeId or domain. 
+            return Ok();
         }
 
         [HttpPost("set-webhook")]
