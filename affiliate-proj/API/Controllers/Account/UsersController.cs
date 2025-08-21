@@ -68,7 +68,6 @@ namespace affiliate_proj.API.Controllers.Account
         {
             try
             {
-                /*TODO: Leave as AccountService. AccountService.DeleteAccount will be composite function.*/
                 var user = await _accountService.DeleteUser(request.UserId);
                 return user;
             }
@@ -235,12 +234,6 @@ namespace affiliate_proj.API.Controllers.Account
             {
                 return BadRequest(ex.Message);
             }
-        }
-
-        [HttpDelete("/delete-creator")]
-        public async Task<ActionResult<CreatorDTO>> DeleteCreator([FromBody] CreatorRequest request)
-        {
-            throw new NotImplementedException();
         }
 
         [HttpDelete("/delete-profile")]
