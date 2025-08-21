@@ -33,6 +33,12 @@ public class ShopifyStoreHelper : IShopifyStoreHelper
         return store != null;
     }
     
+    public async Task<Core.Entities.Store> GetStoreByDomainAsync(string shop)
+    {
+        var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.StoreUrl == shop);
+        return store;
+    }
+    
     public async Task<Core.Entities.Store?> GetStoreDetailsByShopifyStoreIdAsync(long shopifyStoreId)
     {
         var store = await _postgresDbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == shopifyStoreId);
