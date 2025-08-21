@@ -12,14 +12,18 @@ public class ShopifyWebhookService : IShopifyWebhookService
         _configuration = configuration;
     }
 
-    public Task RegisterWebhookAsync(string shop, string accessToken)
+    public async Task RegisterWebhookAsync(string shop, string accessToken)
     {
         var webhookService = new WebhookService(shop, accessToken);
 
         var appUninstalledWebhook = new ShopifySharp.Webhook()
         {
-            Address = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/shopify-webhook/app/uninstalled",
+            Address = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/webhooks/shopifywebhook/app/uninstalled",
+            CreatedAt = DateTime.Now,
+            Topic = "app/uninstalled",
+            Format = "json"
         };
-        throw new NotImplementedException();
+        
+        await webhookService.CreateAsync(appUninstalledWebhook);
     }
 }
