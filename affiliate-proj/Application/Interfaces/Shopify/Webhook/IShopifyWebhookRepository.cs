@@ -6,5 +6,5 @@ namespace affiliate_proj.Application.Interfaces.Shopify.Webhook;
 public interface IShopifyWebhookRepository
 {
     Task<CreateWebhookRegistrationDTO> SetShopifyWebhookAsync(CreateWebhookRegistrationDTO registration);
-    Task<bool> DeleteShopifyWebhook(Shop shop);
+    Task<bool> DeleteShopifyWebhookAsync(Shop shop);
 }
