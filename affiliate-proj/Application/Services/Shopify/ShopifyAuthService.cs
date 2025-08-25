@@ -119,6 +119,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         {
             var userId = await _shopifyStateManager.GetUserIdFromStateMetadataAsync(state);
             await _shopifyStoreHelper.SetShopifyStoreAsync(shop, authorisation, userId);
+            await _shopifyWebhookService.RegisterWebhookAsync(shop, authorisation.AccessToken);
         }
         
         return authorisation;
