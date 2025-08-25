@@ -45,8 +45,12 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         };
     }
 
-    public Task<CreateWebhookRegistrationDTO?> DeleteShopifyWebhook(Shop shop)
+    public async Task<CreateWebhookRegistrationDTO?> DeleteShopifyWebhook(Shop shop)
     {
+        var id = shop.Id;
+        var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == id);
+        var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        
         throw new NotImplementedException();
     }
 }
