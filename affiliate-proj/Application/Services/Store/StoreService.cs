@@ -247,6 +247,7 @@ public class StoreService : IStoreService
         };
     }
 
+    // Anonymises PII and does not delete the record.
     public async Task<Core.Entities.Store?> DeleteStoreAsync(Guid storeId)
     {
         if (storeId == Guid.Empty)
