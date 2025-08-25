@@ -69,13 +69,16 @@ public class ShopifyWebhookService : IShopifyWebhookService
 
     public async Task RemoveWebhookAsync(string shop, string accessToken, long webhookId)
     {
-        // TODO: Implement delete webhook functionality for db
         var webhookService = new WebhookService(shop, accessToken);
-        await webhookService.DeleteAsync(webhookId);
+        
+        var webhookDbReturn = await _shopifyWebhookRepository.DeleteShopifyWebhookAsync(webhookId);
+        if (webhookDbReturn)
+            await webhookService.DeleteAsync(webhookId);
+        
     }
 
     public async Task RemoveWebhookAsync(Shop shop)
     {
-        throw new NotImplementedException();
+        await _shopifyWebhookRepository.DeleteShopifyWebhookAsync(shop);
     }
 }
