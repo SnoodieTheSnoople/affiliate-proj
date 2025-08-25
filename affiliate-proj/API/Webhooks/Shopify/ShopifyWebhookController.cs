@@ -52,7 +52,6 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     await _storeService.DeleteStoreAsync(store.StoreId);
                     // TODO: Simply this condition and refactor RemoveWebhookAsync or overload method with StoreId
                 }
-                // TODO: Remove store from database using storeId or domain. 
                 return Ok();
             }
             catch (Exception e)
