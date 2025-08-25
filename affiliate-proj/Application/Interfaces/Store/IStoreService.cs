@@ -14,5 +14,5 @@ public interface IStoreService
     Task<CreateStoreDTO?> SyncStoreAsync(Guid storeId);
     Task<CreateStoreDTO?> UpdateStoreNameAsync(string storeName, Guid storeId);
     Task<CreateStoreDTO?> UpdateStoreActiveStatusAsync(bool isActive, Guid storeId);
-    Task<CreateStoreDTO?> DeleteStoreAsync(Guid storeId);
+    Task<Core.Entities.Store?> DeleteStoreAsync(Guid storeId);
 }

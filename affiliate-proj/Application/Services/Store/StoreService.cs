@@ -247,8 +247,34 @@ public class StoreService : IStoreService
         };
     }
 
-    public async Task<CreateStoreDTO?> DeleteStoreAsync(Guid storeId)
+    public async Task<Core.Entities.Store?> DeleteStoreAsync(Guid storeId)
     {
-        throw new NotImplementedException();
+        if (storeId == Guid.Empty)
+            return null;
+        
+        var piiReplacementId = $"deleted_{Guid.NewGuid()}";
+        var longReplacement = 0;
+        
+        var store = await _postgresDbContext.Stores.FindAsync(storeId);
+        
+        if (store == null)
+            return null;
+        
+        store.StoreName = piiReplacementId;
+        store.ShopifyId = longReplacement;
+        store.ShopifyToken = piiReplacementId;
+        store.StoreUrl = piiReplacementId;
+        store.ShopifyStoreName = piiReplacementId;
+        store.ShopifyOwnerName = piiReplacementId;
+        store.ShopifyOwnerEmail = piiReplacementId;
+        store.ShopifyOwnerPhone = piiReplacementId;
+        store.ShopifyCountry = piiReplacementId;
+        store.IsActive = false;
+        store.DeletedAt = DateTime.UtcNow;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        
+        store = await _postgresDbContext.Stores.FindAsync(storeId);
+        return store;
     }
 }
