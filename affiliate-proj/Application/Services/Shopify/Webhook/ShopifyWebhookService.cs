@@ -56,7 +56,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
                 StoreId = storeDetails.StoreId,
             };
 
-            await _shopifyWebhookRepository.SetShopifyWebhook(webhookEntry);
+            await _shopifyWebhookRepository.SetShopifyWebhookAsync(webhookEntry);
         }
     }
     

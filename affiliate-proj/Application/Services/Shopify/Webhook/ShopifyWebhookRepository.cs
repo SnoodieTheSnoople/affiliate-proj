@@ -15,7 +15,7 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<CreateWebhookRegistrationDTO> SetShopifyWebhook(CreateWebhookRegistrationDTO registration)
+    public async Task<CreateWebhookRegistrationDTO> SetShopifyWebhookAsync(CreateWebhookRegistrationDTO registration)
     {
         var newRegistration = new WebhookRegistrations
         {
