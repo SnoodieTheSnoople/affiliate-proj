@@ -1,5 +1,6 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
@@ -22,12 +23,13 @@ public class ShopifyAuthService :  IShopifyAuthService
     private readonly IStoreService _storeService;
     private readonly IShopifyStoreHelper _shopifyStoreHelper;
     private readonly IShopifyStateManager _shopifyStateManager;
+    private readonly IShopifyWebhookService _shopifyWebhookService;
 
     public ShopifyAuthService(IConfiguration configuration,
         IShopifyRequestValidationUtility shopifyRequestValidationUtility,
         IShopifyDomainUtility shopifyDomainUtility, IShopifyOauthUtility shopifyOauthUtility,
         IMemoryCache memoryCache, ILogger<ShopifyAuthService> logger, PostgresDbContext postgresDbContext,
-        IStoreService storeService, IShopifyStoreHelper shopifyStoreHelper, IShopifyStateManager shopifyStateManager)
+        IStoreService storeService, IShopifyStoreHelper shopifyStoreHelper, IShopifyStateManager shopifyStateManager, IShopifyWebhookService shopifyWebhookService)
     {
         _configuration = configuration;
         _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -39,6 +41,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         _storeService = storeService;
         _shopifyStoreHelper = shopifyStoreHelper;
         _shopifyStateManager = shopifyStateManager;
+        _shopifyWebhookService = shopifyWebhookService;
     }
     public async Task<string> GenerateInstallUrlAsync(string shop)
     {
