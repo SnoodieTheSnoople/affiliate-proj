@@ -49,13 +49,14 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
     {
         var id = shop.Id;
         var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == id);
-        
-        if (store == null)
+
+        if (store == null) 
             return false;
-        
+
+        Console.WriteLine(store.StoreId);
         var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
 
-        if (webhook != null)
+        if (webhook == null) 
             return false;
         
         _dbContext.WebhookRegistrations.Remove(webhook);
