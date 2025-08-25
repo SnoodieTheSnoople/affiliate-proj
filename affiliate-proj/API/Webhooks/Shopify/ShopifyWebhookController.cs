@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
+using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -12,12 +13,16 @@ namespace affiliate_proj.API.Webhooks.Shopify
         private readonly IShopifyWebhookService _shopifyWebhookService;
         private readonly IShopifyRequestValidationUtility  _shopifyRequestValidationUtility;
         private readonly IConfiguration _configuration;
+        private readonly IShopifyStoreHelper _shopifyStoreHelper;
+        private readonly IStoreService _storeService;
 
-        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, IShopifyRequestValidationUtility shopifyRequestValidationUtility, IConfiguration configuration)
+        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, IShopifyRequestValidationUtility shopifyRequestValidationUtility, IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, IStoreService storeService)
         {
             _shopifyWebhookService = shopifyWebhookService;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _configuration = configuration;
+            _shopifyStoreHelper = shopifyStoreHelper;
+            _storeService = storeService;
         }
         
         [HttpPost("app/uninstalled")]
@@ -39,7 +44,14 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     return BadRequest();
             
                 var shop = Newtonsoft.Json.JsonConvert.DeserializeObject<Shop>(body);
-                await _shopifyWebhookService.RemoveWebhookAsync(shop);
+
+                if (shop != null)
+                {
+                    await _shopifyWebhookService.RemoveWebhookAsync(shop);
+                    var store = await _shopifyStoreHelper.GetStoreDetailsByShopifyStoreIdAsync((long) shop.Id!);
+                    await _storeService.DeleteStoreAsync(store.StoreId);
+                    // TODO: Simply this condition and refactor RemoveWebhookAsync or overload method with StoreId
+                }
                 // TODO: Remove store from database using storeId or domain. 
                 return Ok();
             }
