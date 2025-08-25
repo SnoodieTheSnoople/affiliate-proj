@@ -79,6 +79,6 @@ public class ShopifyWebhookService : IShopifyWebhookService
 
     public async Task RemoveWebhookAsync(Shop shop)
     {
-        await _shopifyWebhookRepository.DeleteShopifyWebhookAsync(shop);
+        await _shopifyWebhookRepository.DeleteShopifyWebhooksAsync(shop);
     }
 }

@@ -45,7 +45,7 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         };
     }
 
-    public async Task<bool> DeleteShopifyWebhookAsync(Shop shop)
+    public async Task<bool> DeleteShopifyWebhooksAsync(Shop shop)
     {
         var id = shop.Id;
         var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == id);
