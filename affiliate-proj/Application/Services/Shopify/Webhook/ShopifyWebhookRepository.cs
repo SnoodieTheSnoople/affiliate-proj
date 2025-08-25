@@ -3,6 +3,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using ShopifySharp;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook;
 
@@ -42,5 +43,10 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
             RegisteredAt = newRegistration.RegisteredAt,
             StoreId = newRegistration.StoreId,
         };
+    }
+
+    public Task<CreateWebhookRegistrationDTO?> DeleteShopifyWebhook(Shop shop)
+    {
+        throw new NotImplementedException();
     }
 }
