@@ -73,4 +73,9 @@ public class ShopifyWebhookService : IShopifyWebhookService
         var webhookService = new WebhookService(shop, accessToken);
         await webhookService.DeleteAsync(webhookId);
     }
+
+    public async Task RemoveWebhookAsync(Shop shop)
+    {
+        throw new NotImplementedException();
+    }
 }
