@@ -45,7 +45,7 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         };
     }
 
-    public async Task<CreateWebhookRegistrationDTO?> DeleteShopifyWebhook(Shop shop)
+    public async Task<bool> DeleteShopifyWebhook(Shop shop)
     {
         var id = shop.Id;
         var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == id);
@@ -54,7 +54,9 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         
         _dbContext.WebhookRegistrations.Remove(webhook);
         await _dbContext.SaveChangesAsync();
-
-        return null;
+        
+        webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        
+        return webhook == null;
     }
 }
