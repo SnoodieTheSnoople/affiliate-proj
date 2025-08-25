@@ -52,19 +52,31 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
 
         if (store == null) 
             return false;
+        
+        // var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        
+        // if (webhook == null) 
+        //     return false;
 
-        Console.WriteLine(store.StoreId);
-        var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        // _dbContext.WebhookRegistrations.Remove(webhook);
+        // await _dbContext.SaveChangesAsync();
+        //
+        // webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        //
+        // return webhook == null;
+        
+        var webhooks = await _dbContext.WebhookRegistrations
+            .Where(r => r.StoreId == store.StoreId).ToListAsync();
 
-        if (webhook == null) 
+        if (!webhooks.Any())
             return false;
         
-        _dbContext.WebhookRegistrations.Remove(webhook);
+        _dbContext.WebhookRegistrations.RemoveRange(webhooks);
         await _dbContext.SaveChangesAsync();
         
-        webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
+        var checkWebhooksExist = await _dbContext.WebhookRegistrations.AnyAsync(r => r.StoreId == store.StoreId);
         
-        return webhook == null;
+        return !checkWebhooksExist;
     }
 
     public async Task<bool> DeleteShopifyWebhookAsync(long webhookId)
