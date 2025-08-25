@@ -7,4 +7,5 @@ public interface IShopifyWebhookRepository
 {
     Task<CreateWebhookRegistrationDTO> SetShopifyWebhookAsync(CreateWebhookRegistrationDTO registration);
     Task<bool> DeleteShopifyWebhookAsync(Shop shop);
+    Task<bool> DeleteShopifyWebhookAsync(long shopifyWebhookId);
 }

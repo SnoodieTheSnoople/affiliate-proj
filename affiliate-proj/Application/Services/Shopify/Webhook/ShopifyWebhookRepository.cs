@@ -59,4 +59,9 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
         
         return webhook == null;
     }
+
+    public async Task<bool> DeleteShopifyWebhookAsync(long webhookId)
+    {
+        throw new NotImplementedException();
+    }
 }
