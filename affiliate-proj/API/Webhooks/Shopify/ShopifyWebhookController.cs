@@ -23,23 +23,31 @@ namespace affiliate_proj.API.Webhooks.Shopify
         [HttpPost("app/uninstalled")]
         public async Task<IActionResult> AppUninstalledAsync()
         {
-            Request.EnableBuffering();
+            try
+            {
+                Request.EnableBuffering();
             
-            using var reader = new StreamReader(Request.Body, leaveOpen: true);
-            var body = await reader.ReadToEndAsync();
+                using var reader = new StreamReader(Request.Body, leaveOpen: true);
+                var body = await reader.ReadToEndAsync();
             
-            Request.Body.Position = 0;
+                Request.Body.Position = 0;
             
-            var isValid = await _shopifyRequestValidationUtility.IsAuthenticWebhookAsync(Request.Headers, Request.Body,
-                _configuration.GetValue<string>("Shopify:ApiSecret"));
+                var isValid = await _shopifyRequestValidationUtility.IsAuthenticWebhookAsync(Request.Headers, Request.Body,
+                    _configuration.GetValue<string>("Shopify:ApiSecret"));
             
-            if (!isValid)
-                return BadRequest();
+                if (!isValid)
+                    return BadRequest();
             
-            var shop = Newtonsoft.Json.JsonConvert.DeserializeObject<Shop>(body);
-            await _shopifyWebhookService.RemoveWebhookAsync(shop);
-            // TODO: Remove store from database using storeId or domain. 
-            return Ok();
+                var shop = Newtonsoft.Json.JsonConvert.DeserializeObject<Shop>(body);
+                await _shopifyWebhookService.RemoveWebhookAsync(shop);
+                // TODO: Remove store from database using storeId or domain. 
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost("set-webhook")]
