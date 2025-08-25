@@ -49,8 +49,12 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
     {
         var id = shop.Id;
         var store = await _dbContext.Stores.FirstOrDefaultAsync(s => s.ShopifyId == id);
+        
         var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.StoreId == store.StoreId);
         
-        throw new NotImplementedException();
+        _dbContext.WebhookRegistrations.Remove(webhook);
+        await _dbContext.SaveChangesAsync();
+
+        return null;
     }
 }
