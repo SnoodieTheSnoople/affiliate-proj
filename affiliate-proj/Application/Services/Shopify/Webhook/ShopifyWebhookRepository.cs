@@ -62,6 +62,12 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
 
     public async Task<bool> DeleteShopifyWebhookAsync(long webhookId)
     {
-        throw new NotImplementedException();
+        var webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.ShopifyWebhookId == webhookId);
+        _dbContext.WebhookRegistrations.Remove(webhook);
+        await _dbContext.SaveChangesAsync();
+        
+        webhook = await _dbContext.WebhookRegistrations.FirstOrDefaultAsync(r => r.ShopifyWebhookId == webhookId);
+        
+        return webhook == null;
     }
 }
