@@ -98,7 +98,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
         {
             try
             {
-                await _shopifyWebhookService.RegisterWebhookAsync(shop, accessToken);
+                await _shopifyWebhookService.RegisterWebhookAsync(shop, accessToken, newTopic);
                 var webhooks = await _shopifyWebhookService.GetAllWebhooksAsync(shop, accessToken);
                 return Ok(webhooks);
             }
