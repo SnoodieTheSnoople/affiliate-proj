@@ -16,7 +16,10 @@ namespace affiliate_proj.API.Webhooks.Shopify
         private readonly IShopifyStoreHelper _shopifyStoreHelper;
         private readonly IStoreService _storeService;
 
-        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, IShopifyRequestValidationUtility shopifyRequestValidationUtility, IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, IStoreService storeService)
+        public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, 
+            IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
+            IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, 
+            IStoreService storeService)
         {
             _shopifyWebhookService = shopifyWebhookService;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -149,7 +152,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
         }
 
         [HttpDelete("delete-webhook")]
-        public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken, [FromQuery] long webhookId)
+        public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken,
+            [FromQuery] long webhookId)
         {
             try
             {
