@@ -25,45 +25,19 @@ public class ShopifyWebhookService : IShopifyWebhookService
     public async Task RegisterWebhookAsync(string shop, string accessToken, string newTopic)
     {
         var webhookService = new WebhookService(shop, accessToken);
+        var url = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/webhooks/shopifywebhook/{newTopic.Trim()}";
         
-        // Console.WriteLine(_configuration.GetValue<string>("Shopify:BaseUrl"));
-        var url = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/webhooks/shopifywebhook/app/uninstalled";
-        // Console.WriteLine(url);
-        
-        var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
-
-        // TODO: Change to register a list of webhooks stored in appsettings.json
-        var appUninstalledWebhook = new ShopifySharp.Webhook()
+        var addWebhook = new ShopifySharp.Webhook()
         {
             Address = url,
             CreatedAt = DateTime.Now,
-            Topic = "app/uninstalled",
+            Topic = newTopic.Trim(),
             Format = "json"
         };
         
-        await webhookService.CreateAsync(appUninstalledWebhook);
-        
-        // TODO: Move to own method to reduce bloat
-        var webhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
-
-        var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shop);
-
-        using var webhooks = webhooksEnum.Items.GetEnumerator();
-        while (webhooks.MoveNext())
-        {
-            var item = webhooks.Current;
-            var webhookEntry = new CreateWebhookRegistrationDTO
-            {
-                StoreUrl = shop,
-                ShopifyWebhookId = (long)item.Id!,
-                Topic = item.Topic,
-                Format = item.Format,
-                RegisteredAt = item.CreatedAt.Value.ToUniversalTime(),
-                StoreId = storeDetails.StoreId,
-            };
-
-            await _shopifyWebhookRepository.SetShopifyWebhookAsync(webhookEntry);
-        }
+        await webhookService.CreateAsync(addWebhook);
+        var registeredWebhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
+        await AddAllWebhooksToDb(shop, registeredWebhooksEnum);
     }
     
     public async Task RegisterWebhooksAsync(string shop, string accessToken)
