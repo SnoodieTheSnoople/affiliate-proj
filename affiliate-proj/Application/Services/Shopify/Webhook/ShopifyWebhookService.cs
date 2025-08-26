@@ -11,12 +11,15 @@ public class ShopifyWebhookService : IShopifyWebhookService
     private readonly IConfiguration _configuration;
     private readonly IShopifyStoreHelper  _shopifyStoreHelper;
     private readonly IShopifyWebhookRepository _shopifyWebhookRepository;
+    private readonly ILogger<ShopifyWebhookService> _logger;
 
-    public ShopifyWebhookService(IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, IShopifyWebhookRepository shopifyWebhookRepository)
+    public ShopifyWebhookService(IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, 
+        IShopifyWebhookRepository shopifyWebhookRepository, ILogger<ShopifyWebhookService> logger)
     {
         _configuration = configuration;
         _shopifyStoreHelper = shopifyStoreHelper;
         _shopifyWebhookRepository = shopifyWebhookRepository;
+        _logger = logger;
     }
 
     public async Task RegisterWebhookAsync(string shop, string accessToken, string newTopic)
