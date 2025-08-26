@@ -88,7 +88,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
         {
             throw new NotImplementedException();
         }
-
+        
+        // Used for testing. DO NOT USE FOR PROD
         [HttpPost("set-single-webhook")]
         public async Task<IActionResult> SetSingleWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken,
             [FromQuery] string newTopic)
