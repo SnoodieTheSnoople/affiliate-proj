@@ -63,6 +63,28 @@ public class ShopifyWebhookService : IShopifyWebhookService
         }
     }
     
+    public async Task RegisterWebhooksAsync(string shop, string accessToken)
+    {
+        var webhookService = new WebhookService(shop, accessToken);
+        
+        var baseUrl = _configuration.GetValue<string>("Shopify:BaseUrl");
+        
+        var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
+
+        foreach (var webhook in listOfWebhooksRegistration)
+        {
+            var registerWebhook = new ShopifySharp.Webhook()
+            {
+                Address = $"{baseUrl}/api/webhooks/shopifywebhook/{webhook.Trim()}",
+                CreatedAt = DateTime.Now,
+                Topic = webhook.Trim(),
+                Format = "json"
+            };
+            
+            await webhookService.CreateAsync(registerWebhook);
+        }
+    }
+    
     public async Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
     {
         var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
