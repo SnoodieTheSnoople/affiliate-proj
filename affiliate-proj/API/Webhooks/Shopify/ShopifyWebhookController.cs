@@ -91,6 +91,13 @@ namespace affiliate_proj.API.Webhooks.Shopify
             }
         }
 
+        [HttpPost("update-webhooks")]
+        public async Task<IActionResult> UpdateAllWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken,
+            [FromQuery] long webhookId)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete("delete-webhook")]
         public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken, [FromQuery] long webhookId)
         {
