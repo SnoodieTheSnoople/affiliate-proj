@@ -97,7 +97,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
         return webhooksEnumerable;
     }
 
-    public async Task UpdateAllWebhookAsync(string shop, string accessToken)
+    public async Task UpdateAllWebhooksAsync(string shop, string accessToken)
     {
         var webhookService =  new WebhookService(shop, accessToken);
         var baseUrl = _configuration.GetValue<string>("Shopify:BaseUrl");
