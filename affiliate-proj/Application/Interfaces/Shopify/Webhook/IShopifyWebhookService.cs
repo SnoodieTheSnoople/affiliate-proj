@@ -11,4 +11,5 @@ public interface IShopifyWebhookService
     Task UpdateAllWebhookAsync(string shop, string accessToken, long webhookId);
     Task RemoveWebhookAsync(string shop, string accessToken, long webhookId);
     Task RemoveWebhookAsync(Shop shop);
+    Task RemoveWebhooksAsync(Guid storeId);
 }

@@ -122,6 +122,11 @@ public class ShopifyWebhookService : IShopifyWebhookService
         await _shopifyWebhookRepository.DeleteShopifyWebhooksAsync(shop);
     }
 
+    public async Task RemoveWebhooksAsync(Guid storeId)
+    {
+        await _shopifyWebhookRepository.DeleteShopifyWebhooksAsync(storeId);
+    }
+
     private async Task AddAllWebhooksToDb(string shop, ListResult<ShopifySharp.Webhook> registeredWebhooksEnum)
     {
         var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shop);
