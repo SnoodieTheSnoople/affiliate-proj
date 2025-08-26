@@ -15,8 +15,14 @@ public class ShopifyWebhookRepository : IShopifyWebhookRepository
     {
         _dbContext = dbContext;
     }
-    public async Task<CreateWebhookRegistrationDTO> SetShopifyWebhookAsync(CreateWebhookRegistrationDTO registration)
+    public async Task<CreateWebhookRegistrationDTO?> SetShopifyWebhookAsync(CreateWebhookRegistrationDTO registration)
     {
+        var checkWebhookRegistrationExists = await _dbContext.WebhookRegistrations
+            .FirstOrDefaultAsync(r => r.WebhookId == registration.WebhookId);
+
+        if (checkWebhookRegistrationExists != null)
+            return null;
+        
         var newRegistration = new WebhookRegistrations
         {
             StoreUrl = registration.StoreUrl,
