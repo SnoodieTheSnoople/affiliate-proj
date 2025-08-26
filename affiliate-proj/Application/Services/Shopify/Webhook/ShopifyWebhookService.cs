@@ -63,7 +63,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
             catch (Exception e)
             {
                 // Pass, continue to iterate.
-                Console.WriteLine(e.Message);
+                _logger.LogError(e.Message);
             }
         }
         
