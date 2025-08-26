@@ -67,6 +67,12 @@ namespace affiliate_proj.API.Webhooks.Shopify
             throw new NotImplementedException();
         }
 
+        [HttpPost("orders/cancelled")]
+        public async Task<IActionResult> CancelOrderAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPost("set-webhook")]
         public async Task<IActionResult> SetWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
