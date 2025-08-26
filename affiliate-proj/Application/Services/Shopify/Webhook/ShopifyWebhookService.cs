@@ -83,6 +83,9 @@ public class ShopifyWebhookService : IShopifyWebhookService
             
             await webhookService.CreateAsync(registerWebhook);
         }
+        
+        var registeredWebhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
+        await AddAllWebhooksToDb(shop, registeredWebhooksEnum);
     }
     
     public async Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
@@ -117,5 +120,27 @@ public class ShopifyWebhookService : IShopifyWebhookService
     public async Task RemoveWebhookAsync(Shop shop)
     {
         await _shopifyWebhookRepository.DeleteShopifyWebhooksAsync(shop);
+    }
+
+    private async Task AddAllWebhooksToDb(string shop, ListResult<ShopifySharp.Webhook> registeredWebhooksEnum)
+    {
+        var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shop);
+
+        using var webhooks = registeredWebhooksEnum.Items.GetEnumerator();
+        while (webhooks.MoveNext())
+        {
+            var item = webhooks.Current;
+            var webhookEntry = new CreateWebhookRegistrationDTO
+            {
+                StoreUrl = shop,
+                ShopifyWebhookId = (long)item.Id!,
+                Topic = item.Topic,
+                Format = item.Format,
+                RegisteredAt = item.CreatedAt.Value.ToUniversalTime(),
+                StoreId = storeDetails.StoreId,
+            };
+
+            await _shopifyWebhookRepository.SetShopifyWebhookAsync(webhookEntry);
+        }
     }
 }
