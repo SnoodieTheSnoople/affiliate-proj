@@ -150,6 +150,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
         }
         
         /* \\\\\\\\\\\\\\\ BELOW IS PREDOMINANTLY USED FOR DEV AND NOT INTENDED FOR PROD /////////////// */
+        // TODO: Consider using [Authorize] for these endpoints below
         
         // Used for testing. DO NOT USE FOR PROD
         [HttpPost("set-single-webhook")]
