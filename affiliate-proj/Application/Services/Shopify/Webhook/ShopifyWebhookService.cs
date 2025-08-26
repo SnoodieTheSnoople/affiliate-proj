@@ -26,6 +26,8 @@ public class ShopifyWebhookService : IShopifyWebhookService
         // Console.WriteLine(_configuration.GetValue<string>("Shopify:BaseUrl"));
         var url = $"{_configuration.GetValue<string>("Shopify:BaseUrl")}/api/webhooks/shopifywebhook/app/uninstalled";
         // Console.WriteLine(url);
+        
+        var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
 
         // TODO: Change to register a list of webhooks stored in appsettings.json
         var appUninstalledWebhook = new ShopifySharp.Webhook()
