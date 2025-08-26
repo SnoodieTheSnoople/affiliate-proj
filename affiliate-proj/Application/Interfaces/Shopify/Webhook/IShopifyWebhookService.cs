@@ -5,7 +5,7 @@ namespace affiliate_proj.Application.Interfaces.Shopify.Webhook;
 
 public interface IShopifyWebhookService
 {
-    Task RegisterWebhookAsync(string shop, string accessToken);
+    Task RegisterWebhookAsync(string shop, string accessToken, string newTopic);
     Task RegisterWebhooksAsync(string shop, string accessToken);
     Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken);
     Task UpdateAllWebhooksAsync(string shop, string accessToken);

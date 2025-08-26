@@ -19,7 +19,7 @@ public class ShopifyWebhookService : IShopifyWebhookService
         _shopifyWebhookRepository = shopifyWebhookRepository;
     }
 
-    public async Task RegisterWebhookAsync(string shop, string accessToken)
+    public async Task RegisterWebhookAsync(string shop, string accessToken, string newTopic)
     {
         var webhookService = new WebhookService(shop, accessToken);
         
