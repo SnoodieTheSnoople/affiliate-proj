@@ -72,6 +72,11 @@ public class ShopifyWebhookService : IShopifyWebhookService
         return webhooksEnumerable;
     }
 
+    public async Task UpdateAllWebhookAsync(string shop, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task RemoveWebhookAsync(string shop, string accessToken, long webhookId)
     {
         var webhookService = new WebhookService(shop, accessToken);
