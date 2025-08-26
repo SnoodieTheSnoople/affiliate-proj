@@ -90,7 +90,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
         }
 
         [HttpPost("set-single-webhook")]
-        public async Task<IActionResult> SetSingleWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
+        public async Task<IActionResult> SetSingleWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken,
+            [FromQuery] string newTopic)
         {
             try
             {
