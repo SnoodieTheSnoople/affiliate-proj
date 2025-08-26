@@ -61,6 +61,12 @@ namespace affiliate_proj.API.Webhooks.Shopify
             }
         }
 
+        [HttpPost("orders/create")]
+        public async Task<IActionResult> CreateOrderAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPost("set-webhook")]
         public async Task<IActionResult> SetWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
