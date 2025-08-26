@@ -72,9 +72,14 @@ public class ShopifyWebhookService : IShopifyWebhookService
         return webhooksEnumerable;
     }
 
-    public async Task UpdateAllWebhookAsync(string shop, string accessToken)
+    public async Task UpdateAllWebhookAsync(string shop, string accessToken, long webhookId)
     {
-        throw new NotImplementedException();
+        var baseUrl = _configuration.GetValue<string>("Shopify:BaseUrl");
+        var webhookService =  new WebhookService(shop, accessToken);
+        var webhook = await webhookService.UpdateAsync(webhookId, new ShopifySharp.Webhook()
+        {
+            Address = $"{baseUrl}/api/webhooks/shopifywebhook/app/uninstalled",
+        });
     }
 
     public async Task RemoveWebhookAsync(string shop, string accessToken, long webhookId)
