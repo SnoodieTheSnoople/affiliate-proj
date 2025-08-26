@@ -77,6 +77,22 @@ namespace affiliate_proj.API.Webhooks.Shopify
             }
         }
         
+        [HttpPost("set-webhooks")]
+        public async Task<IActionResult> SetWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken)
+        {
+            try
+            {
+                await _shopifyWebhookService.RegisterWebhooksAsync(shop, accessToken);
+                var webhooks = await _shopifyWebhookService.GetAllWebhooksAsync(shop, accessToken);
+                return Ok(webhooks);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+        }
+        
         [HttpPost("get-webhooks")]
         public async Task<IActionResult> GetWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
