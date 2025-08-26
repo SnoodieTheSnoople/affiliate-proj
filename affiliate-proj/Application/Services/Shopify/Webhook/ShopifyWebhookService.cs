@@ -73,8 +73,6 @@ public class ShopifyWebhookService : IShopifyWebhookService
     
     public async Task<ListResult<ShopifySharp.Webhook>> GetAllWebhooksAsync(string shop, string accessToken)
     {
-        var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
-        Console.WriteLine(String.Join(", ", listOfWebhooksRegistration));
         var webhookService = new WebhookService(shop, accessToken);
         var webhooksEnumerable = await webhookService.ListAsync();
         return webhooksEnumerable;
