@@ -136,12 +136,11 @@ namespace affiliate_proj.API.Webhooks.Shopify
         }
 
         [HttpPost("update-webhooks")]
-        public async Task<IActionResult> UpdateAllWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken,
-            [FromQuery] long webhookId)
+        public async Task<IActionResult> UpdateAllWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
             try
             {
-                await _shopifyWebhookService.UpdateAllWebhookAsync(shop, accessToken, webhookId);
+                await _shopifyWebhookService.UpdateAllWebhooksAsync(shop, accessToken);
                 return Ok();
             }
             catch (Exception e)
