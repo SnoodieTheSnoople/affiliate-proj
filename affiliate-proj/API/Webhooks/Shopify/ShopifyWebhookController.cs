@@ -152,8 +152,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
             throw new NotImplementedException();
         }
 
-        [HttpDelete("delete-webhook")]
-        public async Task<IActionResult> DeleteWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken,
+        [HttpDelete("delete-single-webhook")]
+        public async Task<IActionResult> DeleteSingleWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken,
             [FromQuery] long webhookId)
         {
             try
