@@ -95,6 +95,16 @@ namespace affiliate_proj.API.Webhooks.Shopify
         public async Task<IActionResult> UpdateAllWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken,
             [FromQuery] long webhookId)
         {
+            try
+            {
+                await _shopifyWebhookService.UpdateAllWebhookAsync(shop, accessToken, webhookId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
             throw new NotImplementedException();
         }
 
