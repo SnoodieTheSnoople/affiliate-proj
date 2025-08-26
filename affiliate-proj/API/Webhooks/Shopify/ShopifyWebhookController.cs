@@ -89,8 +89,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
             throw new NotImplementedException();
         }
 
-        [HttpPost("set-webhook")]
-        public async Task<IActionResult> SetWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
+        [HttpPost("set-single-webhook")]
+        public async Task<IActionResult> SetSingleWebhookAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
             try
             {
