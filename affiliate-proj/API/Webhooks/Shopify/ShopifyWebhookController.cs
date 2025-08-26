@@ -51,7 +51,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 if (shop != null)
                 {
                     var store = await _shopifyStoreHelper.GetStoreDetailsByShopifyStoreIdAsync((long) shop.Id!);
-                    await _shopifyWebhookService.RemoveWebhookAsync(shop);
+                    // await _shopifyWebhookService.RemoveWebhookAsync(shop);
+                    await _shopifyWebhookService.RemoveWebhooksAsync(store.StoreId);
                     await _storeService.DeleteStoreAsync(store.StoreId);
                     // TODO: Simply this condition and refactor RemoveWebhookAsync or overload method with StoreId
                 }
