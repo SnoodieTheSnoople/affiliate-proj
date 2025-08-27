@@ -22,4 +22,7 @@ public class User
     
     [Required]
     public string Email { get; set; }
+    
+    [Required]
+    public bool IsStoreOwner { get; set; }
 }
