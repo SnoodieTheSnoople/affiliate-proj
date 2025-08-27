@@ -10,14 +10,12 @@ namespace affiliate_proj.Application.Services.Account.Creator;
 public class CreatorService : ICreatorService
 {
     private readonly PostgresDbContext _postgresDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAccountHelper _accountHelper;
 
-    public CreatorService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor,
+    public CreatorService(PostgresDbContext postgresDbContext,
         IAccountHelper accountHelper)
     {
         _postgresDbContext = postgresDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _accountHelper = accountHelper;
     }
 

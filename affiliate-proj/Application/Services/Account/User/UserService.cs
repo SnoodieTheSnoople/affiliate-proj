@@ -9,14 +9,12 @@ namespace affiliate_proj.Application.Services.Account.User;
 public class UserService : IUserService
 {
     private readonly PostgresDbContext _postgresDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAccountHelper _accountHelper;
 
-    public UserService(PostgresDbContext postgresDbContext, IHttpContextAccessor httpContextAccessor, 
+    public UserService(PostgresDbContext postgresDbContext, 
         IAccountHelper accountHelper)
     {
         _postgresDbContext = postgresDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _accountHelper = accountHelper;
     }
     
