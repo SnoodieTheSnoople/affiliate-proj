@@ -1,9 +1,6 @@
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
-using affiliate_proj.Core.DTOs.Account;
-using affiliate_proj.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using ShopifySharp;
 using ShopifySharp.Utilities;
@@ -124,7 +121,6 @@ public class ShopifyAuthService :  IShopifyAuthService
     {
         var shopDetails = await _shopifyStoreHelper.GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
         if (shopDetails == null) return;
-        _logger.LogInformation($"Obtained shop: {shopDetails.Name} & {shopDetails.Id}");
         
         var checkStoreExists = await _shopifyStoreHelper.GetStoreDetailsByShopifyStoreIdAsync((long) shopDetails.Id);
         _logger.LogInformation($"Is null? {checkStoreExists==null}");
