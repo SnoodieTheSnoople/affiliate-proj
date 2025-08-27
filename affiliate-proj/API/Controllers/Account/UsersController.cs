@@ -67,6 +67,10 @@ namespace affiliate_proj.API.Controllers.Account
             {
                 return Unauthorized(ex);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("delete-user")]
@@ -80,6 +84,10 @@ namespace affiliate_proj.API.Controllers.Account
             catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
         
@@ -97,6 +105,10 @@ namespace affiliate_proj.API.Controllers.Account
             {
                 return Unauthorized(ex);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("update-username")]
@@ -112,6 +124,10 @@ namespace affiliate_proj.API.Controllers.Account
             catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -129,6 +145,10 @@ namespace affiliate_proj.API.Controllers.Account
             {
                 return Unauthorized(ex);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("/creator-profile/{userId}")]
@@ -143,6 +163,10 @@ namespace affiliate_proj.API.Controllers.Account
             catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -161,6 +185,10 @@ namespace affiliate_proj.API.Controllers.Account
             {
                 return Unauthorized(ex);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("/update-lastname")]
@@ -177,6 +205,10 @@ namespace affiliate_proj.API.Controllers.Account
             catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
