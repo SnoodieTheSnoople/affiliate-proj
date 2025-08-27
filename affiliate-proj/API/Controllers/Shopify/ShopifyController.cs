@@ -61,8 +61,6 @@ namespace affiliate_proj.API.Controllers.Shopify
                 if (shopInfo == null)
                     return BadRequest("Invalid Shopify Store ID");
                 
-                // var addedStore = await _shopifyAuthService.SetShopifyStoreAsync(shopInfo, authorisation);
-                
                 return Ok(new {
                     shop, authorisation.AccessToken, authorisation.GrantedScopes,shopInfo.Name, shopInfo.Email,
                     shopInfo.Country, shopInfo.Domain, shopInfo.Id, shopInfo.Phone, shopInfo.Description,
