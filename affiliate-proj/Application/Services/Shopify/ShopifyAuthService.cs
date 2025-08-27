@@ -158,15 +158,6 @@ public class ShopifyAuthService :  IShopifyAuthService
         if(!isValidDomain) 
             throw new Exception("Internal Error 001: Shopify Domain Not Valid");
         
-        // var savedState = _memoryCache.Get($"ShopifyOAuthState-{state}").ToString();
-        // if (String.IsNullOrEmpty(savedState)) 
-        //     throw new Exception("Internal Error 003: No saved state");
-        //
-        // Console.WriteLine($"Saved State: {savedState}");
-        //
-        // if (!String.Equals(savedState, state)) 
-        //     throw new Exception("Internal Error 004: Invalid state");
-        
         if (!await _shopifyStateManager.VerifyStoreStateAsync(state))
             throw new Exception("Internal Error 003: Shopify State Not Valid");
         
