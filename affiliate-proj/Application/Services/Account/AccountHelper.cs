@@ -2,7 +2,7 @@
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 
-namespace affiliate_proj.Application.Services;
+namespace affiliate_proj.Application.Services.Account;
 
 public class AccountHelper : IAccountHelper
 {
