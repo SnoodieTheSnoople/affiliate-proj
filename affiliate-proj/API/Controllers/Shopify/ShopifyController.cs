@@ -35,10 +35,9 @@ namespace affiliate_proj.API.Controllers.Shopify
                 if (String.IsNullOrEmpty(userId)) 
                     return BadRequest();
                 
-                // var redirectUrl = await _shopifyAuthService.GenerateInstallUrlAsync(shop);
                 var redirectUrl = await _shopifyAuthService.GenerateInstallUrlWithUserIdAsync(shop, 
                     Guid.Parse(userId));
-                // return Redirect(redirectUrl);
+                
                 return Ok(redirectUrl);
             }
             catch (Exception e)
