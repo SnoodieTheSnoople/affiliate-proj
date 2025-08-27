@@ -38,6 +38,7 @@ namespace affiliate_proj.API.Controllers.Account
                     Email = request.Email,
                     PhoneNumber = request.PhoneNumber,
                     Username = request.Username,
+                    IsStoreOwner = request.IsStoreOwner
                 };
 
                 var returnedUserFromRequest = await _userService.SetUserAsync(newUserObjectMap, request.UserId);
