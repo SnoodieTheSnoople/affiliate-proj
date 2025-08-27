@@ -117,6 +117,11 @@ public class ShopifyAuthService :  IShopifyAuthService
         return authorisation;
     }
 
+    private async Task UpdateWebhooksAfterCallback(string shop, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task UpdateStoreAfterCallback(string shop, AuthorizationResult authorisation)
     {
         var shopDetails = await _shopifyStoreHelper.GetShopifyStoreInfoAsync(shop, authorisation.AccessToken);
