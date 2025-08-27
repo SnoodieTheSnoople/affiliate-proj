@@ -46,7 +46,11 @@ namespace affiliate_proj.API.Controllers.Account
             }
             catch (UnauthorizedAccessException ex)
             {
-                return Unauthorized(ex);
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
