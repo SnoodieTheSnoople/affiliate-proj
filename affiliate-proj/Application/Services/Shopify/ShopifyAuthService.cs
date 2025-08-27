@@ -106,6 +106,7 @@ public class ShopifyAuthService :  IShopifyAuthService
         if (await _shopifyStoreHelper.CheckStoreExistsByDomainAsync(shop))
         {
             await UpdateStoreAfterCallback(shop, authorisation);
+            await UpdateWebhooksAfterCallback(shop, authorisation.AccessToken);
         }
         else
         {
@@ -119,7 +120,24 @@ public class ShopifyAuthService :  IShopifyAuthService
 
     private async Task UpdateWebhooksAfterCallback(string shop, string accessToken)
     {
-        throw new NotImplementedException();
+        var currentWebhooksList = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
+        var registeredWebhooksEnum = await _shopifyWebhookService.GetAllWebhooksAsync(shop, accessToken);
+
+        if (!registeredWebhooksEnum.Items.Any())
+        {
+            await _shopifyWebhookService.RegisterWebhooksAsync(shop, accessToken);
+            return;
+        }
+        
+        var registeredTopics = registeredWebhooksEnum.Items.Select(x => x.Topic).ToHashSet();
+
+        foreach (var topic in currentWebhooksList)
+        {
+            if (!registeredTopics.Contains(topic))
+            {
+                await _shopifyWebhookService.RegisterWebhookAsync(shop, accessToken, topic);
+            }
+        }
     }
 
     private async Task UpdateStoreAfterCallback(string shop, AuthorizationResult authorisation)
