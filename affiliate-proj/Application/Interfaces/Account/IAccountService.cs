@@ -1,7 +1,6 @@
 ﻿using affiliate_proj.Core.DTOs.Account;
-using affiliate_proj.Core.Entities;
 
-namespace affiliate_proj.Application.Interfaces;
+namespace affiliate_proj.Application.Interfaces.Account;
 
 public interface IAccountService
 { 

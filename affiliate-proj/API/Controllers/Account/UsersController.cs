@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Interfaces.Account;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Account.User;
 using affiliate_proj.Core.DTOs.Account;
