@@ -9,5 +9,5 @@ public class UserDTO
     public DateTime CreatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
     public string Email { get; set; }
-    public bool? IsStoreOwner { get; set; }
+    public bool IsStoreOwner { get; set; }
 }
