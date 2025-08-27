@@ -45,9 +45,15 @@ public class ShopifyWebhookService : IShopifyWebhookService
         var webhookService = new WebhookService(shop, accessToken);
         var baseUrl = _configuration.GetValue<string>("Shopify:BaseUrl");
         var listOfWebhooksRegistration = _configuration.GetSection("Shopify:Webhooks").Get<List<string>>();
+        
+        var currentlyRegisteredEnum = await GetAllWebhooksAsync(shop, accessToken);
+        var registeredTopics = currentlyRegisteredEnum.Items.Select(x => x.Topic).ToHashSet();
 
         foreach (var webhook in listOfWebhooksRegistration)
         {
+            if (registeredTopics.Contains(webhook.Trim()))
+                continue; 
+            
             try
             {
                 var registerWebhook = new ShopifySharp.Webhook()
