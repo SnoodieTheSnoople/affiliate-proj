@@ -31,4 +31,11 @@ public class AccountHelper : IAccountHelper
         if (user == null) return false;
         return true;
     }
+
+    public async Task<bool> CheckUserIsStoreOwner(Guid userId)
+    {
+        var user = await _postgresDbContext.Users.FindAsync(userId);
+        if (user == null) return false;
+        return user.IsStoreOwner;
+    }
 }
