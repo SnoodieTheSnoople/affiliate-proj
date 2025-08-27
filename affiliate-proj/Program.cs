@@ -18,7 +18,7 @@ using ShopifySharp;
 using ShopifySharp.Utilities;
 using Supabase;
 using IUserService = affiliate_proj.Application.Interfaces.Account.User.IUserService;
-using UserService = affiliate_proj.Application.Services.User.UserService;
+using UserService = affiliate_proj.Application.Services.Account.User.UserService;
 
 namespace affiliate_proj;
 

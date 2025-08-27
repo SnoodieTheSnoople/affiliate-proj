@@ -3,7 +3,7 @@ using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Account.User;
 using affiliate_proj.Core.DTOs.Account;
 
-namespace affiliate_proj.Application.Services.User;
+namespace affiliate_proj.Application.Services.Account.User;
 
 public class UserService : IUserService
 {
