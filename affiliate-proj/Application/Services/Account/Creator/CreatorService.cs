@@ -4,7 +4,7 @@ using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
 
-namespace affiliate_proj.Application.Services.Creator;
+namespace affiliate_proj.Application.Services.Account.Creator;
 
 public class CreatorService : ICreatorService
 {

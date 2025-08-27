@@ -6,7 +6,7 @@ using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
-using affiliate_proj.Application.Services.Creator;
+using affiliate_proj.Application.Services.Account.Creator;
 using affiliate_proj.Application.Services.Shopify;
 using affiliate_proj.Application.Services.Shopify.Webhook;
 using affiliate_proj.Application.Services.Store;
