@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Interfaces.Account;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Account;

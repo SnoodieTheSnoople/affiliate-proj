@@ -1,4 +1,4 @@
-﻿namespace affiliate_proj.Application.Interfaces;
+﻿namespace affiliate_proj.Application.Interfaces.Account;
 
 public interface IAccountHelper
 {

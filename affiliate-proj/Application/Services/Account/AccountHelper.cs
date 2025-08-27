@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
+using affiliate_proj.Application.Interfaces.Account;
 
 namespace affiliate_proj.Application.Services.Account;
 
