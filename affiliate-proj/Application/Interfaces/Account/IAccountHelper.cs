@@ -4,4 +4,5 @@ public interface IAccountHelper
 {
     string GetUserIdFromAccessToken();
     bool CheckUserExists(Guid userId);
+    Task<bool> CheckUserIsStoreOwner(Guid userId);
 }
