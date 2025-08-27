@@ -33,7 +33,10 @@ namespace affiliate_proj.API.Controllers.Shopify
             {
                 var userId = _accountHelper.GetUserIdFromAccessToken();
                 if (String.IsNullOrEmpty(userId)) 
-                    return BadRequest();
+                    return Unauthorized();
+
+                if (!await _accountHelper.CheckUserIsStoreOwnerAsync(Guid.Parse(userId)))
+                    return Unauthorized();
                 
                 var redirectUrl = await _shopifyAuthService.GenerateInstallUrlWithUserIdAsync(shop, 
                     Guid.Parse(userId));
