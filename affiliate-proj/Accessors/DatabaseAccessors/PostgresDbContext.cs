@@ -25,6 +25,7 @@ public class PostgresDbContext : DbContext
             builder.Property(user => user.DeletedAt).HasColumnName("deleted_at");
             builder.Property(user => user.PhoneNumber).HasColumnName("phone_number");
             builder.Property(user => user.Email).HasColumnName("email");
+            builder.Property(user => user.IsStoreOwner).HasColumnName("is_store_owner");
         });
 
         modelBuilder.Entity<Creator>(builder =>
