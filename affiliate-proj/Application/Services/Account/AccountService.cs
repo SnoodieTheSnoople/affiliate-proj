@@ -8,20 +8,15 @@ namespace affiliate_proj.Application.Services.Account;
 
 public class AccountService : IAccountService
 {
-    private readonly SupabaseAccessor _supabaseAccessor;
     private readonly PostgresDbContext _postgresDbContext;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IAccountHelper _accountHelper;
     private readonly IUserService _userService;
     private readonly ICreatorService _creatorService;
 
-    public AccountService(SupabaseAccessor supabaseAccessor,  PostgresDbContext postgresDbContext,  
-        IHttpContextAccessor httpContextAccessor, IAccountHelper accountHelper, IUserService userService, 
+    public AccountService(PostgresDbContext postgresDbContext, IAccountHelper accountHelper, IUserService userService, 
         ICreatorService creatorService)
     {
-        _supabaseAccessor = supabaseAccessor;
         _postgresDbContext = postgresDbContext;
-        _httpContextAccessor = httpContextAccessor;
         _accountHelper = accountHelper;
         _userService = userService;
         _creatorService = creatorService;
