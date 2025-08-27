@@ -230,5 +230,20 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete("delete-webhooks")]
+        public async Task<IActionResult> DeleteAllWebhooksAsync([FromQuery] string shop, [FromQuery] string accessToken)
+        {
+            try
+            {
+                await _shopifyWebhookService.RemoveAllWebhooksAsync(shop, accessToken);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
