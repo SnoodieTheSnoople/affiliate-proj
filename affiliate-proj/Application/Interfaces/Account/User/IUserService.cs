@@ -1,6 +1,6 @@
 ﻿using affiliate_proj.Core.DTOs.Account;
 
-namespace affiliate_proj.Application.Interfaces.User;
+namespace affiliate_proj.Application.Interfaces.Account.User;
 
 public interface IUserService
 {

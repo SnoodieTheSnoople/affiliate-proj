@@ -1,6 +1,6 @@
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Account.Creator;
-using affiliate_proj.Application.Interfaces.User;
+using affiliate_proj.Application.Interfaces.Account.User;
 using affiliate_proj.Core.DTOs.Account;
 using affiliate_proj.Core.Entities;
 using affiliate_proj.Core.RequestModels;

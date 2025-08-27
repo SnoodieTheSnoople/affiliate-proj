@@ -1,6 +1,6 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
-using affiliate_proj.Application.Interfaces.User;
+using affiliate_proj.Application.Interfaces.Account.User;
 using affiliate_proj.Core.DTOs.Account;
 
 namespace affiliate_proj.Application.Services.User;

@@ -17,7 +17,7 @@ using Scalar.AspNetCore;
 using ShopifySharp;
 using ShopifySharp.Utilities;
 using Supabase;
-using IUserService = affiliate_proj.Application.Interfaces.User.IUserService;
+using IUserService = affiliate_proj.Application.Interfaces.Account.User.IUserService;
 using UserService = affiliate_proj.Application.Services.User.UserService;
 
 namespace affiliate_proj;
