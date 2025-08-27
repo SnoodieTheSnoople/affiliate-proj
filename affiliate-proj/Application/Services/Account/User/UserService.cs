@@ -33,7 +33,8 @@ public class UserService : IUserService
                 Username = userDto.Username,
                 PhoneNumber = userDto.PhoneNumber,
                 Email = userDto.Email,
-                DeletedAt = null
+                DeletedAt = null,
+                IsStoreOwner = userDto.IsStoreOwner
             };
 
             _postgresDbContext.Users.Add(user);
@@ -47,6 +48,7 @@ public class UserService : IUserService
                 PhoneNumber = returnUserEntry.PhoneNumber,
                 Email = returnUserEntry.Email,
                 CreatedAt = returnUserEntry.CreatedAt,
+                IsStoreOwner = returnUserEntry.IsStoreOwner
             };
         }
         catch (Exception ex)
@@ -71,6 +73,7 @@ public class UserService : IUserService
                 Username = user.Username,
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
+                IsStoreOwner = user.IsStoreOwner
             };
         }
         catch (Exception ex)
@@ -96,6 +99,7 @@ public class UserService : IUserService
             user.Username = $"deleted_{piiReplacementId}";
             user.PhoneNumber = $"deleted_{piiReplacementId}";
             user.DeletedAt = DateTime.UtcNow;
+            user.IsStoreOwner = false;
             await _postgresDbContext.SaveChangesAsync();
 
             user = await _postgresDbContext.Users.FindAsync(userId);
@@ -108,6 +112,7 @@ public class UserService : IUserService
                 Email = user.Email,
                 CreatedAt = user.CreatedAt,
                 DeletedAt = user.DeletedAt,
+                IsStoreOwner = user.IsStoreOwner
             };
         }
         catch (Exception ex)
@@ -127,8 +132,7 @@ public class UserService : IUserService
                 throw new UnauthorizedAccessException("User not found.");
             
             var user = await _postgresDbContext.Users.FindAsync(userId);
-            if (user == null) return null;
-            /*TODO: Consider a way to differentiate between internal error, or issue with no user found.*/
+            if (user == null) throw new NullReferenceException("User not found.");
             
             user.Email = email;
             await _postgresDbContext.SaveChangesAsync();
@@ -142,6 +146,7 @@ public class UserService : IUserService
                 PhoneNumber = user.PhoneNumber,
                 CreatedAt = user.CreatedAt,
                 Email = user.Email,
+                IsStoreOwner = user.IsStoreOwner
             };
         }
         catch (Exception e)
@@ -176,6 +181,7 @@ public class UserService : IUserService
                 PhoneNumber = user.PhoneNumber,
                 Email = user.Email,
                 CreatedAt = user.CreatedAt,
+                IsStoreOwner = user.IsStoreOwner
             };
         }
         catch (Exception e)
@@ -210,6 +216,7 @@ public class UserService : IUserService
                 PhoneNumber = user.PhoneNumber,
                 CreatedAt = user.CreatedAt,
                 Email = user.Email,
+                IsStoreOwner = user.IsStoreOwner
             };
         }
         catch (Exception e)

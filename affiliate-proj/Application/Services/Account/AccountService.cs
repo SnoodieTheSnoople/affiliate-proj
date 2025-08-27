@@ -39,6 +39,7 @@ public class AccountService : IAccountService
         user.Username = $"deleted_{piiReplacement}";
         user.PhoneNumber = $"deleted_{piiReplacement}";
         user.DeletedAt = DateTime.UtcNow;
+        user.IsStoreOwner = false;
         
         await _postgresDbContext.SaveChangesAsync();
         
@@ -52,6 +53,7 @@ public class AccountService : IAccountService
             CreatedAt = user.CreatedAt,
             Email = user.Email,
             DeletedAt = user.DeletedAt,
+            IsStoreOwner = user.IsStoreOwner
         };
     }
 
