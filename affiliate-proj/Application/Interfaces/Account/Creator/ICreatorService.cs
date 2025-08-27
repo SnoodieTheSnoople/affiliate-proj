@@ -1,6 +1,6 @@
 ﻿using affiliate_proj.Core.DTOs.Account;
 
-namespace affiliate_proj.Application.Interfaces.Creator;
+namespace affiliate_proj.Application.Interfaces.Account.Creator;
 
 public interface ICreatorService
 {

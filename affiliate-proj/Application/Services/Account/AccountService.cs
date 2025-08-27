@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
-using affiliate_proj.Application.Interfaces.Creator;
+using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.User;
 using affiliate_proj.Core.DTOs.Account;
 using Microsoft.EntityFrameworkCore;
