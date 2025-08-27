@@ -119,7 +119,14 @@ public class ShopifyWebhookService : IShopifyWebhookService
     
     public async Task RemoveAllWebhooksAsync(string shop, string accessToken)
     {
-        throw new NotImplementedException();
+        var webhookService = new WebhookService(shop, accessToken);
+        var currentWebhooksEnum = await GetAllWebhooksAsync(shop, accessToken);
+        var webhookIds = currentWebhooksEnum.Items.Select(x => x.Id).ToHashSet();
+
+        foreach (var webhookId in webhookIds)
+        {
+            await webhookService.DeleteAsync((long) webhookId!);
+        }
     }
 
     private async Task AddAllWebhooksToDb(string shop, ListResult<ShopifySharp.Webhook> registeredWebhooksEnum)
