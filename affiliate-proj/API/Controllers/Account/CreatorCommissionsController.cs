@@ -26,4 +26,10 @@ public class CreatorCommissionsController
     {
         throw new NotImplementedException();
     }
+
+    [HttpDelete("delete-commission-rate")]
+    public async Task<IActionResult> DeleteCommissionRate()
+    {
+        throw new NotImplementedException();
+    }
 }
