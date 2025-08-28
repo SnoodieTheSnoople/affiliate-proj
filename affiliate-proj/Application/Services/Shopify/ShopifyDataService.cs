@@ -73,16 +73,6 @@ public class ShopifyDataService : IShopifyDataService
         };
         
         var graphResult = await graphService.PostAsync<CustomListProductsResult>(request);
-
-        foreach (var node in graphResult.Data.Products.Nodes)
-        {
-            if (node.id is not null)
-                Console.WriteLine("Product ID is: " + node.id);
-        }
-        
-        if ((bool)graphResult.Data.Products.PageInfo.hasNextPage)
-            Console.WriteLine("Another Page of products available with cursor:" + 
-                              graphResult.Data.Products.PageInfo.endCursor);
         
         return graphResult;
     }
