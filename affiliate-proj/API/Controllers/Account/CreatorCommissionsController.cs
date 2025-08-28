@@ -14,6 +14,10 @@ public class CreatorCommissionsController
     {
         throw new NotImplementedException();
     }
-    
-    
+
+    [HttpGet("get-commission-rate")]
+    public async Task<IActionResult> GetCommissionRate()
+    {
+        throw new NotImplementedException();
+    }
 }
