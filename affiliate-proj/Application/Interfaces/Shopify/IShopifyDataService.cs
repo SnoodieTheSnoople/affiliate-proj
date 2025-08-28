@@ -1,5 +1,6 @@
 using System.Collections;
 using affiliate_proj.Core.DataTypes;
+using affiliate_proj.Core.DataTypes.GraphQL;
 using affiliate_proj.Core.Entities;
 using ShopifySharp;
 using ShopifySharp.Lists;
@@ -9,7 +10,7 @@ namespace affiliate_proj.Application.Interfaces.Shopify;
 
 public interface IShopifyDataService
 {
-    Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken, int limit = 250);
+    Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken, int limit = 250);
     Task<IEnumerable<Order>> GetOrdersAsync(string shopDomain, string accessToken, int limit = 250);
     Task<IEnumerable<Fulfillment>> GetFulfillmentsAsync(string shopDomain, string accessToken, int limit = 250);
     Task<IEnumerable<Refund>> GetRefundsAsync(string shopDomain, string accessToken, int limit = 250);
