@@ -15,7 +15,7 @@ public class CustomProductsConnection
 
 public class CustomProductNode
 {
-    public string id { get; set; }
+    public string Id { get; set; }
     public string Title { get; set; }
     public string Handle { get; set; }
     public bool HasOnlyDefaultVariant { get; set; }
