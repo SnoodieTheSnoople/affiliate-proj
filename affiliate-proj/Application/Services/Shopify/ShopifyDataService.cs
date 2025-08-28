@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Core.DataTypes;
+using affiliate_proj.Core.DataTypes.GraphQL;
 using affiliate_proj.Core.Entities;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
@@ -22,7 +23,7 @@ public class ShopifyDataService : IShopifyDataService
     }
 
 
-    public async Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
+    public async Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 250)
     {
         var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
@@ -43,12 +44,26 @@ public class ShopifyDataService : IShopifyDataService
                             title
                             handle
                             hasOnlyDefaultVariant
-                            variantsCount {
-                                count
+                            onlineStoreUrl
+                            media(first:1) {
+                                nodes {
+                                        id
+                                        alt
+                                        mediaContentType
+                                        preview {
+                                            image {
+                                                altText
+                                                height
+                                                id
+                                                url
+                                                width
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                }
                 """,
             Variables = new Dictionary<string, object>
             {
@@ -57,17 +72,17 @@ public class ShopifyDataService : IShopifyDataService
             }
         };
         
-        var graphResult = await graphService.PostAsync<ListProductsResult>(request);
+        var graphResult = await graphService.PostAsync<CustomListProductsResult>(request);
 
-        foreach (var node in graphResult.Data.Products.nodes)
+        foreach (var node in graphResult.Data.Products.Nodes)
         {
             if (node.id is not null)
                 Console.WriteLine("Product ID is: " + node.id);
         }
         
-        if ((bool)graphResult.Data.Products.pageInfo.hasNextPage)
+        if ((bool)graphResult.Data.Products.PageInfo.hasNextPage)
             Console.WriteLine("Another Page of products available with cursor:" + 
-                              graphResult.Data.Products.pageInfo.endCursor);
+                              graphResult.Data.Products.PageInfo.endCursor);
         
         return graphResult;
     }
