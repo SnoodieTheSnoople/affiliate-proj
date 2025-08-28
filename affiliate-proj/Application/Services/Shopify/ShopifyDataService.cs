@@ -1,4 +1,5 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Core.DataTypes;
 using affiliate_proj.Core.Entities;
 using ShopifySharp;
@@ -13,6 +14,14 @@ namespace affiliate_proj.Application.Services.Shopify;
 
 public class ShopifyDataService : IShopifyDataService
 {
+    private readonly IGraphServiceFactory _graphServiceFactory;
+
+    public ShopifyDataService(IGraphServiceFactory graphServiceFactory)
+    {
+        _graphServiceFactory = graphServiceFactory;
+    }
+
+
     public async Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 250)
     {
