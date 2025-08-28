@@ -25,8 +25,7 @@ public class ShopifyDataService : IShopifyDataService
     public async Task<GraphResult<ListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 250)
     {
-        // TODO: Change to factory pattern for GraphService instatiation.
-        var graphService = new GraphService(shopDomain, accessToken);
+        var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
         var request = new GraphRequest
         {
             Query =
