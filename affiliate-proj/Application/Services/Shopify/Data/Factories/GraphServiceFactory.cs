@@ -7,6 +7,6 @@ public class GraphServiceFactory : IGraphServiceFactory
 {
     public GraphService CreateGraphService(string shopDomain, string accessToken)
     {
-        throw new NotImplementedException();
+        return new GraphService(shopDomain, accessToken);
     }
 }
