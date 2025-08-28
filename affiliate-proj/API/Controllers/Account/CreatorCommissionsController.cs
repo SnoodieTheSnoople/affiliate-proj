@@ -20,4 +20,10 @@ public class CreatorCommissionsController
     {
         throw new NotImplementedException();
     }
+
+    [HttpPut("update-commission-rate")]
+    public async Task<IActionResult> UpdateCommissionRate()
+    {
+        throw new NotImplementedException();
+    }
 }
