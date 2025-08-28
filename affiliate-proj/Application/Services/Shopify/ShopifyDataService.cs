@@ -24,7 +24,7 @@ public class ShopifyDataService : IShopifyDataService
 
 
     public async Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
-        int limit = 250)
+        int limit = 50)
     {
         var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
         var request = new GraphRequest
@@ -67,7 +67,7 @@ public class ShopifyDataService : IShopifyDataService
                 """,
             Variables = new Dictionary<string, object>
             {
-                { "limit", 3 },
+                { "limit", limit },
                 { "query", "status:" + ProductStatus.ACTIVE }
             }
         };
