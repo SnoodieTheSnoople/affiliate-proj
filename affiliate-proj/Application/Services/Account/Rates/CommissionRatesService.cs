@@ -1,6 +1,8 @@
-﻿namespace affiliate_proj.Application.Services.Account.Rates;
+﻿using affiliate_proj.Application.Interfaces.Account.Rates;
 
-public class CommissionRatesService
+namespace affiliate_proj.Application.Services.Account.Rates;
+
+public class CommissionRatesService : ICommissionRatesService
 {
     
 }
