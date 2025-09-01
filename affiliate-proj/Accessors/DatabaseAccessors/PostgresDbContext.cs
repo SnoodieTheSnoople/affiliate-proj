@@ -9,6 +9,7 @@ public class PostgresDbContext : DbContext
     public DbSet<Creator> Creators { get; set; }
     public DbSet<Store> Stores { get; set; }
     public DbSet<WebhookRegistrations> WebhookRegistrations { get; set; }
+    public DbSet<CommissionRate> CommissionRates { get; set; }
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
 
@@ -72,6 +73,17 @@ public class PostgresDbContext : DbContext
             builder.Property(registration => registration.Format).HasColumnName("format");
             builder.Property(registration => registration.RegisteredAt).HasColumnName("registered_at");
             builder.Property(registration => registration.StoreId).HasColumnName("store_id");
+        });
+
+        modelBuilder.Entity<CommissionRate>( builder =>
+        {
+            builder.ToTable("commission_rates");
+            builder.Property(rate => rate.RateId).HasColumnName("rate_id").ValueGeneratedOnAdd();
+            builder.Property(rate => rate.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+            builder.Property(rate => rate.StoreId).HasColumnName("store_id");
+            builder.Property(rate => rate.CreatorId).HasColumnName("creator_id");
+            builder.Property(rate => rate.Rate).HasColumnName("commission_rate");
+            builder.Property(rate => rate.IsAccepted).HasColumnName("is_accepted");
         });
     }
 
