@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers.Account;
@@ -7,11 +8,20 @@ namespace affiliate_proj.API.Controllers.Account;
 [ApiController]
 [Authorize]
 
-public class CreatorCommissionsController
+public class CreatorCommissionsController : ControllerBase
 {
     [HttpPost("set-commission-rate")]
     public async Task<IActionResult> SetCommissionRate()
     {
+        try
+        {
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
         throw new NotImplementedException();
     }
 
