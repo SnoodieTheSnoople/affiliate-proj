@@ -6,6 +6,13 @@ namespace affiliate_proj.Application.Services.Account.Rates;
 
 public class CommissionRatesService : ICommissionRatesService
 {
+    private readonly ICommissionRatesRepository _commissionRatesRepository;
+
+    public CommissionRatesService(ICommissionRatesRepository commissionRatesRepository)
+    {
+        _commissionRatesRepository = commissionRatesRepository;
+    }
+
     public async Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
     {
         var commissionRate = new CommissionRate
