@@ -22,7 +22,7 @@ public class CommissionRatesService : ICommissionRatesService
             Rate = createCommissionRateDTO.Rate,
             IsAccepted = createCommissionRateDTO.IsAccepted
         };
-        
-        throw new NotImplementedException();
+
+        return await _commissionRatesRepository.SetCommissionRateAsync(commissionRate);
     }
 }
