@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using affiliate_proj.Application.Interfaces.Account.Rates;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,13 @@ namespace affiliate_proj.API.Controllers.Account;
 
 public class CreatorCommissionsController : ControllerBase
 {
+    private readonly ICommissionRatesService _commissionRatesService;
+
+    public CreatorCommissionsController(ICommissionRatesService commissionRatesService)
+    {
+        _commissionRatesService = commissionRatesService;
+    }
+
     [HttpPost("set-commission-rate")]
     public async Task<IActionResult> SetCommissionRate()
     {
