@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Core.DTOs.Rates;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Account.Rates;
 
@@ -14,6 +15,14 @@ public class CommissionRatesRepository
 
     public async Task<CreateCommissionRateDTO> SetCommissionRateAsync(CommissionRateDTO commissionRate)
     {
+        var checkRateExists = _postgresDbContext.CommissionRates
+            .Where(rate => rate.CreatorId == commissionRate.CreatorId)
+            .Where(rate => rate.StoreId == commissionRate.StoreId)
+            .FirstOrDefaultAsync();
+        
+        if (checkRateExists != null)
+            throw new Exception("Commission rate already exists");
+        
         throw new NotImplementedException();
     }
 }
