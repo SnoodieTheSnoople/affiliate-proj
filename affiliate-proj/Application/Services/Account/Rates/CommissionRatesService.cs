@@ -6,8 +6,16 @@ namespace affiliate_proj.Application.Services.Account.Rates;
 
 public class CommissionRatesService : ICommissionRatesService
 {
-    public Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
+    public async Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
     {
+        var commissionRate = new CommissionRate
+        {
+            CreatorId = createCommissionRateDTO.CreatorId,
+            StoreId = createCommissionRateDTO.StoreId,
+            Rate = createCommissionRateDTO.Rate,
+            IsAccepted = createCommissionRateDTO.IsAccepted
+        };
+        
         throw new NotImplementedException();
     }
 }
