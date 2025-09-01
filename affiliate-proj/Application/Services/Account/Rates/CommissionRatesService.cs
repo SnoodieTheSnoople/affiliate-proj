@@ -6,7 +6,7 @@ namespace affiliate_proj.Application.Services.Account.Rates;
 
 public class CommissionRatesService : ICommissionRatesService
 {
-    public Task<CommissionRate> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
+    public Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
     {
         throw new NotImplementedException();
     }

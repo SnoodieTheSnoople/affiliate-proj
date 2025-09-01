@@ -5,5 +5,5 @@ namespace affiliate_proj.Application.Interfaces.Account.Rates;
 
 public interface ICommissionRatesService
 {
-    Task<CommissionRate>  SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO);
+    Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO);
 }
