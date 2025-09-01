@@ -42,7 +42,5 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             Rate = checkRateExists.Rate,
             IsAccepted = checkRateExists.IsAccepted,
         };
-        
-        throw new NotImplementedException();
     }
 }
