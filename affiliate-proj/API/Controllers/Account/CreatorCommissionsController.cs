@@ -1,4 +1,5 @@
 ﻿using affiliate_proj.Application.Interfaces.Account.Rates;
+using affiliate_proj.Core.DTOs.Rates;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,11 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpPost("set-commission-rate")]
-    public async Task<IActionResult> SetCommissionRate()
+    public async Task<IActionResult> SetCommissionRate([FromBody] CreateCommissionRateDTO createCommissionRateDTO)
     {
         try
         {
-            return Ok();
+            return Ok(await _commissionRatesService.SetCommissionRateAsync(createCommissionRateDTO));
         }
         catch (Exception e)
         {
