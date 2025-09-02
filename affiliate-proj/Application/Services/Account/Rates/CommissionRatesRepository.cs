@@ -64,7 +64,20 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<List<CommissionRateDTO>> GetCommissionRatesByStoreIdAsync(Guid storeId)
     {
-        throw new NotImplementedException();
+        if (storeId == Guid.Empty)
+            throw new NullReferenceException();
+        
+        return await _postgresDbContext.CommissionRates.Select(rate => new CommissionRateDTO
+            {
+                RateId = rate.RateId,
+                CreatedAt = rate.CreatedAt,
+                CreatorId = rate.CreatorId,
+                StoreId = rate.StoreId,
+                Rate = rate.Rate,
+                IsAccepted = rate.IsAccepted,
+            })
+            .Where(rate => rate.StoreId == storeId)
+            .ToListAsync();
     }
 
     public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
