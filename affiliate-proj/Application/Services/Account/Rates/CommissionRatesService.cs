@@ -54,7 +54,7 @@ public class CommissionRatesService : ICommissionRatesService
         return await _commissionRatesRepository.GetCommissionRateByRateIdAsync(rateId);
     }
 
-    public Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO)
+    public async Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO)
     {
         if (commissionRateDTO == null)
             throw new ArgumentNullException(nameof(commissionRateDTO));
@@ -65,6 +65,6 @@ public class CommissionRatesService : ICommissionRatesService
         if (commissionRateDTO.Rate > 100)
             throw new ArgumentOutOfRangeException(nameof(commissionRateDTO.Rate));
         
-        throw new NotImplementedException();
+        return await _commissionRatesRepository.UpdateCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.Rate);
     }
 }
