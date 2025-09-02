@@ -82,6 +82,10 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
     {
+        if (rateId == Guid.Empty)
+            throw new NullReferenceException();
+        
+        
         throw new NotImplementedException();
     }
 }
