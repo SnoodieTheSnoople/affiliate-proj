@@ -80,11 +80,12 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             .ToListAsync();
     }
 
-    public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
+    public async Task<CommissionRate?> GetCommissionRateByRateIdAsync(Guid rateId)
     {
         if (rateId == Guid.Empty)
             throw new NullReferenceException();
         
+        return await _postgresDbContext.CommissionRates.FindAsync(rateId);
         
         throw new NotImplementedException();
     }
