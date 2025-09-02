@@ -100,6 +100,31 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO> UpdateCommissionRateAsync(Guid rateId, float rate)
     {
-        throw new NotImplementedException();
+        if (rateId == Guid.Empty)
+            throw new NullReferenceException();
+        
+        var commissionRateEntry = _postgresDbContext.CommissionRates.FirstOrDefault(rate => rate.RateId == rateId);
+
+        if (commissionRateEntry == null)
+            throw new NullReferenceException();
+
+        if (commissionRateEntry.IsAccepted)
+            throw new ArgumentException("Commission rate already exists and is accepted");
+        
+        commissionRateEntry.Rate = rate;
+        
+        await _postgresDbContext.SaveChangesAsync();
+        
+        commissionRateEntry = _postgresDbContext.CommissionRates.FirstOrDefault(rate => rate.RateId == rateId);
+
+        return new CommissionRateDTO
+        {
+            RateId = commissionRateEntry.RateId,
+            CreatedAt = commissionRateEntry.CreatedAt,
+            CreatorId = commissionRateEntry.CreatorId,
+            StoreId = commissionRateEntry.StoreId,
+            Rate = commissionRateEntry.Rate,
+            IsAccepted = commissionRateEntry.IsAccepted,
+        };
     }
 }
