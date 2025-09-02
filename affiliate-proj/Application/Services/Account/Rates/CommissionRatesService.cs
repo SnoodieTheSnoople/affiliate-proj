@@ -43,7 +43,7 @@ public class CommissionRatesService : ICommissionRatesService
         if (purposeType == 's')
             return await _commissionRatesRepository.GetCommissionRatesByStoreIdAsync(id);
 
-        return new CommissionRateDTO();
+        return new List<CommissionRateDTO>();;
     }
 
     public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
