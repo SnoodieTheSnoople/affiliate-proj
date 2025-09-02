@@ -76,17 +76,17 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpPut("update-commission-rate")]
-    public async Task<IActionResult> UpdateCommissionRateAsync([FromBody] CreateCommissionRateDTO createCommissionRateDTO)
+    public async Task<IActionResult> UpdateCommissionRateAsync([FromBody] CommissionRateDTO commissionRateDTO)
     {
         try
         {
-            if (createCommissionRateDTO == null)
+            if (commissionRateDTO == null)
                 return BadRequest();
 
-            if (createCommissionRateDTO.Rate == null)
+            if (commissionRateDTO.Rate == null)
                 return BadRequest();
 
-            if (createCommissionRateDTO.CreatorId == Guid.Empty || createCommissionRateDTO.StoreId == Guid.Empty)
+            if (commissionRateDTO.RateId ==  Guid.Empty)
                 return BadRequest();
 
             return Ok();
