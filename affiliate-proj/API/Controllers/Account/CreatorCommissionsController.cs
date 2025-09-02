@@ -34,11 +34,12 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpGet("get-commission-rate")]
-    public async Task<IActionResult> GetCommissionRate()
+    public async Task<IActionResult> GetCommissionRate([FromQuery] Guid creatorId, [FromQuery] Guid storeId,
+        [FromQuery] Guid rateId)
     {
         try
         {
-
+            
         }
         catch (Exception e)
         {
