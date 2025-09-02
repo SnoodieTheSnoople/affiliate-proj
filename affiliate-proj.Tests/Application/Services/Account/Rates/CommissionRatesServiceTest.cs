@@ -24,6 +24,7 @@ public class CommissionRatesServiceTest
     [Fact]
     public async Task SetCommissionRateAsync_Throws_WhenDtoIsNull()
     {
-        
+        CreateCommissionRateDTO dto = null;
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _commissionRatesService.SetCommissionRateAsync(dto));
     }
 }
