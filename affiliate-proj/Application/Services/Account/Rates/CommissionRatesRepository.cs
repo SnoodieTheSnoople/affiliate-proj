@@ -43,4 +43,19 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             IsAccepted = checkRateExists.IsAccepted,
         };
     }
+
+    public Task<CommissionRateDTO> GetCommissionRatesByCreatorIdAsync(Guid creatorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<CommissionRateDTO> GetCommissionRatesByStoreIdAsync(Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
+    {
+        throw new NotImplementedException();
+    }
 }
