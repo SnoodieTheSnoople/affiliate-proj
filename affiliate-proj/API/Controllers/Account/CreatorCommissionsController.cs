@@ -63,7 +63,8 @@ public class CreatorCommissionsController : ControllerBase
     {
         try
         {
-
+            if (rateId == Guid.Empty)
+                return BadRequest();
         }
         catch (Exception e)
         {
