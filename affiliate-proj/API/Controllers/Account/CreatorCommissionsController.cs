@@ -39,6 +39,21 @@ public class CreatorCommissionsController : ControllerBase
     {
         try
         {
+            if (creatorId == Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
+                return BadRequest();
+            
+            if (creatorId != Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
+            {
+                
+            }
+            else if (creatorId == Guid.Empty && storeId != Guid.Empty && rateId == Guid.Empty)
+            {
+                
+            }
+            else
+            {
+                
+            }
             
         }
         catch (Exception e)
