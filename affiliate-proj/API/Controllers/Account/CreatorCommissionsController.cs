@@ -76,7 +76,7 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpPut("update-commission-rate")]
-    public async Task<IActionResult> UpdateCommissionRate([FromBody] CreateCommissionRateDTO createCommissionRateDTO)
+    public async Task<IActionResult> UpdateCommissionRateAsync([FromBody] CreateCommissionRateDTO createCommissionRateDTO)
     {
         throw new NotImplementedException();
     }
