@@ -44,13 +44,12 @@ public class CreatorCommissionsController : ControllerBase
             
             
             if (creatorId != Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
-                return Ok(await _commissionRatesService.GetCommissionRateAsync(creatorId, 'c'));
+                return Ok(await _commissionRatesService.GetCommissionRatesAsync(creatorId, 'c'));
             
             if (creatorId == Guid.Empty && storeId != Guid.Empty && rateId == Guid.Empty)
-                return Ok(await _commissionRatesService.GetCommissionRateAsync(storeId, 's'));
-            
-            
-            return Ok(await _commissionRatesService.GetCommissionRateAsync(rateId, 'r'));
+                return Ok(await _commissionRatesService.GetCommissionRatesAsync(storeId, 's'));
+
+            return Ok();
         }
         catch (Exception e)
         {
