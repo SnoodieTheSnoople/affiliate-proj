@@ -6,7 +6,7 @@ namespace affiliate_proj.Application.Interfaces.Account.Rates;
 public interface ICommissionRatesRepository
 {
     Task<CommissionRateDTO> SetCommissionRateAsync(CommissionRate commissionRate);
-    Task<CommissionRateDTO> GetCommissionRatesByCreatorIdAsync(Guid creatorId);
+    Task<List<CommissionRateDTO>> GetCommissionRatesByCreatorIdAsync(Guid creatorId);
     Task<CommissionRateDTO> GetCommissionRatesByStoreIdAsync(Guid storeId);
     Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId);
 }
