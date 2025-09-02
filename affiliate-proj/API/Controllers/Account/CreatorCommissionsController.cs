@@ -65,6 +65,8 @@ public class CreatorCommissionsController : ControllerBase
         {
             if (rateId == Guid.Empty)
                 return BadRequest();
+            
+            return Ok(await _commissionRatesService.GetCommissionRateByRateIdAsync(rateId));
         }
         catch (Exception e)
         {
