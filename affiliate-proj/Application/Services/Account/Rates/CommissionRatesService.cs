@@ -32,11 +32,22 @@ public class CommissionRatesService : ICommissionRatesService
         return await _commissionRatesRepository.SetCommissionRateAsync(commissionRate);
     }
 
-    public Task<CommissionRateDTO> GetCommissionRateAsync(Guid id, char purposeType)
+    public async Task<CommissionRateDTO> GetCommissionRatesAsync(Guid id, char purposeType)
     {
         if (id == Guid.Empty)
             throw new NullReferenceException();
+
+        if (purposeType == 'c') 
+            return await _commissionRatesRepository.GetCommissionRatesByCreatorIdAsync(id);
         
-        
+        if (purposeType == 's')
+            return await _commissionRatesRepository.GetCommissionRatesByStoreIdAsync(id);
+
+        return new CommissionRateDTO();
+    }
+
+    public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
+    {
+        throw new NotImplementedException();
     }
 }
