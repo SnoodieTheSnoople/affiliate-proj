@@ -61,7 +61,15 @@ public class CreatorCommissionsController : ControllerBase
     [HttpGet("get-commission-rate")]
     public async Task<IActionResult> GetCommissionRateByRateIdAsync([FromRoute] Guid rateId)
     {
-        throw new NotImplementedException();
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPut("update-commission-rate")]
