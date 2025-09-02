@@ -7,5 +7,5 @@ public interface ICommissionRatesService
 {
     Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO);
     Task<List<CommissionRateDTO>> GetCommissionRatesAsync(Guid id, char purposeType);
-    Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId);
+    Task<CommissionRateDTO?> GetCommissionRateByRateIdAsync(Guid rateId);
 }

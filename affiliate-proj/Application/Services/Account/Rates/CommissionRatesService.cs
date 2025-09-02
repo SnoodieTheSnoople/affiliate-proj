@@ -46,7 +46,7 @@ public class CommissionRatesService : ICommissionRatesService
         return new List<CommissionRateDTO>();;
     }
 
-    public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
+    public async Task<CommissionRateDTO?> GetCommissionRateByRateIdAsync(Guid rateId)
     {
         throw new NotImplementedException();
     }
