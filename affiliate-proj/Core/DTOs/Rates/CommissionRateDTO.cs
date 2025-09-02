@@ -2,9 +2,9 @@
 
 public class CommissionRateDTO
 {
-    public string RateId {  get; set; }
-    public string CreatorId { get; set; }
-    public string StoreId { get; set; }
+    public Guid RateId {  get; set; }
+    public Guid CreatorId { get; set; }
+    public Guid StoreId { get; set; }
     public float Rate { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool IsAccepted { get; set; }
