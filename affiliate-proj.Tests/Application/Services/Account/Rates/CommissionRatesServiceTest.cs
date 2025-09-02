@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Services.Account.Rates;
 using affiliate_proj.Core.DTOs.Rates;
+using affiliate_proj.Core.Entities;
 using JetBrains.Annotations;
 using Moq;
 using NuGet.ContentModel;
@@ -40,5 +41,41 @@ public class CommissionRatesServiceTest
             Rate = 150,
         };
         await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => _commissionRatesService.SetCommissionRateAsync(dto));
+    }
+
+    [Fact]
+    public async Task SetComissionRateAsync_CallsRepo_WhenValidDto()
+    {
+        CreateCommissionRateDTO dto = new CreateCommissionRateDTO()
+        {
+            CreatorId = Guid.NewGuid(),
+            StoreId = Guid.NewGuid(),
+            Rate = 10,
+            IsAccepted = false
+        };
+
+        var expected = new CommissionRateDTO
+        {
+            CreatorId = dto.CreatorId,
+            StoreId = dto.StoreId,
+            Rate = dto.Rate,
+            IsAccepted = false
+        };
+
+        _commissionRatesRepository.Setup(r => r.SetCommissionRateAsync(It.IsAny<CommissionRate>()))
+            .ReturnsAsync(expected);
+
+        var result = await _commissionRatesService.SetCommissionRateAsync(dto);
+        
+        Assert.NotNull(result);
+        Assert.Equal(expected.Rate, result.Rate);
+        
+        _commissionRatesRepository.Verify( r => 
+            r.SetCommissionRateAsync(It.Is<CommissionRate>(c => 
+                c.Rate == expected.Rate && 
+                c.CreatorId == expected.CreatorId &&
+                c.StoreId == expected.StoreId && 
+                c.IsAccepted == expected.IsAccepted)), 
+            Times.Once);
     }
 }
