@@ -6,4 +6,5 @@ namespace affiliate_proj.Application.Interfaces.Account.Rates;
 public interface ICommissionRatesService
 {
     Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO);
+    Task<CommissionRateDTO> GetCommissionRateAsync(Guid id, char purposeType);
 }
