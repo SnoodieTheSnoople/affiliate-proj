@@ -59,7 +59,7 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpGet("get-commission-rate")]
-    public async Task<IActionResult> GetCommissionRateByRateIdAsync([FromRoute] Guid rateId)
+    public async Task<IActionResult> GetCommissionRateByRateIdAsync([FromQuery] Guid rateId)
     {
         try
         {
