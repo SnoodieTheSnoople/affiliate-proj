@@ -36,6 +36,15 @@ public class CreatorCommissionsController : ControllerBase
     [HttpGet("get-commission-rate")]
     public async Task<IActionResult> GetCommissionRate()
     {
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
         throw new NotImplementedException();
     }
 
