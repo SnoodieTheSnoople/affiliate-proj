@@ -56,6 +56,15 @@ public class CommissionRatesService : ICommissionRatesService
 
     public Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO)
     {
+        if (commissionRateDTO == null)
+            throw new ArgumentNullException(nameof(commissionRateDTO));
+
+        if (commissionRateDTO.RateId == Guid.Empty)
+            throw new ArgumentNullException();
+        
+        if (commissionRateDTO.Rate > 100)
+            throw new ArgumentOutOfRangeException(nameof(commissionRateDTO.Rate));
+        
         throw new NotImplementedException();
     }
 }
