@@ -9,4 +9,5 @@ public interface ICommissionRatesRepository
     Task<List<CommissionRateDTO>> GetCommissionRatesByCreatorIdAsync(Guid creatorId);
     Task<List<CommissionRateDTO>> GetCommissionRatesByStoreIdAsync(Guid storeId);
     Task<CommissionRateDTO?> GetCommissionRateByRateIdAsync(Guid rateId);
+    Task<CommissionRateDTO> UpdateCommissionRateAsync(Guid rateId, float rate);
 }

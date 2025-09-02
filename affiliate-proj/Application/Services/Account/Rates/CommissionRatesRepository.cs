@@ -97,4 +97,9 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             IsAccepted = result.IsAccepted,
         };
     }
+
+    public async Task<CommissionRateDTO> UpdateCommissionRateAsync(Guid rateId, float rate)
+    {
+        throw new NotImplementedException();
+    }
 }
