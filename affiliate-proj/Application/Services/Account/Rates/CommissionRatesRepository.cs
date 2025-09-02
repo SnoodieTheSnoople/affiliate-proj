@@ -44,17 +44,17 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         };
     }
 
-    public Task<CommissionRateDTO> GetCommissionRatesByCreatorIdAsync(Guid creatorId)
+    public async Task<CommissionRateDTO> GetCommissionRatesByCreatorIdAsync(Guid creatorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CommissionRateDTO> GetCommissionRatesByStoreIdAsync(Guid storeId)
+    public async Task<CommissionRateDTO> GetCommissionRatesByStoreIdAsync(Guid storeId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
+    public async Task<CommissionRateDTO> GetCommissionRateByRateIdAsync(Guid rateId)
     {
         throw new NotImplementedException();
     }
