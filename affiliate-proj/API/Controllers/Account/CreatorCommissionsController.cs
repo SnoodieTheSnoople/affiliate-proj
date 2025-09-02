@@ -42,26 +42,21 @@ public class CreatorCommissionsController : ControllerBase
             if (creatorId == Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
                 return BadRequest();
             
-            if (creatorId != Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
-            {
-                
-            }
-            else if (creatorId == Guid.Empty && storeId != Guid.Empty && rateId == Guid.Empty)
-            {
-                
-            }
-            else
-            {
-                
-            }
             
+            if (creatorId != Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
+                return Ok(await _commissionRatesService.GetCommissionRateAsync(creatorId, 'c'));
+            
+            if (creatorId == Guid.Empty && storeId != Guid.Empty && rateId == Guid.Empty)
+                return Ok(await _commissionRatesService.GetCommissionRateAsync(storeId, 's'));
+            
+            
+            return Ok(await _commissionRatesService.GetCommissionRateAsync(rateId, 'r'));
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
-        throw new NotImplementedException();
     }
 
     [HttpPut("update-commission-rate")]
