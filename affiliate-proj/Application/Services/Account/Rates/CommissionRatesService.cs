@@ -15,6 +15,12 @@ public class CommissionRatesService : ICommissionRatesService
 
     public async Task<CommissionRateDTO> SetCommissionRateAsync(CreateCommissionRateDTO createCommissionRateDTO)
     {
+        if (createCommissionRateDTO == null)
+            throw new ArgumentNullException(nameof(createCommissionRateDTO));
+        
+        if (createCommissionRateDTO.Rate > 100)
+            throw new ArgumentOutOfRangeException(nameof(createCommissionRateDTO.Rate));
+        
         var commissionRate = new CommissionRate
         {
             CreatorId = createCommissionRateDTO.CreatorId,
