@@ -34,6 +34,9 @@ public class CommissionRatesService : ICommissionRatesService
 
     public Task<CommissionRateDTO> GetCommissionRateAsync(Guid id, char purposeType)
     {
-        throw new NotImplementedException();
+        if (id == Guid.Empty)
+            throw new NullReferenceException();
+        
+        
     }
 }
