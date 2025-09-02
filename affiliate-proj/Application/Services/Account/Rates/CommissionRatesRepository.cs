@@ -60,8 +60,6 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             })
             .Where(rate => rate.CreatorId == creatorId)
             .ToListAsync();
-        
-        throw new NotImplementedException();
     }
 
     public async Task<List<CommissionRateDTO>> GetCommissionRatesByStoreIdAsync(Guid storeId)
