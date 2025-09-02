@@ -53,4 +53,9 @@ public class CommissionRatesService : ICommissionRatesService
 
         return await _commissionRatesRepository.GetCommissionRateByRateIdAsync(rateId);
     }
+
+    public Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO createCommissionRateDTO)
+    {
+        throw new NotImplementedException();
+    }
 }
