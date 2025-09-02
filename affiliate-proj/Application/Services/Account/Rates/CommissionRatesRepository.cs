@@ -64,7 +64,7 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         throw new NotImplementedException();
     }
 
-    public async Task<CommissionRateDTO> GetCommissionRatesByStoreIdAsync(Guid storeId)
+    public async Task<List<CommissionRateDTO>> GetCommissionRatesByStoreIdAsync(Guid storeId)
     {
         throw new NotImplementedException();
     }
