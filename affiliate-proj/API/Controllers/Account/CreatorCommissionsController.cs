@@ -31,7 +31,6 @@ public class CreatorCommissionsController : ControllerBase
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
-        throw new NotImplementedException();
     }
 
     [HttpGet("get-commission-rate")]
