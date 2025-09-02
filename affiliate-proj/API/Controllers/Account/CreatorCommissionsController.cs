@@ -89,14 +89,13 @@ public class CreatorCommissionsController : ControllerBase
             if (commissionRateDTO.RateId ==  Guid.Empty)
                 return BadRequest();
 
-            return Ok();
+            return Ok(await _commissionRatesService.UpdateCommissionRateAsync(commissionRateDTO));
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
-        throw new NotImplementedException();
     }
 
     [HttpDelete("delete-commission-rate")]
