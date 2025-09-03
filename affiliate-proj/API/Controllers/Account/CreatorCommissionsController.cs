@@ -103,7 +103,13 @@ public class CreatorCommissionsController : ControllerBase
     {
         try
         {
+            if (commissionRateDTO == null)
+                return BadRequest();
             
+            if (commissionRateDTO.RateId ==  Guid.Empty)
+                return BadRequest("ID empty");
+
+            return Ok();
         }
         catch (Exception e)
         {
