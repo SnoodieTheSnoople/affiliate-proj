@@ -34,19 +34,18 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpGet("get-commission-rates")]
-    public async Task<IActionResult> GetCommissionRatesAsync([FromQuery] Guid creatorId, [FromQuery] Guid storeId,
-        [FromQuery] Guid rateId)
+    public async Task<IActionResult> GetCommissionRatesAsync([FromQuery] Guid creatorId, [FromQuery] Guid storeId)
     {
         try
         {
-            if (creatorId == Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
+            if (creatorId == Guid.Empty && storeId == Guid.Empty)
                 return BadRequest();
             
             
-            if (creatorId != Guid.Empty && storeId == Guid.Empty && rateId == Guid.Empty)
+            if (creatorId != Guid.Empty && storeId == Guid.Empty)
                 return Ok(await _commissionRatesService.GetCommissionRatesAsync(creatorId, 'c'));
             
-            if (creatorId == Guid.Empty && storeId != Guid.Empty && rateId == Guid.Empty)
+            if (creatorId == Guid.Empty && storeId != Guid.Empty)
                 return Ok(await _commissionRatesService.GetCommissionRatesAsync(storeId, 's'));
 
             return Ok();
