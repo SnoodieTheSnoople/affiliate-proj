@@ -88,4 +88,10 @@ public class CommissionRatesServiceTest
         await Assert.ThrowsAsync<NullReferenceException>(() => 
             _commissionRatesService.GetCommissionRatesAsync(emptyId, 't'));
     }
+
+    [Fact]
+    public async Task GetCommissionRatesAsync_ReturnsEmptyList_WhenPurposeTypeIncorrect()
+    {
+        
+    }
 }
