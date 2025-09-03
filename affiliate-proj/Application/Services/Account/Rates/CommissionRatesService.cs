@@ -102,11 +102,10 @@ public class CommissionRatesService : ICommissionRatesService
             var oldRate = await DeleteCommissionRateAsync(commissionRateDTO.RateId);
             if (oldRate != null)
                 throw new DBConcurrencyException("Unable to delete record");
-
-            return new CommissionRateDTO();
         }
 
-        return new CommissionRateDTO();
+        return await _commissionRatesRepository
+            .AcceptCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.IsAccepted);
     }
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
