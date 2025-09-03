@@ -65,8 +65,21 @@ public class CommissionRatesService : ICommissionRatesService
         if (commissionRateDTO.Rate > 100)
             throw new ArgumentOutOfRangeException(nameof(commissionRateDTO.Rate));
         
+        var checkIfCurrentRateIsAccepted = await _commissionRatesRepository
+            .GetCommissionRateByRateIdAsync(commissionRateDTO.RateId);
+        
+        if (checkIfCurrentRateIsAccepted.IsAccepted)
+        {
+            return await _commissionRatesRepository.SetCommissionRateAsync(new CommissionRate
+            {
+                CreatorId = checkIfCurrentRateIsAccepted.CreatorId,
+                StoreId = checkIfCurrentRateIsAccepted.StoreId,
+                Rate = commissionRateDTO.Rate,
+                IsAccepted = false
+            });
+        }
+        
         return await _commissionRatesRepository.UpdateCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.Rate);
-        // TODO: Create logic to check if rate exists between storeId & creatorId, check if accepted. If accepted, create new rate not accepted.
     }
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
