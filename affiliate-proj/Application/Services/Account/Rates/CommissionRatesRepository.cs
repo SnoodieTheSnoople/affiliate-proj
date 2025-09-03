@@ -17,20 +17,21 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO> SetCommissionRateAsync(CommissionRate commissionRate)
     {
-        var checkRateExists = await _postgresDbContext.CommissionRates
-            .Where(rate => rate.CreatorId == commissionRate.CreatorId)
-            .Where(rate => rate.StoreId == commissionRate.StoreId)
-            .FirstOrDefaultAsync();
-        
-        if (checkRateExists != null)
-            throw new Exception("Commission rate already exists");
+        // var checkRateExists = await _postgresDbContext.CommissionRates
+        //     .Where(rate => rate.CreatorId == commissionRate.CreatorId)
+        //     .Where(rate => rate.StoreId == commissionRate.StoreId)
+        //     .FirstOrDefaultAsync();
+        //
+        // if (checkRateExists != null)
+        //     throw new Exception("Commission rate already exists");
         
         await _postgresDbContext.CommissionRates.AddAsync(commissionRate);
         await _postgresDbContext.SaveChangesAsync();
         
-        checkRateExists = await _postgresDbContext.CommissionRates
+        var checkRateExists = await _postgresDbContext.CommissionRates
             .Where(rate => rate.CreatorId == commissionRate.CreatorId)
             .Where(rate => rate.StoreId == commissionRate.StoreId)
+            .Where(rate => rate.Rate == commissionRate.Rate)
             .FirstOrDefaultAsync();
 
         return new CommissionRateDTO
