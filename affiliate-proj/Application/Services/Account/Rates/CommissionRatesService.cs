@@ -74,8 +74,11 @@ public class CommissionRatesService : ICommissionRatesService
         if (rateId == Guid.Empty)
             throw new ArgumentNullException("ID empty");
 
-        var checkRepoShowsNull;
-        
-        throw new NotImplementedException();
+        var checkRepoShowsNull = await _commissionRatesRepository.DeleteCommissionRateAsync(rateId);
+
+        if (checkRepoShowsNull != null)
+            throw new ArgumentException("Internal error. Unable to delete record.");
+
+        return checkRepoShowsNull;
     }
 }
