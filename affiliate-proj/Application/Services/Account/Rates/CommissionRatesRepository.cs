@@ -130,7 +130,31 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO> AcceptCommissionRateAsync(Guid rateId, bool isAccepted)
     {
-        throw new NotImplementedException();
+        if (rateId == Guid.Empty)
+            throw new ArgumentNullException("ID empty");
+
+        if (!isAccepted)
+            throw new ArgumentOutOfRangeException("Accepted cannot be false");
+        
+        var commissionRateEntry = await _postgresDbContext.CommissionRates.FindAsync(rateId);
+        
+        if (commissionRateEntry == null)
+            throw new NullReferenceException();
+        
+        commissionRateEntry.IsAccepted = isAccepted;
+        await _postgresDbContext.SaveChangesAsync();
+        
+        commissionRateEntry = await _postgresDbContext.CommissionRates.FindAsync(rateId);
+
+        return new CommissionRateDTO
+        {
+            RateId = commissionRateEntry.RateId,
+            CreatedAt = commissionRateEntry.CreatedAt,
+            CreatorId = commissionRateEntry.CreatorId,
+            StoreId = commissionRateEntry.StoreId,
+            Rate = commissionRateEntry.Rate,
+            IsAccepted = commissionRateEntry.IsAccepted,
+        };
     }
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
