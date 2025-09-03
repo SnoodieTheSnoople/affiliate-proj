@@ -82,7 +82,7 @@ public class CreatorCommissionsController : ControllerBase
             if (commissionRateDTO == null)
                 return BadRequest();
 
-            if (commissionRateDTO.Rate == null)
+            if (commissionRateDTO.Rate == null || commissionRateDTO.Rate == 0)
                 return BadRequest();
 
             if (commissionRateDTO.RateId ==  Guid.Empty)
