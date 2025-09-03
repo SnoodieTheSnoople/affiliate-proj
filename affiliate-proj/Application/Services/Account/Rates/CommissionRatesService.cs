@@ -71,6 +71,11 @@ public class CommissionRatesService : ICommissionRatesService
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
+        if (rateId == Guid.Empty)
+            throw new ArgumentNullException("ID empty");
+
+        var checkRepoShowsNull;
+        
         throw new NotImplementedException();
     }
 }
