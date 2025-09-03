@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Services.Account.Rates;
@@ -92,6 +93,14 @@ public class CommissionRatesServiceTest
     [Fact]
     public async Task GetCommissionRatesAsync_ReturnsEmptyList_WhenPurposeTypeIncorrect()
     {
+        var id = Guid.NewGuid();
+        var incorrectPurposeType = 't';
+
+        var expected = new List<CommissionRateDTO>();
         
+        var result =  await _commissionRatesService.GetCommissionRatesAsync(id, incorrectPurposeType);
+        
+        Assert.NotNull(result);
+        Assert.Equal(expected, result);
     }
 }
