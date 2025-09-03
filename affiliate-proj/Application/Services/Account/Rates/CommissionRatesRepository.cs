@@ -128,6 +128,11 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         };
     }
 
+    public async Task<CommissionRateDTO> AcceptCommissionRateAsync(Guid rateId, bool isAccepted)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
         if (rateId == Guid.Empty)
