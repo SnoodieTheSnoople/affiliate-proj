@@ -131,10 +131,20 @@ public class CommissionRatesRepository : ICommissionRatesRepository
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
         if (rateId == Guid.Empty)
-            throw new NullReferenceException();
+            throw new ArgumentNullException("ID missing");
         
         var commissionRateEntry = await _postgresDbContext.CommissionRates.FindAsync(rateId);
         
-        throw new NotImplementedException();
+        if (commissionRateEntry == null)
+            throw new NullReferenceException("Commission rate not found");
+        
+        _postgresDbContext.CommissionRates.Remove(commissionRateEntry);
+        await _postgresDbContext.SaveChangesAsync();
+        
+        commissionRateEntry = await _postgresDbContext.CommissionRates.FindAsync(rateId);
+        if (commissionRateEntry != null)
+            throw new ArgumentException("Unable to remove commission rate");
+
+        return null;
     }
 }
