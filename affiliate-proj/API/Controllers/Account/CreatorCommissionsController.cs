@@ -99,7 +99,7 @@ public class CreatorCommissionsController : ControllerBase
     }
 
     [HttpDelete("delete-commission-rate")]
-    public async Task<IActionResult> DeleteCommissionRate()
+    public async Task<IActionResult> DeleteCommissionRate(Guid rateId)
     {
         throw new NotImplementedException();
     }
