@@ -78,4 +78,14 @@ public class CommissionRatesServiceTest
                 c.IsAccepted == expected.IsAccepted)), 
             Times.Once);
     }
+
+
+    [Fact]
+    public async Task GetCommissionRatesAsync_Throws_WhenIdEmpty()
+    {
+        var emptyId = Guid.Empty;
+        
+        await Assert.ThrowsAsync<NullReferenceException>(() => 
+            _commissionRatesService.GetCommissionRatesAsync(emptyId, 't'));
+    }
 }
