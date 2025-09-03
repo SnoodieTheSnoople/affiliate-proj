@@ -95,12 +95,10 @@ public class CommissionRatesServiceTest
     {
         var id = Guid.NewGuid();
         var incorrectPurposeType = 't';
-
-        var expected = new List<CommissionRateDTO>();
         
         var result =  await _commissionRatesService.GetCommissionRatesAsync(id, incorrectPurposeType);
         
         Assert.NotNull(result);
-        Assert.Equal(expected, result);
+        Assert.Empty(result);
     }
 }
