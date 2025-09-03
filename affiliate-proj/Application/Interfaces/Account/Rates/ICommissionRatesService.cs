@@ -9,4 +9,5 @@ public interface ICommissionRatesService
     Task<List<CommissionRateDTO>> GetCommissionRatesAsync(Guid id, char purposeType);
     Task<CommissionRateDTO?> GetCommissionRateByRateIdAsync(Guid rateId);
     Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO);
+    Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId);
 }

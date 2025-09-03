@@ -68,4 +68,9 @@ public class CommissionRatesService : ICommissionRatesService
         return await _commissionRatesRepository.UpdateCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.Rate);
         // TODO: Create logic to check if rate exists between storeId & creatorId, check if accepted. If accepted, create new rate not accepted.
     }
+
+    public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
+    {
+        throw new NotImplementedException();
+    }
 }
