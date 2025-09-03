@@ -106,6 +106,11 @@ public class CreatorCommissionsController : ControllerBase
             if (rateId == Guid.Empty)
                 return BadRequest("ID empty");
 
+            var checkCommissionRateNull = await _commissionRatesService.DeleteCommissionRateAsync(rateId);
+
+            if (checkCommissionRateNull != null)
+                return BadRequest();
+            
             return Ok();
         }
         catch (Exception e)
@@ -113,6 +118,5 @@ public class CreatorCommissionsController : ControllerBase
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
-        throw new NotImplementedException();
     }
 }
