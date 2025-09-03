@@ -101,6 +101,18 @@ public class CreatorCommissionsController : ControllerBase
     [HttpDelete("delete-commission-rate")]
     public async Task<IActionResult> DeleteCommissionRate(Guid rateId)
     {
+        try
+        {
+            if (rateId == Guid.Empty)
+                return BadRequest("ID empty");
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
         throw new NotImplementedException();
     }
 }
