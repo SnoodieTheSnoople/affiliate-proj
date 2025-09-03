@@ -130,6 +130,9 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
+        if (rateId == Guid.Empty)
+            throw new NullReferenceException();
+        
         throw new NotImplementedException();
     }
 }
