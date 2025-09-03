@@ -9,11 +9,11 @@ namespace affiliate_proj.API.Controllers.Account;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-
+// TODO: Implement user checking. Can be done by store or user.
 public class CreatorCommissionsController : ControllerBase
 {
     private readonly ICommissionRatesService _commissionRatesService;
-
+    
     public CreatorCommissionsController(ICommissionRatesService commissionRatesService)
     {
         _commissionRatesService = commissionRatesService;
