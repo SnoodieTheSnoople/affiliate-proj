@@ -128,7 +128,7 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         };
     }
 
-    public Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
+    public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
         throw new NotImplementedException();
     }
