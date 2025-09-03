@@ -101,4 +101,9 @@ public class CommissionRatesServiceTest
         Assert.NotNull(result);
         Assert.Empty(result);
     }
+
+    public async Task GetCommissionRatesAsync_CallsRepoByCreator_WhenPurposeTypeCorrect()
+    {
+        
+    }
 }
