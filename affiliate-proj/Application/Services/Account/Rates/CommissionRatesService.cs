@@ -1,4 +1,5 @@
-﻿using affiliate_proj.Application.Interfaces.Account.Rates;
+﻿using System.Data;
+using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Core.DTOs.Rates;
 using affiliate_proj.Core.Entities;
 
@@ -84,7 +85,28 @@ public class CommissionRatesService : ICommissionRatesService
 
     public async Task<CommissionRateDTO> AcceptCommissionRateAsync(CommissionRateDTO commissionRateDTO)
     {
-        throw new NotImplementedException();
+        if (commissionRateDTO == null)
+            throw new ArgumentNullException("Object null");
+
+        if (commissionRateDTO.RateId == Guid.Empty)
+            throw new ArgumentNullException();
+
+        if (!commissionRateDTO.IsAccepted)
+            throw new ArgumentException("Cannot be false");
+        
+        var checkIfCurrentRateIsAccepted = await _commissionRatesRepository
+            .GetCommissionRateByRateIdAsync(commissionRateDTO.RateId);
+
+        if (checkIfCurrentRateIsAccepted.IsAccepted)
+        {
+            var oldRate = await DeleteCommissionRateAsync(commissionRateDTO.RateId);
+            if (oldRate != null)
+                throw new DBConcurrencyException("Unable to delete record");
+
+            return new CommissionRateDTO();
+        }
+
+        return new CommissionRateDTO();
     }
 
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
