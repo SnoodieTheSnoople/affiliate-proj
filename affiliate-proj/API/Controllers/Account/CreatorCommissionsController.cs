@@ -101,6 +101,15 @@ public class CreatorCommissionsController : ControllerBase
     [HttpPut("accept-commission-rate")]
     public async Task<IActionResult> AcceptCommissionRateAsync([FromBody] CommissionRateDTO commissionRateDTO)
     {
+        try
+        {
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
         throw new NotImplementedException();
     }
 
