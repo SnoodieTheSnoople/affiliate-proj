@@ -116,7 +116,6 @@ public class CreatorCommissionsController : ControllerBase
             Console.WriteLine(e);
             return BadRequest(e.Message);
         }
-        throw new NotImplementedException();
     }
 
     [HttpDelete("delete-commission-rate")]
