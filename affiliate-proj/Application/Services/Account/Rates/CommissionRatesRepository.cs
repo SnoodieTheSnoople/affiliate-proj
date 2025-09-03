@@ -133,6 +133,8 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         if (rateId == Guid.Empty)
             throw new NullReferenceException();
         
+        var commissionRateEntry = await _postgresDbContext.CommissionRates.FindAsync(rateId);
+        
         throw new NotImplementedException();
     }
 }
