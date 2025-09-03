@@ -96,7 +96,8 @@ public class CommissionRatesService : ICommissionRatesService
             throw new ArgumentException("Cannot be false");
         
         var checkIfCurrentRateIsAccepted = await _commissionRatesRepository
-            .GetCommissionRateByRateIdAsync(commissionRateDTO.RateId);
+            .GetCommissionRateByStoreIdAndCreatorIdAndIsAcceptedAsync(commissionRateDTO.StoreId, 
+                commissionRateDTO.CreatorId);
 
         if (checkIfCurrentRateIsAccepted != null && checkIfCurrentRateIsAccepted.IsAccepted)
         {
