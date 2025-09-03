@@ -102,8 +102,31 @@ public class CommissionRatesServiceTest
         Assert.Empty(result);
     }
 
+    [Fact]
     public async Task GetCommissionRatesAsync_CallsRepoByCreator_WhenPurposeTypeCorrect()
     {
+        var creatorId = Guid.NewGuid();
+        var expectedRates = new List<CommissionRateDTO>
+        {
+            new()
+            {
+                RateId = Guid.NewGuid(),
+                CreatorId = creatorId,
+                StoreId = Guid.NewGuid(),
+                Rate = 10,
+                IsAccepted = false
+            }
+        };
+
+        _commissionRatesRepository.Setup(r =>
+            r.GetCommissionRatesByCreatorIdAsync(creatorId)).ReturnsAsync(expectedRates);
         
+        var result = await _commissionRatesService.GetCommissionRatesAsync(creatorId, 'c');
+        
+        Assert.NotNull(result);
+        _commissionRatesRepository.Verify(r => r.GetCommissionRatesByCreatorIdAsync(creatorId), Times.Once);
+        Assert.Single(result);
+        Assert.Equal(expectedRates[0].CreatorId, result[0].CreatorId);
+        Assert.Equal(expectedRates[0].Rate, result[0].Rate);
     }
 }
