@@ -82,6 +82,11 @@ public class CommissionRatesService : ICommissionRatesService
         return await _commissionRatesRepository.UpdateCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.Rate);
     }
 
+    public async Task<CommissionRateDTO> AcceptCommissionRateAsync(CommissionRateDTO commissionRateDTO)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
     {
         if (rateId == Guid.Empty)
