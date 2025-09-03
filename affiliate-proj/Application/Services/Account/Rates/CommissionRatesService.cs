@@ -66,5 +66,6 @@ public class CommissionRatesService : ICommissionRatesService
             throw new ArgumentOutOfRangeException(nameof(commissionRateDTO.Rate));
         
         return await _commissionRatesRepository.UpdateCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.Rate);
+        // TODO: Create logic to check if rate exists between storeId & creatorId, check if accepted. If accepted, create new rate not accepted.
     }
 }
