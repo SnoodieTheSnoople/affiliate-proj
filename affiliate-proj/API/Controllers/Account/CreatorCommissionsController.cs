@@ -109,7 +109,7 @@ public class CreatorCommissionsController : ControllerBase
             if (commissionRateDTO.RateId ==  Guid.Empty)
                 return BadRequest("ID empty");
 
-            return Ok();
+            return Ok(await _commissionRatesService.AcceptCommissionRateAsync(commissionRateDTO));
         }
         catch (Exception e)
         {
