@@ -2,6 +2,7 @@
 using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Core.DTOs.Rates;
 using affiliate_proj.Core.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.Application.Services.Account.Rates;
 
@@ -97,9 +98,9 @@ public class CommissionRatesService : ICommissionRatesService
         var checkIfCurrentRateIsAccepted = await _commissionRatesRepository
             .GetCommissionRateByRateIdAsync(commissionRateDTO.RateId);
 
-        if (checkIfCurrentRateIsAccepted.IsAccepted)
+        if (checkIfCurrentRateIsAccepted != null && checkIfCurrentRateIsAccepted.IsAccepted)
         {
-            var oldRate = await DeleteCommissionRateAsync(commissionRateDTO.RateId);
+            var oldRate = await DeleteCommissionRateAsync(checkIfCurrentRateIsAccepted.RateId);
             if (oldRate != null)
                 throw new DBConcurrencyException("Unable to delete record");
         }
@@ -108,7 +109,7 @@ public class CommissionRatesService : ICommissionRatesService
             .AcceptCommissionRateAsync(commissionRateDTO.RateId, commissionRateDTO.IsAccepted);
     }
 
-    public async Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
+    public async Task<CommissionRateDTO?> DeleteCommissionRateAsync([FromQuery] Guid rateId)
     {
         if (rateId == Guid.Empty)
             throw new ArgumentNullException("ID empty");
