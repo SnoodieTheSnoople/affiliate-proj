@@ -99,9 +99,27 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         };
     }
 
-    public Task<CommissionRateDTO?> GetCommissionRateByStoreIdAndCreatorIdAndIsAcceptedAsync(Guid storeId, Guid creatorId)
+    public async Task<CommissionRateDTO?> GetCommissionRateByStoreIdAndCreatorIdAndIsAcceptedAsync(Guid storeId, Guid creatorId)
     {
-        throw new NotImplementedException();
+        if (storeId == Guid.Empty)
+            throw new ArgumentNullException();
+        if (creatorId == Guid.Empty)
+            throw new ArgumentNullException();
+        
+        var result = await _postgresDbContext.CommissionRates
+            .Where(rate => rate.StoreId == storeId 
+                           && rate.CreatorId == creatorId
+                           && rate.IsAccepted == true).FirstOrDefaultAsync();
+
+        return new CommissionRateDTO
+        {
+            RateId = result.RateId,
+            CreatedAt = result.CreatedAt,
+            CreatorId = result.CreatorId,
+            StoreId = result.StoreId,
+            Rate = result.Rate,
+            IsAccepted = result.IsAccepted,
+        };
     }
 
     public async Task<CommissionRateDTO> UpdateCommissionRateAsync(Guid rateId, float rate)
