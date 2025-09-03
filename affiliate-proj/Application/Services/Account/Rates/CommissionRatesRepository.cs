@@ -127,4 +127,9 @@ public class CommissionRatesRepository : ICommissionRatesRepository
             IsAccepted = commissionRateEntry.IsAccepted,
         };
     }
+
+    public Task<CommissionRateDTO?> DeleteCommissionRateAsync(Guid rateId)
+    {
+        throw new NotImplementedException();
+    }
 }
