@@ -98,6 +98,12 @@ public class CreatorCommissionsController : ControllerBase
         }
     }
 
+    [HttpPut("accept-commission-rate")]
+    public async Task<IActionResult> AcceptCommissionRateAsync([FromBody] CommissionRateDTO commissionRateDTO)
+    {
+        throw new NotImplementedException();
+    }
+
     [HttpDelete("delete-commission-rate")]
     public async Task<IActionResult> DeleteCommissionRate(Guid rateId)
     {
