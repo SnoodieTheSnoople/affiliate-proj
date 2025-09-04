@@ -41,4 +41,10 @@ public class ShopifyDataController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet("set-products")]
+    public async Task<IActionResult> SetProductsAsync([FromQuery] string shop, [FromQuery] string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 }
