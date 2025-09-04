@@ -16,7 +16,7 @@ public class ShopifyProductService : IShopifyProductService
         _graphServiceFactory = graphServiceFactory;
     }
 
-    public async Task<int> GetProductsCount(string shopDomain, string accessToken)
+    public async Task<GraphResult<ProductsCountResult>> GetProductsCount(string shopDomain, string accessToken)
     {
         var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
         var request = new GraphRequest
@@ -36,11 +36,11 @@ public class ShopifyProductService : IShopifyProductService
         };
         
         var graphResult = await graphService.PostAsync<ProductsCountResult>(request);
-        return graphResult.Data.ProductsCount.count;
+        return graphResult;
     }
 
     public async Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
-        int limit = 50)
+        int limit = 250)
     {
         var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
         var request = new GraphRequest
