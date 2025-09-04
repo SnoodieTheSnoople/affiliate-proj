@@ -98,5 +98,33 @@ public class ShopifyProductService : IShopifyProductService
         var countsResult = await GetProductsCountAsync(shopDomain,  accessToken);
         
         var productsCount = countsResult.Data.ProductsCount.count;
+
+        if (productsCount == 0)
+            return;
+        
+        if (productsCount < 0)
+            throw new ArgumentOutOfRangeException(nameof(productsCount));
+        
+        if (productsCount > 250)
+        {
+            var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
+            var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
+            //TODO: Delay next API call, increment by cursor.
+        }
+        
+        //TODO: Repository call, increment 
+        
+        var productsResult = await GetProductsAsync(shopDomain, accessToken);
+        
+        var allProducts = productsResult.Data.Products.Nodes.ToList();
+
+        foreach (var product in allProducts)
+        {
+            Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}");
+            foreach (var media in product.Media.Nodes)
+            {
+                Console.WriteLine($"Media img ID: {media.Id}, Media: {media.MediaContentType}, Img Url: {media.Preview.Image.Url}");
+            }
+        }
     }
 }

@@ -42,9 +42,11 @@ public class ShopifyDataController : ControllerBase
         }
     }
 
-    [HttpGet("set-products")]
+    [HttpPost("set-products")]
     public async Task<IActionResult> SetProductsAsync([FromQuery] string shop, [FromQuery] string accessToken)
     {
+        await _shopifyProductService.SetProductsAsync(shop, accessToken);
+        return Ok();
         throw new NotImplementedException();
     }
 }
