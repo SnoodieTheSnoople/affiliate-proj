@@ -92,4 +92,9 @@ public class ShopifyProductService : IShopifyProductService
         
         return graphResult;
     }
+
+    public async Task SetProductsAsync(string shopDomain, string accessToken)
+    {
+        
+    }
 }
