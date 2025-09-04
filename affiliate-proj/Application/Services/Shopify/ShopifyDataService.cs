@@ -23,7 +23,25 @@ public class ShopifyDataService : IShopifyDataService
 
     public async Task<int> GetProductsCount(string shopDomain, string accessToken)
     {
-        throw new NotImplementedException();
+        var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
+        var request = new GraphRequest
+        {
+            Query =
+                """
+                query getProductCount($query: String!) {
+                    productsCount(query: $query) {
+                        count
+                    }
+                }
+                """,
+            Variables = new Dictionary<string, object>
+            {
+                { "query", "status:" + ProductStatus.ACTIVE}
+            }
+        };
+        
+        var graphResult = await graphService.PostAsync<ProductsCountResult>(request);
+        return graphResult.Data.ProductsCount.count;
     }
 
     public async Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
