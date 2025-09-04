@@ -1,6 +1,10 @@
-﻿namespace affiliate_proj.API.Controllers.Shopify.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class ShopifyDataController
+namespace affiliate_proj.API.Controllers.Shopify.Data;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ShopifyDataController : ControllerBase
 {
     
 }
