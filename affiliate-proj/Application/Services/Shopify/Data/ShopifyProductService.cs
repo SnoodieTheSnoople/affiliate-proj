@@ -1,4 +1,5 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify.Data;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Core.DataTypes.GraphQL;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
@@ -8,6 +9,13 @@ namespace affiliate_proj.Application.Services.Shopify.Data;
 
 public class ShopifyProductService : IShopifyProductService
 {
+    private readonly IGraphServiceFactory _graphServiceFactory;
+
+    public ShopifyProductService(IGraphServiceFactory graphServiceFactory)
+    {
+        _graphServiceFactory = graphServiceFactory;
+    }
+
     public async Task<int> GetProductsCount(string shopDomain, string accessToken)
     {
         var graphService = _graphServiceFactory.CreateGraphService(shopDomain, accessToken);
