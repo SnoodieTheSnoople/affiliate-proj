@@ -95,6 +95,8 @@ public class ShopifyProductService : IShopifyProductService
 
     public async Task SetProductsAsync(string shopDomain, string accessToken)
     {
+        var countsResult = await GetProductsCount(shopDomain,  accessToken);
         
+        var productsCount = countsResult.Data.ProductsCount.count;
     }
 }
