@@ -33,7 +33,7 @@ public class ShopifyDataController : ControllerBase
     {
         try
         {
-            return Ok(await _shopifyProductService.GetProductsCount(shop, accessToken));
+            return Ok(await _shopifyProductService.GetProductsCountAsync(shop, accessToken));
         }
         catch (Exception e)
         {
