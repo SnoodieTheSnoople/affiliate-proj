@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers.Shopify.Data;
 
-[Route("api/[controller]")]
+[Route("api/data/[controller]")]
 [ApiController]
 public class ShopifyDataController : ControllerBase
 {
@@ -12,5 +12,33 @@ public class ShopifyDataController : ControllerBase
     public ShopifyDataController(IShopifyProductService shopifyProductService)
     {
         _shopifyProductService = shopifyProductService;
+    }
+    
+    [HttpGet("get-products")]
+    public async Task<IActionResult> GetProductsAsync([FromQuery] string shop, [FromQuery] string accessToken)
+    {
+        try
+        {
+            return Ok(await _shopifyProductService.GetProductsAsync(shop, accessToken));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("get-products-count")]
+    public async Task<IActionResult> GetProductsCountAsync([FromQuery] string shop, [FromQuery] string accessToken)
+    {
+        try
+        {
+            return Ok(await _shopifyProductService.GetProductsCount(shop, accessToken));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
 }
