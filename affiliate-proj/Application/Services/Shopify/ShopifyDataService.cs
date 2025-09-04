@@ -1,8 +1,6 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
-using affiliate_proj.Core.DataTypes;
 using affiliate_proj.Core.DataTypes.GraphQL;
-using affiliate_proj.Core.Entities;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
 using ShopifySharp.Services.Graph;
@@ -22,6 +20,11 @@ public class ShopifyDataService : IShopifyDataService
         _graphServiceFactory = graphServiceFactory;
     }
 
+
+    public async Task<int> GetProductsCount(string shopDomain, string accessToken)
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<GraphResult<CustomListProductsResult>> GetProductsAsync(string shopDomain, string accessToken,
         int limit = 50)
