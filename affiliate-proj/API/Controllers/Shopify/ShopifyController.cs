@@ -94,7 +94,15 @@ namespace affiliate_proj.API.Controllers.Shopify
         [HttpGet("get-products-count")]
         public async Task<IActionResult> GetProductsCountAsync([FromQuery] string shop, [FromQuery] string accessToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(await _shopifyDataService.GetProductsCount(shop, accessToken));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
     }
 }
