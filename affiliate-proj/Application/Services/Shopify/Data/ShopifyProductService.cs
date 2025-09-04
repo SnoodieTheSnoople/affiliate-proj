@@ -1,6 +1,8 @@
-﻿namespace affiliate_proj.Application.Services.Shopify.Data;
+﻿using affiliate_proj.Application.Interfaces.Shopify.Data;
 
-public class ShopifyProductService
+namespace affiliate_proj.Application.Services.Shopify.Data;
+
+public class ShopifyProductService : IShopifyProductService
 {
     
 }
