@@ -108,6 +108,7 @@ public class ShopifyProductService : IShopifyProductService
         var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
         var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
         var currentAmt = maximumAvailable - countsResult.Extensions.Cost.ActualQueryCost;
+        var actualCost = countsResult.Extensions.Cost.ActualQueryCost;
         Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
         
         if (productsCount > 250)
@@ -121,7 +122,8 @@ public class ShopifyProductService : IShopifyProductService
         
         //TODO: Repository call, increment 
         
-        Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
+        Console.WriteLine($"Restore Rate: {restoreRate} | Maximum Available: {maximumAvailable} | " +
+                          $"Current Amt: {currentAmt} | Actual Cost: {actualCost}");
         
         var productsResult = await GetProductsAsync(shopDomain, accessToken);
         
