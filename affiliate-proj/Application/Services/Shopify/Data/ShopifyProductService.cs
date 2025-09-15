@@ -144,9 +144,16 @@ public class ShopifyProductService : IShopifyProductService
         return (maxAvailable - currentAmtAvailabe) / restoreRate;
     }
 
-    private double GetTimeDelayForNextQuery(double maxAvailable, double currentAmtAvailabe, double restoreRate,
+    private double GetTimeDelayForNextQuery(double currentAmtAvailabe, double restoreRate,
         double actualCost)
     {
-        throw new NotImplementedException();
+        var bufferMultiplier = 1.5;
+        var overhead = 50;
+        var bufferedCost = actualCost * bufferMultiplier + overhead;
+        
+        var delta = bufferedCost - currentAmtAvailabe;
+
+        var timeDelayResult = delta / restoreRate;
+        return timeDelayResult;
     }
 }
