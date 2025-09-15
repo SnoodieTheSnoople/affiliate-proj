@@ -139,6 +139,6 @@ public class ShopifyProductService : IShopifyProductService
 
     public Task<double> GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
     {
-        throw new NotImplementedException();
+        return Task.FromResult((maxAvailable - currentAmtAvailabe) / restoreRate);
     }
 }
