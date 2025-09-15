@@ -105,14 +105,23 @@ public class ShopifyProductService : IShopifyProductService
         if (productsCount < 0)
             throw new ArgumentOutOfRangeException(nameof(productsCount));
         
+        var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
+        var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
+        var currentAmt = maximumAvailable - countsResult.Extensions.Cost.ActualQueryCost;
+        Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
+        
         if (productsCount > 250)
         {
-            var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
-            var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
+            // var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
+            // var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
+            // var currentAmt = maximumAvailable - countsResult.Extensions.Cost.ActualQueryCost;
+            Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
             //TODO: Delay next API call, increment by cursor.
         }
         
         //TODO: Repository call, increment 
+        
+        Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
         
         var productsResult = await GetProductsAsync(shopDomain, accessToken);
         
