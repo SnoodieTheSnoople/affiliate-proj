@@ -137,8 +137,8 @@ public class ShopifyProductService : IShopifyProductService
         }
     }
 
-    public Task<double> GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
+    private double GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
     {
-        return Task.FromResult((maxAvailable - currentAmtAvailabe) / restoreRate);
+        return (maxAvailable - currentAmtAvailabe) / restoreRate;
     }
 }
