@@ -7,7 +7,7 @@ public class ShopifyProductDTO
     public string ShopifyProductId { get; set; }
     public string Title { get; set; }
     public string Handle { get; set; }
-    public string HasOnlyDefaultVariant { get; set; }
+    public bool HasOnlyDefaultVariant { get; set; }
     public string OnlineStoreUrl { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
