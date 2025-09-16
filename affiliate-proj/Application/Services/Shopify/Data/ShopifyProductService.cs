@@ -155,7 +155,7 @@ public class ShopifyProductService : IShopifyProductService
 
             productsList.Add(new CreateShopifyProductDTO
             {
-                StoreId = new Guid(), // Temp, get store Id
+                StoreId = storeDetails.StoreId,
                 ShopifyProductId = product.Id,
                 Title = product.Title,
                 Handle = product.Handle,
