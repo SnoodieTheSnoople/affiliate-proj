@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify.Data;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Core.DataTypes.GraphQL;
+using affiliate_proj.Core.DTOs.Shopify.Products;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
 using ShopifySharp.Services.Graph;
@@ -104,14 +105,16 @@ public class ShopifyProductService : IShopifyProductService
         
         if (productsCount < 0)
             throw new ArgumentOutOfRangeException(nameof(productsCount));
+
+        var productsResult = await GetProductsAsync(shopDomain, accessToken);
         
         var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
         var maximumAvailable = countsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
         var currentAmt = maximumAvailable - countsResult.Extensions.Cost.ActualQueryCost;
         var actualCost = countsResult.Extensions.Cost.ActualQueryCost;
-        
+
         Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
-        
+
         if (productsCount > 250)
         {
             // var restoreRate = countsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
@@ -120,11 +123,9 @@ public class ShopifyProductService : IShopifyProductService
             Console.WriteLine($"Restore Rate: {restoreRate} |  Maximum Available: {maximumAvailable} |  Current Amt: {currentAmt}");
             //TODO: Delay next API call, increment by cursor.
         }
-        
+
         //TODO: Repository call, increment 
 
-
-        var productsResult = await GetProductsAsync(shopDomain, accessToken);
 
         restoreRate = productsResult.Extensions.Cost.ThrottleStatus.RestoreRate;
         maximumAvailable = productsResult.Extensions.Cost.ThrottleStatus.MaximumAvailable;
@@ -138,6 +139,7 @@ public class ShopifyProductService : IShopifyProductService
         Console.WriteLine( currentAmt < actualCost ? GetTimeDelayForNextQuery(currentAmt, restoreRate, actualCost) : 0);
         
         var allProducts = productsResult.Data.Products.Nodes.ToList();
+        var productsList = new List<CreateShopifyProductDTO>();
 
         foreach (var product in allProducts)
         {
@@ -146,6 +148,16 @@ public class ShopifyProductService : IShopifyProductService
             {
                 Console.WriteLine($"Media img ID: {media.Id}, Media: {media.MediaContentType}, Img Url: {media.Preview.Image.Url}");
             }
+
+            productsList.Add(new CreateShopifyProductDTO
+            {
+                StoreId = new Guid(), // Temp, get store Id
+                ShopifyProductId = product.Id,
+                Title = product.Title,
+                Handle = product.Handle,
+                HasOnlyDefaultVariant = product.HasOnlyDefaultVariant,
+                OnlineStoreUrl = product.OnlineStoreUrl,
+            });
         }
     }
 
