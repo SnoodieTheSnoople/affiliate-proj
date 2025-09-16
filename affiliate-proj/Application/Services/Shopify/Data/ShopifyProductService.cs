@@ -100,6 +100,7 @@ public class ShopifyProductService : IShopifyProductService
     public async Task SetProductsAsync(string shopDomain, string accessToken)
     {
         var countsResult = await GetProductsCountAsync(shopDomain,  accessToken);
+        var storeDetails = await _shopifyStoreHelper.GetStoreByDomainAsync(shopDomain);
         
         var productsCount = countsResult.Data.ProductsCount.count;
 
