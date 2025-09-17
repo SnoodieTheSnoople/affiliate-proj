@@ -3,6 +3,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DataTypes.GraphQL;
 using affiliate_proj.Core.DTOs.Shopify.Products;
+using affiliate_proj.Core.DTOs.Shopify.Products.Media;
 using ShopifySharp;
 using ShopifySharp.GraphQL;
 using ShopifySharp.Services.Graph;
@@ -144,15 +145,11 @@ public class ShopifyProductService : IShopifyProductService
         
         var allProducts = productsResult.Data.Products.Nodes.ToList();
         var productsList = new List<CreateShopifyProductDTO>();
+        var mediaList = new List<CreateShopifyProductMediaDTO>();
 
         foreach (var product in allProducts)
         {
             Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}");
-            foreach (var media in product.Media.Nodes)
-            {
-                Console.WriteLine($"Media img ID: {media.Id}, Media: {media.MediaContentType}, Img Url: {media.Preview.Image.Url}");
-            }
-
             productsList.Add(new CreateShopifyProductDTO
             {
                 StoreId = storeDetails.StoreId,
@@ -162,6 +159,14 @@ public class ShopifyProductService : IShopifyProductService
                 HasOnlyDefaultVariant = product.HasOnlyDefaultVariant,
                 OnlineStoreUrl = product.OnlineStoreUrl,
             });
+            foreach (var media in product.Media.Nodes)
+            {
+                Console.WriteLine($"Media img ID: {media.Id}, Media: {media.MediaContentType}, Img Url: {media.Preview.Image.Url}");
+                mediaList.Add(new CreateShopifyProductMediaDTO
+                {
+                    
+                });
+            }
         }
     }
 
