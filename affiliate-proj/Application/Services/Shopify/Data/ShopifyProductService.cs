@@ -165,6 +165,11 @@ public class ShopifyProductService : IShopifyProductService
         }
     }
 
+    private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<CreateShopifyProductDTO> productsDtos)
+    {
+        throw new NotImplementedException();
+    }
+
     private double GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
     {
         return (maxAvailable - currentAmtAvailabe) / restoreRate;
