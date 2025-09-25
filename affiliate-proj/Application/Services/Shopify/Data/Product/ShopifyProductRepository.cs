@@ -25,7 +25,8 @@ public class ShopifyProductRepository : IShopifyProductRepository
         var checkShopifyProductId = shopifyProductDTOs.Select(product => product.ShopifyProductId).ToHashSet();
         
         var existingProduct = await _context.ShopifyProducts
-            .Where(product => checkShopifyProductId.Contains(product.ShopifyProductId))
+            .Where(product => product.StoreId == storeId && 
+                              checkShopifyProductId.Contains(product.ShopifyProductId))
             .Select(product => product.ShopifyProductId)
             .ToListAsync();
         
