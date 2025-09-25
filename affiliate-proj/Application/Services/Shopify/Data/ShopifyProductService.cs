@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Application.Interfaces.Shopify.Data;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DataTypes.GraphQL;
 using affiliate_proj.Core.DTOs.Shopify.Products;
@@ -14,11 +15,13 @@ public class ShopifyProductService : IShopifyProductService
 {
     private readonly IGraphServiceFactory _graphServiceFactory;
     private readonly IShopifyStoreHelper _shopifyStoreHelper;
+    private readonly IShopifyProductRepository _shopifyProductRepository;
 
-    public ShopifyProductService(IGraphServiceFactory graphServiceFactory, IShopifyStoreHelper shopifyStoreHelper)
+    public ShopifyProductService(IGraphServiceFactory graphServiceFactory, IShopifyStoreHelper shopifyStoreHelper, IShopifyProductRepository shopifyProductRepository)
     {
         _graphServiceFactory = graphServiceFactory;
         _shopifyStoreHelper = shopifyStoreHelper;
+        _shopifyProductRepository = shopifyProductRepository;
     }
 
     public async Task<GraphResult<ProductsCountResult>> GetProductsCountAsync(string shopDomain, string accessToken)
