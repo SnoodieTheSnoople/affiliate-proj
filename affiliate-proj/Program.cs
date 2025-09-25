@@ -7,6 +7,7 @@ using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Data;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
@@ -16,6 +17,7 @@ using affiliate_proj.Application.Services.Account.Rates;
 using affiliate_proj.Application.Services.Shopify;
 using affiliate_proj.Application.Services.Shopify.Data;
 using affiliate_proj.Application.Services.Shopify.Data.Factories;
+using affiliate_proj.Application.Services.Shopify.Data.Product;
 using affiliate_proj.Application.Services.Shopify.Webhook;
 using affiliate_proj.Application.Services.Store;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -101,6 +103,7 @@ public class Program
         builder.Services.AddScoped<IShopifyDataService, ShopifyDataService>();
         builder.Services.AddScoped<IShopifyStateManager, ShopifyStateManager>();
         builder.Services.AddScoped<IShopifyProductService, ShopifyProductService>();
+        builder.Services.AddScoped<IShopifyProductRepository, ShopifyProductRepository>();
         
         builder.Services.AddScoped<IGraphServiceFactory, GraphServiceFactory>();
         
