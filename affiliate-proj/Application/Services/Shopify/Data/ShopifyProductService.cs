@@ -144,14 +144,16 @@ public class ShopifyProductService : IShopifyProductService
         Console.WriteLine( currentAmt < actualCost ? GetTimeDelayForNextQuery(currentAmt, restoreRate, actualCost) : 0);
         
         var allProducts = productsResult.Data.Products.Nodes.ToList();
-        var productsList = new List<CreateShopifyProductDTO>();
+        var productsList = new List<ShopifyProductDTO>();
         var mediaList = new List<CreateShopifyProductMediaDTO>();
 
         foreach (var product in allProducts)
         {
             Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}");
-            productsList.Add(new CreateShopifyProductDTO
+            var generatedProductId = Guid.NewGuid();
+            productsList.Add(new ShopifyProductDTO
             {
+                ProductId = generatedProductId,
                 StoreId = storeDetails.StoreId,
                 ShopifyProductId = product.Id,
                 Title = product.Title,
@@ -164,7 +166,12 @@ public class ShopifyProductService : IShopifyProductService
                 Console.WriteLine($"Media img ID: {media.Id}, Media: {media.MediaContentType}, Img Url: {media.Preview.Image.Url}");
                 mediaList.Add(new CreateShopifyProductMediaDTO
                 {
-                    
+                    ProductId = generatedProductId,
+                    Alt = media.Alt,
+                    MediaType = media.MediaContentType,
+                    ImageUrl = media.Preview.Image.Url,
+                    Width = (int)media.Preview.Image.Width,
+                    Height = (int)media.Preview.Image.Height,
                 });
             }
         }
