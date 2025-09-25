@@ -8,11 +8,11 @@ namespace affiliate_proj.Application.Services.Shopify.Data.Product;
 
 public class ShopifyProductRepository : IShopifyProductRepository
 {
-    private readonly PostgresDbContext _context;
+    private readonly PostgresDbContext _dbContext;
 
-    public ShopifyProductRepository(PostgresDbContext context)
+    public ShopifyProductRepository(PostgresDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
     public async Task<ShopifyProductDTO> SetProductAsync(ShopifyProductDTO shopifyProductDTO)
@@ -36,7 +36,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         
         var checkShopifyProductId = shopifyProductsList.Select(product => product.ShopifyProductId).ToHashSet();
         
-        var existingProduct = await _context.ShopifyProducts
+        var existingProduct = await _dbContext.ShopifyProducts
             .Where(product => product.StoreId == storeId && 
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .Select(product => product.ShopifyProductId)
@@ -48,8 +48,8 @@ public class ShopifyProductRepository : IShopifyProductRepository
             .Where(product => !existingProduct.Contains(product.ShopifyProductId))
             .ToList();
         
-        await _context.ShopifyProducts.AddRangeAsync(newProductList);
-        await _context.SaveChangesAsync();
+        await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
+        await _dbContext.SaveChangesAsync();
         
         throw new NotImplementedException();
     }
