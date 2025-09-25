@@ -19,7 +19,8 @@ public class ShopifyProductRepository : IShopifyProductRepository
         throw new NotImplementedException();
     }
 
-    public async Task<List<ShopifyProductDTO>> SetProductsListAsync(List<ShopifyProductDTO> shopifyProductDTOs)
+    public async Task<List<ShopifyProductDTO>> SetProductsListAsync(List<ShopifyProductDTO> shopifyProductDTOs, 
+        Guid storeId)
     {
         var checkShopifyProductId = shopifyProductDTOs.Select(product => product.ShopifyProductId).ToHashSet();
         
