@@ -88,6 +88,21 @@ public class PostgresDbContext : DbContext
             builder.Property(rate => rate.Rate).HasColumnName("commission_rate");
             builder.Property(rate => rate.IsAccepted).HasColumnName("is_accepted");
         });
+
+        modelBuilder.Entity<ShopifyProducts>(builder =>
+        {
+            builder.ToTable("shopify_products");
+            builder.Property(product => product.ProductId).HasColumnName("product_id");
+            builder.Property(product => product.StoreId).HasColumnName("store_id");
+            builder.Property(product => product.ShopifyProductId).HasColumnName("shopify_product_id");
+            builder.Property(product => product.Title).HasColumnName("title");
+            builder.Property(product => product.Handle).HasColumnName("handle");
+            builder.Property(product => product.HasOnlyDefaultVariant).HasColumnName("has_only_default_variant");
+            builder.Property(product => product.OnlineStoreUrl).HasColumnName("online_store_url");
+            builder.Property(product => product.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+            builder.Property(product => product.UpdatedAt).HasColumnName("updated_at");
+            builder.Property(product => product.SyncedAt).HasColumnName("synced_at");
+        });
     }
 
 }
