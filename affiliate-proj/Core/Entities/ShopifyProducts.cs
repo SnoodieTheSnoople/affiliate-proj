@@ -25,7 +25,7 @@ public class ShopifyProducts
     public string Handle { get; set; }
     
     [Required]
-    public string HasOnlyDefaultVariant { get; set; }
+    public bool HasOnlyDefaultVariant { get; set; }
     
     [Required]
     public string OnlineStoreUrl { get; set; }
