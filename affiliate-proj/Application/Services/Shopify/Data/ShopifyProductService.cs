@@ -185,6 +185,12 @@ public class ShopifyProductService : IShopifyProductService
         throw new NotImplementedException();
     }
 
+    private async Task<List<ShopifyProductMediaDTO>> SetProductMediaInDbAsync(
+        List<CreateShopifyProductMediaDTO> productMediaDtos)
+    {
+        throw new NotImplementedException();
+    }
+
     private double GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
     {
         return (maxAvailable - currentAmtAvailabe) / restoreRate;
