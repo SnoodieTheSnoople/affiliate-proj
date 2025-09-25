@@ -49,6 +49,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
             .ToList();
         
         await _context.ShopifyProducts.AddRangeAsync(newProductList);
+        await _context.SaveChangesAsync();
         
         throw new NotImplementedException();
     }
