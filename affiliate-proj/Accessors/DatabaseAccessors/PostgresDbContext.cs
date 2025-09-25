@@ -103,6 +103,19 @@ public class PostgresDbContext : DbContext
             builder.Property(product => product.UpdatedAt).HasColumnName("updated_at");
             builder.Property(product => product.SyncedAt).HasColumnName("synced_at");
         });
+
+        modelBuilder.Entity<ShopifyProductMedias>(builder =>
+        {
+            builder.ToTable("shopify_product_medias");
+            builder.Property(media => media.MediaId).HasColumnName("media_id");
+            builder.Property(media => media.ProductId).HasColumnName("product_id");
+            builder.Property(media => media.Alt).HasColumnName("alt");
+            builder.Property(media => media.MediaType).HasColumnName("media_type");
+            builder.Property(media => media.ImageUrl).HasColumnName("image_url");
+            builder.Property(media => media.Width).HasColumnName("width");
+            builder.Property(media => media.Height).HasColumnName("height");
+            builder.Property(media => media.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+        });
     }
 
 }
