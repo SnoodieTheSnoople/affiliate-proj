@@ -10,6 +10,9 @@ public class PostgresDbContext : DbContext
     public DbSet<Store> Stores { get; set; }
     public DbSet<WebhookRegistrations> WebhookRegistrations { get; set; }
     public DbSet<CommissionRate> CommissionRates { get; set; }
+    public DbSet<ShopifyProducts> ShopifyProducts { get; set; }
+    public DbSet<ShopifyProductMedias> ShopifyProductMedias { get; set; }
+    
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
 
