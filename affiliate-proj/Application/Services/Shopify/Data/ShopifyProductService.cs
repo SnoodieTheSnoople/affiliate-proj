@@ -175,9 +175,12 @@ public class ShopifyProductService : IShopifyProductService
                 });
             }
         }
+        
+        //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
+        await SetProductsInDbAsync(productsList);
     }
 
-    private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<CreateShopifyProductDTO> productsDtos)
+    private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos)
     {
         throw new NotImplementedException();
     }
