@@ -52,7 +52,24 @@ public class ShopifyProductRepository : IShopifyProductRepository
         await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
         await _dbContext.SaveChangesAsync();
         
-        throw new NotImplementedException();
+        var returnProducts = await _dbContext.ShopifyProducts
+            .Where(product => product.StoreId == storeId && 
+                              checkShopifyProductId.Contains(product.ShopifyProductId))
+            .ToListAsync();
+
+        return returnProducts.Select(toDto => new ShopifyProductDTO
+        {
+            ProductId = toDto.ProductId,
+            StoreId = toDto.StoreId,
+            ShopifyProductId = toDto.ShopifyProductId,
+            Title = toDto.Title,
+            Handle = toDto.Handle,
+            HasOnlyDefaultVariant = toDto.HasOnlyDefaultVariant,
+            OnlineStoreUrl = toDto.OnlineStoreUrl,
+            CreatedAt = toDto.CreatedAt,
+            SyncedAt = toDto.SyncedAt,
+            UpdatedAt = toDto.UpdatedAt
+        }).ToList();
     }
 
     public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList)
