@@ -91,7 +91,52 @@ public class ShopifyProductRepository : IShopifyProductRepository
         
         if (shopifyProductsList.Count == 0)
             return new List<ShopifyProductDTO>();
-    
-        throw new NotImplementedException();
+        
+        var updateDateTime = DateTime.UtcNow;
+
+        var productsDictByShopifyId = shopifyProductsList
+            .GroupBy(product => product.ShopifyProductId)
+            .Select(group => group.First())
+            .ToDictionary(product => product.ShopifyProductId, product => product);
+        
+        var productsListShopifyIds = productsDictByShopifyId.Keys.ToList();
+
+        var existingProducts = await _dbContext.ShopifyProducts
+            .Where(product => product.StoreId == storeId && 
+                              productsListShopifyIds.Contains(product.ShopifyProductId))
+            .ToListAsync();
+
+        foreach (var product in existingProducts)
+        {
+            var getProductFromDict = productsDictByShopifyId[product.ShopifyProductId];
+            
+            product.Title = getProductFromDict.Title;
+            product.Handle = getProductFromDict.Handle;
+            product.HasOnlyDefaultVariant = getProductFromDict.HasOnlyDefaultVariant;
+            product.OnlineStoreUrl = getProductFromDict.OnlineStoreUrl;
+            product.UpdatedAt = updateDateTime;
+        }
+        
+        await _dbContext.SaveChangesAsync();
+
+        var getProducts = await _dbContext.ShopifyProducts
+            .AsNoTracking()
+            .Where(product => product.StoreId == storeId &&
+                              productsListShopifyIds.Contains(product.ShopifyProductId))
+            .ToListAsync();
+        
+        return getProducts.Select(toDto => new ShopifyProductDTO
+        {
+            ProductId = toDto.ProductId,
+            StoreId = toDto.StoreId,
+            ShopifyProductId = toDto.ShopifyProductId,
+            Title = toDto.Title,
+            Handle = toDto.Handle,
+            HasOnlyDefaultVariant = toDto.HasOnlyDefaultVariant,
+            OnlineStoreUrl = toDto.OnlineStoreUrl,
+            CreatedAt = toDto.CreatedAt,
+            SyncedAt = toDto.SyncedAt,
+            UpdatedAt = toDto.UpdatedAt
+        }).ToList();
     }
 }
