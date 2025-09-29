@@ -38,6 +38,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         var checkShopifyProductId = shopifyProductsList.Select(product => product.ShopifyProductId).ToHashSet();
         
         var existingProduct = await _dbContext.ShopifyProducts
+            .AsNoTracking()
             .Where(product => product.StoreId == storeId && 
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .Select(product => product.ShopifyProductId)
@@ -53,6 +54,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         await _dbContext.SaveChangesAsync();
         
         var returnProducts = await _dbContext.ShopifyProducts
+            .AsNoTracking()
             .Where(product => product.StoreId == storeId && 
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .ToListAsync();
