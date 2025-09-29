@@ -83,7 +83,8 @@ public class ShopifyProductRepository : IShopifyProductRepository
         }).ToList();
     }
 
-    public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList)
+    public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList,
+        Guid storeId)
     {
         if (shopifyProductsList == null)
            throw new ArgumentNullException();

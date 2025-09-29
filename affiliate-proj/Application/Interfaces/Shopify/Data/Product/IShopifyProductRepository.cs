@@ -7,5 +7,5 @@ public interface IShopifyProductRepository
 {
     Task<ShopifyProductDTO> SetProductAsync(ShopifyProductDTO shopifyProductDTO);
     Task<List<ShopifyProductDTO>> SetProductsListAsync(List<ShopifyProductDTO> shopifyProductDTOs, Guid storeId);
-    Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList);
+    Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList, Guid storeId);
 }
