@@ -36,7 +36,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         var shopifyProductsList = shopifyProductDTOs.Select(dto => new ShopifyProducts
         {
             ProductId = dto.ProductId,
-            StoreId = dto.StoreId,
+            StoreId = storeId,
             ShopifyProductId = dto.ShopifyProductId,
             Title = dto.Title,
             Handle = dto.Handle,
