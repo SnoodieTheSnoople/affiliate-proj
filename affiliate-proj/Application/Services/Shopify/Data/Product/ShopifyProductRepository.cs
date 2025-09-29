@@ -52,8 +52,10 @@ public class ShopifyProductRepository : IShopifyProductRepository
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .Select(product => product.ShopifyProductId)
             .ToListAsync();
-        
-        // TODO: Consider update if there is an existing entry
+
+
+        var listToUpdate = shopifyProductsList.Where(elements => existingProduct.Contains(elements.ShopifyProductId)).ToList();
+        var updatedList = await UpdateProductsListAsync(listToUpdate , storeId);
         
         var newProductList = shopifyProductsList
             .Where(product => !existingProduct.Contains(product.ShopifyProductId))
@@ -62,13 +64,14 @@ public class ShopifyProductRepository : IShopifyProductRepository
         await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
         await _dbContext.SaveChangesAsync();
         
-        var returnProducts = await _dbContext.ShopifyProducts
+        var newProducts = await _dbContext.ShopifyProducts
             .AsNoTracking()
             .Where(product => product.StoreId == storeId && 
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .ToListAsync();
 
-        return returnProducts.Select(toDto => new ShopifyProductDTO
+
+        var returnProducts = newProducts.Select(toDto => new ShopifyProductDTO
         {
             ProductId = toDto.ProductId,
             StoreId = toDto.StoreId,
@@ -81,6 +84,10 @@ public class ShopifyProductRepository : IShopifyProductRepository
             SyncedAt = toDto.SyncedAt,
             UpdatedAt = toDto.UpdatedAt
         }).ToList();
+        
+        returnProducts.AddRange(updatedList);
+
+        return returnProducts;
     }
 
     public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList,
