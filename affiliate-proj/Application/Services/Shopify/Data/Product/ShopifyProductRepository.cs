@@ -85,6 +85,12 @@ public class ShopifyProductRepository : IShopifyProductRepository
 
     public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList)
     {
+        if (shopifyProductsList == null)
+           throw new ArgumentNullException();
+        
+        if (shopifyProductsList.Count == 0)
+            return new List<ShopifyProductDTO>();
+    
         throw new NotImplementedException();
     }
 }
