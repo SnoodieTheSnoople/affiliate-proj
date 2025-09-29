@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Core.DTOs.Shopify.Products;
+using affiliate_proj.Core.DTOs.Shopify.Products.Media;
 using affiliate_proj.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +52,11 @@ public class ShopifyProductRepository : IShopifyProductRepository
         await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
         await _dbContext.SaveChangesAsync();
         
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ShopifyProductDTO>> UpdateProductsListAsync(List<ShopifyProducts> shopifyProductsList)
+    {
         throw new NotImplementedException();
     }
 }
