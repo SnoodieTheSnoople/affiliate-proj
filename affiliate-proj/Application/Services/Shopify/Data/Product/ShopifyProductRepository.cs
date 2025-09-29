@@ -64,6 +64,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
         await _dbContext.SaveChangesAsync();
         
+        // TODO: Modify to prevent duplicating returns from updatedList and newProducts as newProducts calls all entities.
         var newProducts = await _dbContext.ShopifyProducts
             .AsNoTracking()
             .Where(product => product.StoreId == storeId && 
