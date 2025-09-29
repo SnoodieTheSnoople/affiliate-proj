@@ -24,6 +24,15 @@ public class ShopifyProductRepository : IShopifyProductRepository
     public async Task<List<ShopifyProductDTO>> SetProductsListAsync(List<ShopifyProductDTO> shopifyProductDTOs, 
         Guid storeId)
     {
+        if (shopifyProductDTOs == null)
+            throw new ArgumentNullException();
+        
+        if (storeId == Guid.Empty)
+            throw new ArgumentNullException();
+        
+        if (shopifyProductDTOs.Count == 0)
+            return new List<ShopifyProductDTO>();
+        
         var shopifyProductsList = shopifyProductDTOs.Select(dto => new ShopifyProducts
         {
             ProductId = dto.ProductId,
