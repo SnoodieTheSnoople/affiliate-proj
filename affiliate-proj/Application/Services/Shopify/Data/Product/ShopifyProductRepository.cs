@@ -149,4 +149,16 @@ public class ShopifyProductRepository : IShopifyProductRepository
             UpdatedAt = toDto.UpdatedAt
         }).ToList();
     }
+
+    public async Task<List<ShopifyProductMediaDTO>> SetShopifyProductMediaListAsync(
+        List<CreateShopifyProductMediaDTO> shopifyProductMediaDTOs)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ShopifyProductMediaDTO>> UpdateShopifyProductMediaListAsync(
+        List<ShopifyProductMedias> shopifyProductMediasList)
+    {
+        throw new NotImplementedException();
+    }
 }
