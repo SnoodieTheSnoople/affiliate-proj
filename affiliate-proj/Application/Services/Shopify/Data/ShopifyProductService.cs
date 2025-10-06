@@ -170,6 +170,7 @@ public class ShopifyProductService : IShopifyProductService
                 mediaList.Add(new CreateShopifyProductMediaDTO
                 {
                     ProductId = generatedProductId,
+                    ShopifyProductId = product.Id,
                     Alt = media.Alt,
                     MediaType = media.MediaContentType,
                     ImageUrl = media.Preview.Image.Url,
