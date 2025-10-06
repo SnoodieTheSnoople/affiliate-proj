@@ -44,6 +44,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
             OnlineStoreUrl = dto.OnlineStoreUrl
         }).ToList();
         
+        
         var checkShopifyProductId = shopifyProductsList.Select(product => product.ShopifyProductId).ToHashSet();
         
         var existingProduct = await _dbContext.ShopifyProducts
@@ -52,23 +53,24 @@ public class ShopifyProductRepository : IShopifyProductRepository
                               checkShopifyProductId.Contains(product.ShopifyProductId))
             .Select(product => product.ShopifyProductId)
             .ToListAsync();
-
-
+        
         var listToUpdate = shopifyProductsList.Where(elements => existingProduct.Contains(elements.ShopifyProductId)).ToList();
-        var updatedList = await UpdateProductsListAsync(listToUpdate , storeId);
+        var updatedList = await UpdateProductsListAsync(listToUpdate, storeId);
+        
         
         var newProductList = shopifyProductsList
             .Where(product => !existingProduct.Contains(product.ShopifyProductId))
             .ToList();
         
+        var newProductListIds = newProductList.Select(id => id.ProductId).ToList();
+        
         await _dbContext.ShopifyProducts.AddRangeAsync(newProductList);
         await _dbContext.SaveChangesAsync();
         
-        // TODO: Modify to prevent duplicating returns from updatedList and newProducts as newProducts calls all entities.
         var newProducts = await _dbContext.ShopifyProducts
             .AsNoTracking()
             .Where(product => product.StoreId == storeId && 
-                              checkShopifyProductId.Contains(product.ShopifyProductId))
+                              newProductListIds.Contains(product.ProductId))
             .ToListAsync();
 
 
