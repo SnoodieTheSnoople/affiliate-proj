@@ -187,7 +187,10 @@ public class ShopifyProductService : IShopifyProductService
 
     private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos, Guid storeId)
     {
-        throw new NotImplementedException();
+        if (productsDtos.Count == 0) return new List<ShopifyProductDTO>();
+        if (storeId == Guid.Empty) throw new  ArgumentNullException(nameof(storeId));
+        
+        return await _shopifyProductRepository.SetProductsListAsync(productsDtos, storeId);
     }
 
     private async Task<List<ShopifyProductMediaDTO>> SetProductMediaInDbAsync(
