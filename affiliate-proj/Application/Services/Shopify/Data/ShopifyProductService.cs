@@ -182,8 +182,9 @@ public class ShopifyProductService : IShopifyProductService
         
         //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
         var actualProducts = await SetProductsInDbAsync(productsList, storeDetails.StoreId);
+        // Modify mediaList to reflect actualProducts with correct ProductId
         await SetProductMediaInDbAsync(mediaList);
-        // TODO: Implement SetProductsInDbAsync & SetProductMediaInDbAsync
+        // TODO: Implement SetProductMediaInDbAsync
     }
 
     private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos, Guid storeId)
