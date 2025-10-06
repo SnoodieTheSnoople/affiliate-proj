@@ -180,12 +180,12 @@ public class ShopifyProductService : IShopifyProductService
         }
         
         //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
-        await SetProductsInDbAsync(productsList);
+        await SetProductsInDbAsync(productsList, TODO);
         await SetProductMediaInDbAsync(mediaList);
         // TODO: Implement SetProductsInDbAsync & SetProductMediaInDbAsync
     }
 
-    private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos)
+    private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos, Guid storeId)
     {
         throw new NotImplementedException();
     }
