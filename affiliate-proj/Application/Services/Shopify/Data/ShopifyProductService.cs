@@ -180,7 +180,7 @@ public class ShopifyProductService : IShopifyProductService
         }
         
         //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
-        await SetProductsInDbAsync(productsList, storeDetails.StoreId);
+        var actualProducts = await SetProductsInDbAsync(productsList, storeDetails.StoreId);
         await SetProductMediaInDbAsync(mediaList);
         // TODO: Implement SetProductsInDbAsync & SetProductMediaInDbAsync
     }
