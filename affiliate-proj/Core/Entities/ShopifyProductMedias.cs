@@ -16,6 +16,9 @@ public class ShopifyProductMedias
     public ShopifyProducts Product { get; set; }
     
     [Required]
+    public string ShopifyProductId { get; set; }
+    
+    [Required]
     public string Alt { get; set; }
     
     [Required]

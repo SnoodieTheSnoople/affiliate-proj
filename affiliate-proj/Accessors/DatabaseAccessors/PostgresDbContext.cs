@@ -109,6 +109,7 @@ public class PostgresDbContext : DbContext
             builder.ToTable("shopify_product_medias");
             builder.Property(media => media.MediaId).HasColumnName("media_id");
             builder.Property(media => media.ProductId).HasColumnName("product_id");
+            builder.Property(media => media.ShopifyProductId).HasColumnName("shopify_product_id");
             builder.Property(media => media.Alt).HasColumnName("alt");
             builder.Property(media => media.MediaType).HasColumnName("media_type");
             builder.Property(media => media.ImageUrl).HasColumnName("image_url");
