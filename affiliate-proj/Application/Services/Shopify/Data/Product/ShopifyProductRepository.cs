@@ -153,6 +153,11 @@ public class ShopifyProductRepository : IShopifyProductRepository
     public async Task<List<ShopifyProductMediaDTO>> SetShopifyProductMediaListAsync(
         List<CreateShopifyProductMediaDTO> shopifyProductMediaDTOs)
     {
+        if (shopifyProductMediaDTOs == null) throw new  ArgumentNullException(nameof(shopifyProductMediaDTOs));
+        if (shopifyProductMediaDTOs.Count == 0) return new List<ShopifyProductMediaDTO>();
+        
+        
+        
         throw new NotImplementedException();
     }
 
