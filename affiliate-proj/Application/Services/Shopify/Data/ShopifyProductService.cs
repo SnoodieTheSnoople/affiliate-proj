@@ -183,6 +183,19 @@ public class ShopifyProductService : IShopifyProductService
         //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
         var actualProducts = await SetProductsInDbAsync(productsList, storeDetails.StoreId);
         // Modify mediaList to reflect actualProducts with correct ProductId
+        
+        var productIdsDict = actualProducts
+            .ToDictionary(product => product.ShopifyProductId, product => product.ProductId);
+
+        foreach (var media in mediaList)
+        {
+            if (productIdsDict.TryGetValue(media.ShopifyProductId, out var productId))
+            {
+                media.ProductId = productId;
+            }
+            // Consider logging missing IDs
+        }
+        
         await SetProductMediaInDbAsync(mediaList);
         // TODO: Implement SetProductMediaInDbAsync
     }
