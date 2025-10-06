@@ -4,6 +4,7 @@ public class ShopifyProductMediaDTO
 {
     public Guid MediaId { get; set; }
     public Guid ProductId { get; set; }
+    public string ShopifyProductId { get; set; }
     public string Alt { get; set; }
     public string MediaType { get; set; }
     public string ImageUrl  { get; set; }
