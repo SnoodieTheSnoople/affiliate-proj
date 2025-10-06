@@ -169,7 +169,47 @@ public class ShopifyProductRepository : IShopifyProductRepository
         
         // Assuming that only 1 image/media is stored
         
-        throw new NotImplementedException();
+        var setOfProductIdsToCheck = convertDtos.Select(dto => dto.ProductId).ToHashSet();
+        var existingRecords = await _dbContext.ShopifyProducts
+            .AsNoTracking()
+            .Where(media => setOfProductIdsToCheck.Contains(media.ProductId))
+            .Select(media => media.ProductId)
+            .ToListAsync();
+        
+        var listToUpdate = convertDtos.Where(media => 
+            existingRecords.Contains(media.ProductId)).ToList();
+        // UpdateShopifyProductMediaListAsync method call here...
+        
+        
+        var newMediaToAddList = convertDtos.Where(
+            media => !existingRecords.Contains(media.ProductId)).ToList();
+
+        var newMediaProductIds = newMediaToAddList.Select(id => id.ProductId).ToList();
+
+        await _dbContext.ShopifyProductMedias.AddRangeAsync(newMediaToAddList);
+        await _dbContext.SaveChangesAsync();
+
+        var newMedias = await _dbContext.ShopifyProductMedias
+            .AsNoTracking()
+            .Where(media => newMediaProductIds.Contains(media.ProductId))
+            .ToListAsync();
+
+        var returnMedias = newMedias.Select(toDto => new ShopifyProductMediaDTO
+        {
+            MediaId = toDto.MediaId,
+            ProductId = toDto.ProductId,
+            ShopifyProductId = toDto.ShopifyProductId,
+            Alt = toDto.Alt,
+            MediaType = toDto.MediaType,
+            ImageUrl = toDto.ImageUrl,
+            Width = toDto.Width,
+            Height = toDto.Height,
+            CreatedAt = toDto.CreatedAt
+        }).ToList();
+        
+        // Add return from UpdateShopifyProductMediaListAsync()
+        
+        return returnMedias;
     }
 
     public async Task<List<ShopifyProductMediaDTO>> UpdateShopifyProductMediaListAsync(
