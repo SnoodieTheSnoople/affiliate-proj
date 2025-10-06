@@ -159,6 +159,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         var convertDtos = shopifyProductMediaDTOs.Select(dto => new ShopifyProductMedias
         {
             ProductId = dto.ProductId,
+            ShopifyProductId = dto.ShopifyProductId,
             Alt = dto.Alt,
             MediaType = dto.MediaType,
             ImageUrl = dto.ImageUrl,
