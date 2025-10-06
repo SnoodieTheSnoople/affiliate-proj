@@ -196,6 +196,7 @@ public class ShopifyProductService : IShopifyProductService
     private async Task<List<ShopifyProductMediaDTO>> SetProductMediaInDbAsync(
         List<CreateShopifyProductMediaDTO> productMediaDtos)
     {
+        return await _shopifyProductRepository.SetShopifyProductMediaListAsync(productMediaDtos);
         throw new NotImplementedException();
     }
 
