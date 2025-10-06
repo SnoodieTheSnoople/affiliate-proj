@@ -155,8 +155,18 @@ public class ShopifyProductRepository : IShopifyProductRepository
     {
         if (shopifyProductMediaDTOs == null) throw new  ArgumentNullException(nameof(shopifyProductMediaDTOs));
         if (shopifyProductMediaDTOs.Count == 0) return new List<ShopifyProductMediaDTO>();
+
+        var convertDtos = shopifyProductMediaDTOs.Select(dto => new ShopifyProductMedias
+        {
+            ProductId = dto.ProductId,
+            Alt = dto.Alt,
+            MediaType = dto.MediaType,
+            ImageUrl = dto.ImageUrl,
+            Width = dto.Width,
+            Height = dto.Height,
+        }).ToList();
         
-        
+        // Assuming that only 1 image/media is stored
         
         throw new NotImplementedException();
     }
