@@ -179,7 +179,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         var listToUpdate = convertDtos.Where(media => 
             existingRecords.Contains(media.ProductId)).ToList();
         // UpdateShopifyProductMediaListAsync method call here...
-        
+        var updatedList = await UpdateShopifyProductMediaListAsync(listToUpdate);
         
         var newMediaToAddList = convertDtos.Where(
             media => !existingRecords.Contains(media.ProductId)).ToList();
@@ -208,6 +208,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         }).ToList();
         
         // Add return from UpdateShopifyProductMediaListAsync()
+        returnMedias.AddRange(updatedList);
         
         return returnMedias;
     }
