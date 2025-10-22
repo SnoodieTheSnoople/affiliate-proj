@@ -197,7 +197,6 @@ public class ShopifyProductService : IShopifyProductService
         }
         
         await SetProductMediaInDbAsync(mediaList);
-        // TODO: Implement SetProductMediaInDbAsync
     }
 
     private async Task<List<ShopifyProductDTO>> SetProductsInDbAsync(List<ShopifyProductDTO> productsDtos, Guid storeId)
@@ -212,9 +211,9 @@ public class ShopifyProductService : IShopifyProductService
         List<CreateShopifyProductMediaDTO> productMediaDtos)
     {
         return await _shopifyProductRepository.SetShopifyProductMediaListAsync(productMediaDtos);
-        throw new NotImplementedException();
     }
 
+    /******************************************************************************************************************/
     private double GetTimeDelayForFullRecovery(double maxAvailable, double currentAmtAvailabe, double restoreRate)
     {
         return (maxAvailable - currentAmtAvailabe) / restoreRate;
