@@ -47,6 +47,6 @@ public class ShopifyDataController : ControllerBase
     {
         await _shopifyProductService.SetProductsAsync(shop, accessToken);
         return Ok();
-        throw new NotImplementedException();
+        // TODO: Test Endpoint
     }
 }
