@@ -215,6 +215,52 @@ public class ShopifyProductRepository : IShopifyProductRepository
     public async Task<List<ShopifyProductMediaDTO>> UpdateShopifyProductMediaListAsync(
         List<ShopifyProductMedias> shopifyProductMediasList)
     {
-        throw new NotImplementedException();
+        if (shopifyProductMediasList == null)
+            throw new ArgumentException();
+        
+        if (shopifyProductMediasList.Count == 0)
+            return new List<ShopifyProductMediaDTO>();
+        
+        var productMediaDictByShopifyId = shopifyProductMediasList
+            .GroupBy(media => media.ShopifyProductId)
+            .Select(group => group.First())
+            .ToDictionary(media => media.ShopifyProductId);
+        
+        var mediaListShopifyIds = productMediaDictByShopifyId.Keys.ToList();
+        
+        var existingProducts = await _dbContext.ShopifyProductMedias
+            .Where(media => mediaListShopifyIds.Contains(media.ShopifyProductId))
+            .ToListAsync();
+
+        foreach (var media in existingProducts)
+        {
+            var getMediaFromDict = productMediaDictByShopifyId[media.ShopifyProductId];
+            
+            media.Alt = media.Alt;
+            media.MediaType = getMediaFromDict.MediaType;
+            media.ImageUrl = getMediaFromDict.ImageUrl;
+            media.Width = getMediaFromDict.Width;
+            media.Height = getMediaFromDict.Height;
+        }
+        
+        await _dbContext.SaveChangesAsync();
+        
+        var getMedias = await _dbContext.ShopifyProductMedias
+            .AsNoTracking()
+            .Where(media => mediaListShopifyIds.Contains(media.ShopifyProductId))
+            .ToListAsync();
+
+        return getMedias.Select(toDto => new ShopifyProductMediaDTO
+        {
+            MediaId = toDto.MediaId,
+            ProductId = toDto.ProductId,
+            ShopifyProductId = toDto.ShopifyProductId,
+            Alt = toDto.Alt,
+            MediaType = toDto.MediaType,
+            ImageUrl = toDto.ImageUrl,
+            Width = toDto.Width,
+            Height = toDto.Height,
+            CreatedAt = toDto.CreatedAt
+        }).ToList();
     }
 }
