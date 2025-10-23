@@ -47,6 +47,6 @@ public class ShopifyDataController : ControllerBase
     {
         await _shopifyProductService.SetProductsAsync(shop, accessToken);
         return Ok();
-        // TODO: Test Endpoint
+        // TESTED TODO: NEEDS MAJOR REFACTORING
     }
 }
