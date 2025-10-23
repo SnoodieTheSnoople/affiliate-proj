@@ -156,6 +156,7 @@ public class ShopifyProductService : IShopifyProductService
         var productsList = new List<ShopifyProductDTO>();
         var mediaList = new List<CreateShopifyProductMediaDTO>();
 
+        // TODO: Try look to improve this foreach
         foreach (var product in allProducts)
         {
             Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}," +
