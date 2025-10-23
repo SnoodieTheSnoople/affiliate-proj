@@ -60,5 +60,10 @@ public class CustomResourcePublicationsV2
 
 public class CustomResourcePublicationsV2Node
 {
-    
+    public bool IsPublished  { get; set; }
+    public CustomPublication Publication { get; set; }
+}
+
+public class CustomPublication
+{
 }
