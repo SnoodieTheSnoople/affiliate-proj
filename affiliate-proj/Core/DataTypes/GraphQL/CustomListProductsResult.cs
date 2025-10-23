@@ -20,6 +20,7 @@ public class CustomProductNode
     public string Handle { get; set; }
     public bool HasOnlyDefaultVariant { get; set; }
     public string OnlineStoreUrl { get; set; }
+    public string OnlineStorePreviewUrl { get; set; }
     public CustomMediaConnection Media { get; set; }
 }
 
