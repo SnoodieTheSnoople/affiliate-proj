@@ -21,6 +21,8 @@ public class CustomProductNode
     public bool HasOnlyDefaultVariant { get; set; }
     public string OnlineStoreUrl { get; set; }
     public string OnlineStorePreviewUrl { get; set; }
+    public bool PublishedOnCurrentPublication { get; set; }
+    public CustomResourcePublicationsV2 ResourcePublicationsV2 { get; set; }
     public CustomMediaConnection Media { get; set; }
 }
 
@@ -49,4 +51,9 @@ public class CustomImage
     public int? Height { get; set; }
     public int? Width { get; set; }
     public string Url { get; set; }
+}
+
+public class CustomResourcePublicationsV2
+{
+    
 }
