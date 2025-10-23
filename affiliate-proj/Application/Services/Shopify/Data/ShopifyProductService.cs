@@ -238,11 +238,7 @@ public class ShopifyProductService : IShopifyProductService
     private async Task<List<ShopifyProductMediaDTO>> SetProductMediaInDbAsync(
         List<CreateShopifyProductMediaDTO> productMediaDtos)
     {
-        Console.WriteLine(productMediaDtos.Count);
-        foreach (var m in productMediaDtos)
-        {
-            Console.WriteLine($"{m.ProductId}, {m.ShopifyProductId}, {m.Alt},  {m.MediaType}, {m.Width}, {m.Height}");
-        }
+        if (productMediaDtos.Count == 0) return new List<ShopifyProductMediaDTO>();
         return await _shopifyProductRepository.SetShopifyProductMediaListAsync(productMediaDtos);
     }
 
