@@ -163,6 +163,23 @@ public class ShopifyProductService : IShopifyProductService
                               $"| OnlineStoreUrlPreview: {product.OnlineStorePreviewUrl}");
             // OnlineStoreUrl will be null on dev. 
             var generatedProductId = Guid.NewGuid();
+            
+            // Default behaviour to direct to ShopDomain if link does not exist
+            var onlineUrl = shopDomain;
+
+            var pubCount = product.ResourcePublicationsV2.Nodes.Count;
+            Console.WriteLine(product.ResourcePublicationsV2.Nodes.Count);
+
+            if (pubCount == 1)
+            {
+                var isPublished = product.ResourcePublicationsV2.Nodes[pubCount-1].IsPublished;
+
+                if (isPublished && product.OnlineStoreUrl == null || product.OnlineStoreUrl == String.Empty)
+                {
+                    onlineUrl = $"{shopDomain}/products/{product.Handle}";
+                }
+            }
+            
             productsList.Add(new ShopifyProductDTO
             {
                 ProductId = generatedProductId,
@@ -171,7 +188,7 @@ public class ShopifyProductService : IShopifyProductService
                 Title = product.Title,
                 Handle = product.Handle,
                 HasOnlyDefaultVariant = product.HasOnlyDefaultVariant,
-                OnlineStoreUrl = product.OnlineStoreUrl,
+                OnlineStoreUrl = onlineUrl,
             });
             foreach (var media in product.Media.Nodes)
             {
@@ -191,11 +208,12 @@ public class ShopifyProductService : IShopifyProductService
         
         //ITERATE THROUGH PRODUCTSLIST AND MEDIALIST AND ADD TO DB
         var actualProducts = await SetProductsInDbAsync(productsList, storeDetails.StoreId);
+        
         // Modify mediaList to reflect actualProducts with correct ProductId
         
         var productIdsDict = actualProducts
             .ToDictionary(product => product.ShopifyProductId, product => product.ProductId);
-
+        
         foreach (var media in mediaList)
         {
             if (productIdsDict.TryGetValue(media.ShopifyProductId, out var productId))
@@ -219,6 +237,11 @@ public class ShopifyProductService : IShopifyProductService
     private async Task<List<ShopifyProductMediaDTO>> SetProductMediaInDbAsync(
         List<CreateShopifyProductMediaDTO> productMediaDtos)
     {
+        Console.WriteLine(productMediaDtos.Count);
+        foreach (var m in productMediaDtos)
+        {
+            Console.WriteLine($"{m.ProductId}, {m.ShopifyProductId}, {m.Alt},  {m.MediaType}, {m.Width}, {m.Height}");
+        }
         return await _shopifyProductRepository.SetShopifyProductMediaListAsync(productMediaDtos);
     }
 
