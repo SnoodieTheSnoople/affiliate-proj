@@ -53,6 +53,7 @@ public class CustomImage
     public string Url { get; set; }
 }
 
+// Requires 'read_product_listings' scope
 public class CustomResourcePublicationsV2
 {
     public List<CustomResourcePublicationsV2Node>  Nodes { get; set; }
