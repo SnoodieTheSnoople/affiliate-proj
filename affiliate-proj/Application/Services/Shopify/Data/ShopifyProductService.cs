@@ -172,6 +172,7 @@ public class ShopifyProductService : IShopifyProductService
 
             if (pubCount == 1)
             {
+                // Assumption that there is the 1 sales channel "Online Store"
                 var isPublished = product.ResourcePublicationsV2.Nodes[pubCount-1].IsPublished;
 
                 if (isPublished && product.OnlineStoreUrl == null || product.OnlineStoreUrl == String.Empty)
