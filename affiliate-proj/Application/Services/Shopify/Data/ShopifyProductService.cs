@@ -148,7 +148,10 @@ public class ShopifyProductService : IShopifyProductService
 
         foreach (var product in allProducts)
         {
-            Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title},\nOnline Store URL: {product.OnlineStoreUrl}");
+            Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}," +
+                              $"\nOnlineStoreUrl: {product.OnlineStoreUrl} " +
+                              $"| OnlineStoreUrlPreview: {product.OnlineStorePreviewUrl}");
+            // OnlineStoreUrl will be null on dev. 
             var generatedProductId = Guid.NewGuid();
             productsList.Add(new ShopifyProductDTO
             {
