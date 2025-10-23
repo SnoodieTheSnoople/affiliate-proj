@@ -246,22 +246,23 @@ public class ShopifyProductRepository : IShopifyProductRepository
         
         await _dbContext.SaveChangesAsync();
         
-        var getMedias = await _dbContext.ShopifyProductMedias
+        var updatedMedias = await _dbContext.ShopifyProductMedias
             .AsNoTracking()
             .Where(media => mediaListShopifyIds.Contains(media.ShopifyProductId))
+            .Select(toDto => new ShopifyProductMediaDTO
+            {
+                MediaId = toDto.MediaId,
+                ProductId = toDto.ProductId,
+                ShopifyProductId = toDto.ShopifyProductId,
+                Alt = toDto.Alt,
+                MediaType = toDto.MediaType,
+                ImageUrl = toDto.ImageUrl,
+                Width = toDto.Width,
+                Height = toDto.Height,
+                CreatedAt = toDto.CreatedAt
+            })
             .ToListAsync();
 
-        return getMedias.Select(toDto => new ShopifyProductMediaDTO
-        {
-            MediaId = toDto.MediaId,
-            ProductId = toDto.ProductId,
-            ShopifyProductId = toDto.ShopifyProductId,
-            Alt = toDto.Alt,
-            MediaType = toDto.MediaType,
-            ImageUrl = toDto.ImageUrl,
-            Width = toDto.Width,
-            Height = toDto.Height,
-            CreatedAt = toDto.CreatedAt
-        }).ToList();
+        return updatedMedias;
     }
 }
