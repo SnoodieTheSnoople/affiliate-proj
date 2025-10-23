@@ -237,7 +237,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         {
             var getMediaFromDict = productMediaDictByShopifyId[media.ShopifyProductId];
             
-            media.Alt = media.Alt;
+            media.Alt = getMediaFromDict.Alt;
             media.MediaType = getMediaFromDict.MediaType;
             media.ImageUrl = getMediaFromDict.ImageUrl;
             media.Width = getMediaFromDict.Width;
