@@ -70,6 +70,11 @@ public class ShopifyProductService : IShopifyProductService
                             hasOnlyDefaultVariant
                             onlineStoreUrl
                             onlineStorePreviewUrl
+                            resourcePublicationsV2(first: 10) {
+                                nodes {
+                                    isPublished
+                                }
+                            }
                             media(first:1) {
                                 nodes {
                                         id
