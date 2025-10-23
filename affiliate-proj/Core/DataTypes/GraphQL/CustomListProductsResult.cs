@@ -21,6 +21,8 @@ public class CustomProductNode
     public bool HasOnlyDefaultVariant { get; set; }
     public string OnlineStoreUrl { get; set; }
     public string OnlineStorePreviewUrl { get; set; }
+    
+    // Requires 'read_product_listings' scope
     public bool PublishedOnCurrentPublication { get; set; }
     public CustomResourcePublicationsV2 ResourcePublicationsV2 { get; set; }
     public CustomMediaConnection Media { get; set; }
@@ -53,7 +55,7 @@ public class CustomImage
     public string Url { get; set; }
 }
 
-// Requires 'read_product_listings' scope
+// Requires 'read_publications' scope
 public class CustomResourcePublicationsV2
 {
     public List<CustomResourcePublicationsV2Node>  Nodes { get; set; }
