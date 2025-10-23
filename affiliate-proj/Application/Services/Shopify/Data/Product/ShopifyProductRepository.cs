@@ -170,7 +170,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         // Assuming that only 1 image/media is stored
         
         var setOfProductIdsToCheck = convertDtos.Select(dto => dto.ProductId).ToHashSet();
-        var existingRecords = await _dbContext.ShopifyProducts
+        var existingRecords = await _dbContext.ShopifyProductMedias
             .AsNoTracking()
             .Where(media => setOfProductIdsToCheck.Contains(media.ProductId))
             .Select(media => media.ProductId)
