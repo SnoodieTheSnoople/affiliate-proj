@@ -55,5 +55,10 @@ public class CustomImage
 
 public class CustomResourcePublicationsV2
 {
+    public List<CustomResourcePublicationsV2Node>  Nodes { get; set; }
+}
+
+public class CustomResourcePublicationsV2Node
+{
     
 }
