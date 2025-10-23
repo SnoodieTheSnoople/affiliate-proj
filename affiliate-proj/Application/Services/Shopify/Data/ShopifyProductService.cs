@@ -69,6 +69,7 @@ public class ShopifyProductService : IShopifyProductService
                             handle
                             hasOnlyDefaultVariant
                             onlineStoreUrl
+                            onlineStorePreviewUrl
                             media(first:1) {
                                 nodes {
                                         id
@@ -152,7 +153,7 @@ public class ShopifyProductService : IShopifyProductService
 
         foreach (var product in allProducts)
         {
-            Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title}");
+            Console.WriteLine($"Product ID: {product.Id}, Product Title: {product.Title},\nOnline Store URL: {product.OnlineStoreUrl}");
             var generatedProductId = Guid.NewGuid();
             productsList.Add(new ShopifyProductDTO
             {
