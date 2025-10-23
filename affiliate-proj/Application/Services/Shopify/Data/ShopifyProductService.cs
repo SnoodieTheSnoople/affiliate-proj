@@ -73,6 +73,11 @@ public class ShopifyProductService : IShopifyProductService
                             resourcePublicationsV2(first: 10) {
                                 nodes {
                                     isPublished
+                                    publication {
+                                        catalog {
+                                            title
+                                        }
+                                    }
                                 }
                             }
                             media(first:1) {
