@@ -66,4 +66,10 @@ public class CustomResourcePublicationsV2Node
 
 public class CustomPublication
 {
+    public CustomCatalog Catalog { get; set; }
+}
+
+public class CustomCatalog
+{
+    public string Title { get; set; }
 }
