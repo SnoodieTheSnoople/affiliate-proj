@@ -10,13 +10,13 @@ public class AffiliateLink
     public string LinkId { get; set; }
     
     [Required]
-    public string CreatorId  { get; set; }
+    public Guid CreatorId  { get; set; }
     
     [ForeignKey(nameof(CreatorId))]
     public Creator Creator { get; set; }
     
     [Required]
-    public string StoreId  { get; set; }
+    public Guid StoreId  { get; set; }
     
     [ForeignKey(nameof(StoreId))]
     public Store Store { get; set; }
