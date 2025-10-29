@@ -119,6 +119,19 @@ public class PostgresDbContext : DbContext
             builder.Property(media => media.Height).HasColumnName("height");
             builder.Property(media => media.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
         });
+
+        modelBuilder.Entity<AffiliateLink>(builder =>
+        {
+            builder.ToTable("affiliate_links");
+            builder.Property(link => link.LinkId).HasColumnName("link_id");
+            builder.Property(link => link.CreatorId).HasColumnName("creator_id");
+            builder.Property(link => link.StoreId).HasColumnName("store_id");
+            builder.Property(link => link.Link).HasColumnName("affiliate_link");
+            builder.Property(link => link.RefParam).HasColumnName("ref_param");
+            builder.Property(link => link.ProductLink).HasColumnName("product_link");
+            builder.Property(link => link.Clicks).HasColumnName("clicks");
+            builder.Property(link => link.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+        });
     }
 
 }
