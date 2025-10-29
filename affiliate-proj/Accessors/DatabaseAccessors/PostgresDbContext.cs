@@ -132,6 +132,19 @@ public class PostgresDbContext : DbContext
             builder.Property(link => link.Clicks).HasColumnName("clicks");
             builder.Property(link => link.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
         });
+
+        modelBuilder.Entity<AffiliateCode>(builder =>
+        {
+            builder.ToTable("affiliate_codes");
+            builder.Property(code => code.CodeId).HasColumnName("code_id");
+            builder.Property(code => code.CreatorId).HasColumnName("creator_id");
+            builder.Property(code => code.StoreId).HasColumnName("store_id");
+            builder.Property(code => code.Code).HasColumnName("affiliate_code");
+            builder.Property(code => code.IsActive).HasColumnName("is_active");
+            builder.Property(code => code.ValidFor).HasColumnName("valid_for");
+            builder.Property(code => code.ExpiryDate).HasColumnName("expiry_date");
+            builder.Property(code => code.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+        });
     }
 
 }
