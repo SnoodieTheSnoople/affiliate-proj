@@ -12,6 +12,8 @@ public class PostgresDbContext : DbContext
     public DbSet<CommissionRate> CommissionRates { get; set; }
     public DbSet<ShopifyProducts> ShopifyProducts { get; set; }
     public DbSet<ShopifyProductMedias> ShopifyProductMedias { get; set; }
+    public DbSet<AffiliateLink> AffiliateLinks { get; set; }
+    public DbSet<AffiliateCode> AffiliateCodes { get; set; }
     
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
