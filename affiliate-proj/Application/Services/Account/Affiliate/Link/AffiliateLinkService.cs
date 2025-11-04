@@ -23,6 +23,13 @@ public class AffiliateLinkService : IAffiliateLinkService
         // Get ProductLink and validate exists in db
         // Set Clicks to 0
         
+        if (!_accountHelper.CheckUserExists(createAffiliateLinkDto.CreatorId))
+        {
+            throw new Exception("Creator does not exist.");
+        }
+        await _storeService.GetStoreByIdAsync(createAffiliateLinkDto.StoreId); // Will throw if not found anyway
+        
+        
         
         throw new NotImplementedException();
     }
