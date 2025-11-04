@@ -8,17 +8,19 @@ namespace affiliate_proj.Application.Services.Account.Affiliate.Link;
 
 public class AffiliateLinkService : IAffiliateLinkService
 {
+    private readonly IAffiliateLinkRepository _affiliateLinkRepository;
     private readonly IAccountHelper _accountHelper;
     private readonly IStoreService _storeService;
     private readonly IShopifyProductRepository _shopifyProductRepository;
     private readonly IConfiguration _configuration;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository)
+    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository)
     {
         _accountHelper = accountHelper;
         _storeService = storeService;
         _configuration = configuration;
         _shopifyProductRepository = shopifyProductRepository;
+        _affiliateLinkRepository = affiliateLinkRepository;
     }
 
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
