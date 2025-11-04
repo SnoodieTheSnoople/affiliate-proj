@@ -59,6 +59,8 @@ public class AffiliateLinkService : IAffiliateLinkService
         }
 
         createAffiliateLinkDto.Clicks = 0;
+
+        await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
         
         throw new NotImplementedException();
     }
