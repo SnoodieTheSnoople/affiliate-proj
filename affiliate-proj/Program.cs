@@ -2,6 +2,7 @@ using System.Text;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Account;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Interfaces.Shopify;
@@ -12,6 +13,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Account;
+using affiliate_proj.Application.Services.Account.Affiliate.Link;
 using affiliate_proj.Application.Services.Account.Creator;
 using affiliate_proj.Application.Services.Account.Rates;
 using affiliate_proj.Application.Services.Shopify;
@@ -93,6 +95,7 @@ public class Program
         builder.Services.AddScoped<IAccountHelper, AccountHelper>();
         builder.Services.AddScoped<ICommissionRatesService, CommissionRatesService>();
         builder.Services.AddScoped<ICommissionRatesRepository, CommissionRatesRepository>();
+        builder.Services.AddScoped<IAffiliateLinkService, AffiliateLinkService>();
         
         /* Store Service */
         builder.Services.AddScoped<IStoreService, StoreService>();
