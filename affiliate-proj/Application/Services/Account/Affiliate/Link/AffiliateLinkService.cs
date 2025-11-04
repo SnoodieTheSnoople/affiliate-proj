@@ -55,6 +55,8 @@ public class AffiliateLinkService : IAffiliateLinkService
         {
             throw new Exception("Product link does not exist.");
         }
+
+        createAffiliateLinkDto.Clicks = 0;
         
         throw new NotImplementedException();
     }
