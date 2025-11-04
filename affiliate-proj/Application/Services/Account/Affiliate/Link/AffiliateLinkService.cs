@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Application.Interfaces.Account;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Affiliate.Link;
 
@@ -9,13 +10,15 @@ public class AffiliateLinkService : IAffiliateLinkService
 {
     private readonly IAccountHelper _accountHelper;
     private readonly IStoreService _storeService;
+    private readonly IShopifyProductRepository _shopifyProductRepository;
     private readonly IConfiguration _configuration;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration)
+    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository)
     {
         _accountHelper = accountHelper;
         _storeService = storeService;
         _configuration = configuration;
+        _shopifyProductRepository = shopifyProductRepository;
     }
 
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
