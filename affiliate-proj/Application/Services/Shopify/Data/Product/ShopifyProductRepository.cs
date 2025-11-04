@@ -263,4 +263,9 @@ public class ShopifyProductRepository : IShopifyProductRepository
 
         return updatedMedias;
     }
+
+    public Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
 }
