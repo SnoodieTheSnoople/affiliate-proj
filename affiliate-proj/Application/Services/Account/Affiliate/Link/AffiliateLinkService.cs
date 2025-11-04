@@ -49,6 +49,13 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("Invalid link.");
         }
         
+        // TODO: Implement Shopify ProductLink validation
+        if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(createAffiliateLinkDto.ProductLink, 
+                createAffiliateLinkDto.StoreId) == null)
+        {
+            throw new Exception("Product link does not exist.");
+        }
+        
         throw new NotImplementedException();
     }
 }
