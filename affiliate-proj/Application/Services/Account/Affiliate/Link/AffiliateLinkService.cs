@@ -9,11 +9,13 @@ public class AffiliateLinkService : IAffiliateLinkService
 {
     private readonly IAccountHelper _accountHelper;
     private readonly IStoreService _storeService;
+    private readonly IConfiguration _configuration;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService)
+    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration)
     {
         _accountHelper = accountHelper;
         _storeService = storeService;
+        _configuration = configuration;
     }
 
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
@@ -29,7 +31,19 @@ public class AffiliateLinkService : IAffiliateLinkService
         }
         await _storeService.GetStoreByIdAsync(createAffiliateLinkDto.StoreId); // Will throw if not found anyway
         
+        // Link validation
+        var baseUrl = new Uri(_configuration.GetValue<string>("BaseUrl"));
+        var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
+        var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
+        var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
         
+        var path = affiliateLinkUri.AbsolutePath.Trim('/');
+        var isValidPath = !string.IsNullOrEmpty(path) && !path.Contains(createAffiliateLinkDto.RefParam);
+        
+        if (!isSchemeSame || !isHostSame || !isValidPath)
+        {
+            throw new Exception("Invalid link.");
+        }
         
         throw new NotImplementedException();
     }
