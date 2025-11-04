@@ -1,3 +1,4 @@
+using affiliate_proj.Core.DTOs.Affiliate.Link;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
     public class AffiliateLinkController : ControllerBase
     {
         [HttpPost("set-affiliate-link")]
-        public async Task<IActionResult> SetAffiliateLink()
+        public async Task<IActionResult> SetAffiliateLink([FromBody] CreateAffiliateLinkDTO createAffiliateLinkDTO)
         {
             try
             {
