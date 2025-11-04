@@ -13,6 +13,15 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         {
             try
             {
+                if (createAffiliateLinkDTO.CreatorId == Guid.Empty ||
+                    createAffiliateLinkDTO.StoreId == Guid.Empty ||
+                    string.IsNullOrEmpty(createAffiliateLinkDTO.Link) ||
+                    string.IsNullOrEmpty(createAffiliateLinkDTO.RefParam) ||
+                    string.IsNullOrEmpty(createAffiliateLinkDTO.ProductLink))
+                {
+                    return BadRequest("Invalid input data.");
+                }
+                
                 return Ok();
             }
             catch (Exception e)
