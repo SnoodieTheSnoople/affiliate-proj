@@ -7,6 +7,12 @@ public class AffiliateLinkService : IAffiliateLinkService
 {
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
     {
+        // Validate if Creator and Store exists
+        // Create new link and use baseUrl + refParam
+        // Get ProductLink and validate exists in db
+        // Set Clicks to 0
+        
+        
         throw new NotImplementedException();
     }
 }
