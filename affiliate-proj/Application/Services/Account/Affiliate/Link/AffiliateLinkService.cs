@@ -32,13 +32,14 @@ public class AffiliateLinkService : IAffiliateLinkService
         await _storeService.GetStoreByIdAsync(createAffiliateLinkDto.StoreId); // Will throw if not found anyway
         
         // Link validation
+        // TODO: Move to separate validator method. Refactor for security and depth.
         var baseUrl = new Uri(_configuration.GetValue<string>("BaseUrl"));
         var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
         var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
         var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
         
         var path = affiliateLinkUri.AbsolutePath.Trim('/');
-        var isValidPath = !string.IsNullOrEmpty(path) && !path.Contains(createAffiliateLinkDto.RefParam);
+        var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(createAffiliateLinkDto.RefParam);
         
         if (!isSchemeSame || !isHostSame || !isValidPath)
         {
