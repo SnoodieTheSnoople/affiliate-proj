@@ -14,5 +14,5 @@ public interface IShopifyProductRepository
     Task<List<ShopifyProductMediaDTO>> UpdateShopifyProductMediaListAsync(
         List<ShopifyProductMedias> shopifyProductMediasList);
     
-    Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId);
+    Task<ShopifyProductDTO?> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId);
 }

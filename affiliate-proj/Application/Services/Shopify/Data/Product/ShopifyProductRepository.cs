@@ -264,7 +264,7 @@ public class ShopifyProductRepository : IShopifyProductRepository
         return updatedMedias;
     }
 
-    public async Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
+    public async Task<ShopifyProductDTO?> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
     {
         if (String.IsNullOrEmpty(productLink))
             throw new ArgumentNullException(nameof(productLink));
@@ -276,7 +276,19 @@ public class ShopifyProductRepository : IShopifyProductRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(product => product.OnlineStoreUrl == productLink && 
                                             product.StoreId == storeId);
-        
-        throw new NotImplementedException();
+
+        return new ShopifyProductDTO
+        {
+            ProductId = shopifyProduct.ProductId,
+            StoreId = shopifyProduct.StoreId,
+            ShopifyProductId = shopifyProduct.ShopifyProductId,
+            Title = shopifyProduct.Title,
+            Handle = shopifyProduct.Handle,
+            HasOnlyDefaultVariant = shopifyProduct.HasOnlyDefaultVariant,
+            OnlineStoreUrl = shopifyProduct.OnlineStoreUrl,
+            CreatedAt = shopifyProduct.CreatedAt,
+            SyncedAt = shopifyProduct.SyncedAt,
+            UpdatedAt = shopifyProduct.UpdatedAt
+        };
     }
 }
