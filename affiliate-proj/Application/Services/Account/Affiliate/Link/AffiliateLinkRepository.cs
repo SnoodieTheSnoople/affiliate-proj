@@ -42,4 +42,19 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
             Clicks = affiliateLink.Clicks
         };
     }
+
+    private AffiliateLinkDTO ConvertEntityToDto(AffiliateLink entity)
+    {
+        return new AffiliateLinkDTO
+        {
+            LinkId = entity.LinkId,
+            CreatorId = entity.CreatorId,
+            StoreId = entity.StoreId,
+            Link = entity.Link,
+            RefParam = entity.RefParam,
+            ProductLink = entity.ProductLink,
+            Clicks = entity.Clicks,
+            CreatedAt = entity.CreatedAt
+        };
+    }
 }
