@@ -8,6 +8,8 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 {
     public async Task<AffiliateLinkDTO> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
     {
+        var entity = ConvertDtoToEntity(createAffiliateLinkDto);
+        
         throw new NotImplementedException();
     }
     
