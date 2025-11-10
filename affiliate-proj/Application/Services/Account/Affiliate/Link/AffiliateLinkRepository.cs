@@ -11,18 +11,16 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         throw new NotImplementedException();
     }
     
-    private AffiliateLink ConvertFromDTO(AffiliateLink affiliateLink)
+    private AffiliateLink ConvertFromDTO(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink
         {
-            LinkId = affiliateLink.LinkId,
             CreatorId = affiliateLink.CreatorId,
             StoreId = affiliateLink.StoreId,
             Link = affiliateLink.Link,
             RefParam = affiliateLink.RefParam,
             ProductLink = affiliateLink.ProductLink,
-            Clicks = affiliateLink.Clicks,
-            CreatedAt = affiliateLink.CreatedAt
+            Clicks = affiliateLink.Clicks
         };
     }
 }
