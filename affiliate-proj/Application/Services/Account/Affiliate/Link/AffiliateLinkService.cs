@@ -69,7 +69,7 @@ public class AffiliateLinkService : IAffiliateLinkService
 
         createAffiliateLinkDto.Clicks = 0;
 
-        // await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
+        await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
         
         _logger.LogInformation("Affiliate link created for CreatorId: {creatorId}, StoreId: {storeId}",
             createAffiliateLinkDto.CreatorId, createAffiliateLinkDto.StoreId);
