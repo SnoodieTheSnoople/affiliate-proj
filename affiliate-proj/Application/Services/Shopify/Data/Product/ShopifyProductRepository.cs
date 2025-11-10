@@ -266,6 +266,12 @@ public class ShopifyProductRepository : IShopifyProductRepository
 
     public Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
     {
+        if (String.IsNullOrEmpty(productLink))
+            throw new ArgumentNullException(nameof(productLink));
+        
+        if (Guid.Empty == storeId)
+            throw new ArgumentNullException(nameof(storeId));
+        
         throw new NotImplementedException();
     }
 }
