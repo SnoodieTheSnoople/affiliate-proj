@@ -18,13 +18,14 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
     public async Task<AffiliateLinkDTO> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
     {
         var entity = ConvertDtoToEntity(createAffiliateLinkDto);
-
-        if (await _dbContext.AffiliateLinks.FirstOrDefaultAsync(x => x.CreatorId == entity.CreatorId
+        
+        var checkExists = await _dbContext.AffiliateLinks.FirstOrDefaultAsync(x => x.CreatorId == entity.CreatorId
                                                                      && x.StoreId == entity.StoreId &&
                                                                      x.RefParam == entity.RefParam &&
-                                                                     x.ProductLink == entity.ProductLink) != null)
+                                                                     x.ProductLink == entity.ProductLink);
+        if (checkExists != null)
         {
-            throw new Exception("Affiliate link already exists.");
+            return ConvertEntityToDto(checkExists);
         }
         
         throw new NotImplementedException();
