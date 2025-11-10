@@ -13,14 +13,16 @@ public class AffiliateLinkService : IAffiliateLinkService
     private readonly IStoreService _storeService;
     private readonly IShopifyProductRepository _shopifyProductRepository;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<AffiliateLinkService> _logger;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository)
+    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository, ILogger<AffiliateLinkService> logger)
     {
         _accountHelper = accountHelper;
         _storeService = storeService;
         _configuration = configuration;
         _shopifyProductRepository = shopifyProductRepository;
         _affiliateLinkRepository = affiliateLinkRepository;
+        _logger = logger;
     }
 
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
@@ -32,9 +34,14 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         if (!_accountHelper.CheckUserExists(createAffiliateLinkDto.CreatorId))
         {
+            _logger.LogError("Creator not found: {creatorId}", createAffiliateLinkDto.CreatorId);
             throw new Exception("Creator does not exist.");
         }
+        
+        _logger.LogInformation("Creator found: {CreatorId}", createAffiliateLinkDto.CreatorId);
+        
         await _storeService.GetStoreByIdAsync(createAffiliateLinkDto.StoreId); // Will throw if not found anyway
+        _logger.LogInformation("Store found: {StoreId}", createAffiliateLinkDto.StoreId);
         
         // Link validation
         // TODO: Move to separate validator method. Refactor for security and depth.
@@ -48,6 +55,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         if (!isSchemeSame || !isHostSame || !isValidPath)
         {
+            _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
             throw new Exception("Invalid link.");
         }
         
@@ -55,12 +63,20 @@ public class AffiliateLinkService : IAffiliateLinkService
         if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(createAffiliateLinkDto.ProductLink, 
                 createAffiliateLinkDto.StoreId) == null)
         {
+            _logger.LogError("Shopify product not found.");
             throw new Exception("Product link does not exist.");
         }
 
         createAffiliateLinkDto.Clicks = 0;
 
-        await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
+        // await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
+        
+        _logger.LogInformation("Affiliate link created for CreatorId: {creatorId}, StoreId: {storeId}",
+            createAffiliateLinkDto.CreatorId, createAffiliateLinkDto.StoreId);
+        _logger.LogInformation("Link set to {link}", createAffiliateLinkDto.Link);
+        _logger.LogInformation("RefParam set to {refParam}", createAffiliateLinkDto.RefParam);
+        _logger.LogInformation("ProductLink set to {productLink}", createAffiliateLinkDto.ProductLink);
+        _logger.LogInformation("Clicks initialized to {clicks}", createAffiliateLinkDto.Clicks);
         
         throw new NotImplementedException();
     }
