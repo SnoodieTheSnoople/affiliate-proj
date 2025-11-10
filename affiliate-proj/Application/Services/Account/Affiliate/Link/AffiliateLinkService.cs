@@ -32,6 +32,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         // Get ProductLink and validate exists in db
         // Set Clicks to 0
         
+        // TODO: Change to CreatorService call
         if (!_accountHelper.CheckUserExists(createAffiliateLinkDto.CreatorId))
         {
             _logger.LogError("Creator not found: {creatorId}", createAffiliateLinkDto.CreatorId);
@@ -45,7 +46,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         // Link validation
         // TODO: Move to separate validator method. Refactor for security and depth.
-        var baseUrl = new Uri(_configuration.GetValue<string>("BaseUrl"));
+        var baseUrl = new Uri(_configuration.GetValue<string>("Shopify:BaseUrl"));
         var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
         var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
         var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
@@ -59,7 +60,6 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("Invalid link.");
         }
         
-        // TODO: Implement Shopify ProductLink validation
         if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(createAffiliateLinkDto.ProductLink, 
                 createAffiliateLinkDto.StoreId) == null)
         {
