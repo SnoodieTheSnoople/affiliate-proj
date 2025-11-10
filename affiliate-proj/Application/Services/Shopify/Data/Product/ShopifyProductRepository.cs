@@ -264,13 +264,18 @@ public class ShopifyProductRepository : IShopifyProductRepository
         return updatedMedias;
     }
 
-    public Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
+    public async Task<ShopifyProductDTO> CheckShopifyProductExistsByLinkAsync(string productLink, Guid storeId)
     {
         if (String.IsNullOrEmpty(productLink))
             throw new ArgumentNullException(nameof(productLink));
         
         if (Guid.Empty == storeId)
             throw new ArgumentNullException(nameof(storeId));
+        
+        var shopifyProduct = await _dbContext.ShopifyProducts
+            .AsNoTracking()
+            .FirstOrDefaultAsync(product => product.OnlineStoreUrl == productLink && 
+                                            product.StoreId == storeId);
         
         throw new NotImplementedException();
     }
