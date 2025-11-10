@@ -28,7 +28,13 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
             return ConvertEntityToDto(checkExists);
         }
         
-        throw new NotImplementedException();
+        await _dbContext.AffiliateLinks.AddAsync(entity);
+        await  _dbContext.SaveChangesAsync();
+        
+        return ConvertEntityToDto(await _dbContext.AffiliateLinks.FirstOrDefaultAsync(
+            x => x.CreatorId == entity.CreatorId && x.StoreId == entity.StoreId &&
+                 x.RefParam == entity.RefParam &&
+                 x.ProductLink == entity.ProductLink));
     }
     
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
