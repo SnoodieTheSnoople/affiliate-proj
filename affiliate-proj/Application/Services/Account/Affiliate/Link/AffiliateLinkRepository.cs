@@ -11,7 +11,7 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         throw new NotImplementedException();
     }
     
-    private AffiliateLink ConvertFromDTO(CreateAffiliateLinkDTO affiliateLink)
+    private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink
         {
