@@ -69,8 +69,7 @@ public class AffiliateLinkService : IAffiliateLinkService
 
         createAffiliateLinkDto.Clicks = 0;
 
-        await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
-        
+
         _logger.LogInformation("Affiliate link created for CreatorId: {creatorId}, StoreId: {storeId}",
             createAffiliateLinkDto.CreatorId, createAffiliateLinkDto.StoreId);
         _logger.LogInformation("Link set to {link}", createAffiliateLinkDto.Link);
@@ -78,6 +77,6 @@ public class AffiliateLinkService : IAffiliateLinkService
         _logger.LogInformation("ProductLink set to {productLink}", createAffiliateLinkDto.ProductLink);
         _logger.LogInformation("Clicks initialized to {clicks}", createAffiliateLinkDto.Clicks);
         
-        throw new NotImplementedException();
+        return await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
     }
 }
