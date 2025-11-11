@@ -49,7 +49,12 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         
         return entities;
     }
-    
+
+    public async Task<List<AffiliateLinkDTO>> GetAffiliateLinksByStoreIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink

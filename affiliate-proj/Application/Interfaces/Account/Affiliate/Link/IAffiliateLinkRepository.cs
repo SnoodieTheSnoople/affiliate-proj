@@ -6,4 +6,5 @@ public interface IAffiliateLinkRepository
 {
     Task<AffiliateLinkDTO> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto);
     Task<List<AffiliateLinkDTO>> GetAffiliateLinksByCreatorIdAsync(Guid id);
+    Task<List<AffiliateLinkDTO>> GetAffiliateLinksByStoreIdAsync(Guid id);
 }
