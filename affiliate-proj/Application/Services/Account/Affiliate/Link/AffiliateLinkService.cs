@@ -93,7 +93,13 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<List<AffiliateLinkDTO>?> GetAffiliateLinksByStoreIdAsync(Guid storeId)
     {
-        throw new NotImplementedException();
+        if (storeId == Guid.Empty)
+        {
+            _logger.LogError("Invalid StoreId: {storeId}", storeId);
+            throw new Exception("StoreId cannot be empty.");
+        }
+        
+        return await _affiliateLinkRepository.GetAffiliateLinksByStoreIdAsync(storeId);
     }
 
     public async Task<AffiliateLinkDTO?> GetAffiliateLinkByIdAsync(Guid affiliateLinkId)
