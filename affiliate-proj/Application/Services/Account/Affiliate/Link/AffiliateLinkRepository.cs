@@ -43,6 +43,7 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
             throw new ArgumentException("ID cannot be empty.", nameof(id));
 
         var entities = await _dbContext.AffiliateLinks
+            .AsNoTracking()
             .Where(link => link.CreatorId == id)
             .Select(link => new AffiliateLinkDTO
             {
@@ -66,6 +67,7 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
             throw new ArgumentException("ID cannot be empty.", nameof(id));
 
         var entities = await _dbContext.AffiliateLinks
+            .AsNoTracking()
             .Where(link => link.StoreId == id)
             .Select(link => new AffiliateLinkDTO
             {
