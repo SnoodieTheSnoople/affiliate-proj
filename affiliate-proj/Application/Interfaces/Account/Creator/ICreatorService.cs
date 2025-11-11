@@ -10,5 +10,5 @@ public interface ICreatorService
     Task<CreatorDTO?> UpdateFirstNameAsync(string firstName, Guid userId);
     Task<CreatorDTO?> UpdateSurnameAsync(string surname, Guid userId);
     Task<CreatorDTO?> UpdateDateOfBirthAsync(DateOnly dateofbirth, Guid userId);
-    bool CheckCreatorExists(Guid creatorId);
+    Task<bool> CheckCreatorExistsAsync(Guid creatorId);
 }

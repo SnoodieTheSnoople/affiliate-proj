@@ -252,9 +252,9 @@ public class CreatorService : ICreatorService
         }
     }
 
-    public bool CheckCreatorExists(Guid creatorId)
+    public async Task<bool> CheckCreatorExistsAsync(Guid creatorId)
     {
-        var creator = _postgresDbContext.Creators.FindAsync(creatorId);
+        var creator = await _postgresDbContext.Creators.FindAsync(creatorId);
         if (creator == null) return false;
         
         return true;
