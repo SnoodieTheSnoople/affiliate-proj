@@ -44,7 +44,17 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
         var entities = await _dbContext.AffiliateLinks
             .Where(link => link.CreatorId == id)
-            .Select(link => ConvertEntityToDto(link))
+            .Select(link => new AffiliateLinkDTO
+            {
+                LinkId = link.LinkId,
+                CreatorId = link.CreatorId,
+                StoreId = link.StoreId,
+                Link = link.Link,
+                RefParam = link.RefParam,
+                ProductLink = link.ProductLink,
+                Clicks = link.Clicks,
+                CreatedAt = link.CreatedAt
+            })
             .ToListAsync();
         
         return entities;
@@ -57,7 +67,17 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
         var entities = await _dbContext.AffiliateLinks
             .Where(link => link.StoreId == id)
-            .Select(link => ConvertEntityToDto(link))
+            .Select(link => new AffiliateLinkDTO
+            {
+                LinkId = link.LinkId,
+                CreatorId = link.CreatorId,
+                StoreId = link.StoreId,
+                Link = link.Link,
+                RefParam = link.RefParam,
+                ProductLink = link.ProductLink,
+                Clicks = link.Clicks,
+                CreatedAt = link.CreatedAt
+            })
             .ToListAsync();
         
         return entities;
