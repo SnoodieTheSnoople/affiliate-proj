@@ -254,6 +254,9 @@ public class CreatorService : ICreatorService
 
     public bool CheckCreatorExists(Guid creatorId)
     {
-        throw new NotImplementedException();
+        var creator = _postgresDbContext.Creators.FindAsync(creatorId);
+        if (creator == null) return false;
+        
+        return true;
     }
 }
