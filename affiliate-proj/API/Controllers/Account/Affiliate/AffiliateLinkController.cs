@@ -46,12 +46,12 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
             {
                 if (createAffiliateLinkDTO.CreatorId != Guid.Empty && createAffiliateLinkDTO.StoreId == Guid.Empty)
                 {
-                    return Ok(_affiliateLinkService.GetAffiliateLinksByCreatorIdAsync(createAffiliateLinkDTO.CreatorId));
+                    return Ok(await _affiliateLinkService.GetAffiliateLinksByCreatorIdAsync(createAffiliateLinkDTO.CreatorId));
                 }
 
                 if (createAffiliateLinkDTO.StoreId != Guid.Empty && createAffiliateLinkDTO.CreatorId == Guid.Empty)
                 {
-                    return Ok(_affiliateLinkService.GetAffiliateLinksByStoreIdAsync(createAffiliateLinkDTO.StoreId));
+                    return Ok(await _affiliateLinkService.GetAffiliateLinksByStoreIdAsync(createAffiliateLinkDTO.StoreId));
                 }
 
                 return BadRequest("Invalid input data.");
