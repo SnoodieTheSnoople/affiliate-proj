@@ -37,6 +37,11 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
                  x.ProductLink == entity.ProductLink));
     }
     
+    public async Task<List<AffiliateLinkDTO>> GetAffiliateLinksByCreatorOrStoreIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+    
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink
