@@ -84,4 +84,9 @@ public class AffiliateLinkService : IAffiliateLinkService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<List<AffiliateLinkDTO>?> GetAffiliateLinksByStoreIdAsync(Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
 }
