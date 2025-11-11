@@ -41,10 +41,13 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
     {
         if (id == Guid.Empty)
             throw new ArgumentException("ID cannot be empty.", nameof(id));
+
+        var entities = await _dbContext.AffiliateLinks
+            .Where(link => link.CreatorId == id)
+            .Select(link => ConvertEntityToDto(link))
+            .ToListAsync();
         
-        var entities = await _dbContext.AffiliateLinks.FirstOrDefaultAsync(x => x.CreatorId == id);
-        
-        throw new NotImplementedException();
+        return entities;
     }
     
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
