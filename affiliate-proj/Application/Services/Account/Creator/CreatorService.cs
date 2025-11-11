@@ -19,7 +19,7 @@ public class CreatorService : ICreatorService
         _accountHelper = accountHelper;
     }
 
-    private bool CheckCreatorExists(Guid userId)
+    private bool CheckCreatorExistsByUserId(Guid userId)
     {
         var creator = _postgresDbContext.Creators.FirstOrDefault(c => c.UserId == userId);
         if (creator == null) return false;
@@ -33,7 +33,7 @@ public class CreatorService : ICreatorService
             throw new UnauthorizedAccessException("User ID mismatch.");
         if (!_accountHelper.CheckUserExists(userId))
             throw new UnauthorizedAccessException("User not found.");
-        if (!CheckCreatorExists(userId))
+        if (!CheckCreatorExistsByUserId(userId))
             throw new UnauthorizedAccessException("Creator not found.");
         
         return true;
@@ -58,7 +58,7 @@ public class CreatorService : ICreatorService
                 UserId = creatorDto.UserId,
             };
 
-            if (CheckCreatorExists(userId)) return null;
+            if (CheckCreatorExistsByUserId(userId)) return null;
 
             await _postgresDbContext.Creators.AddAsync(newCreatorRecord);
             await _postgresDbContext.SaveChangesAsync();
@@ -122,7 +122,7 @@ public class CreatorService : ICreatorService
             if (!_accountHelper.CheckUserExists(userId))
                 throw new  KeyNotFoundException("User not found.");
             
-            if (!CheckCreatorExists(userId))
+            if (!CheckCreatorExistsByUserId(userId))
                 throw new  KeyNotFoundException("Creator not found.");
             
             var creator = await _postgresDbContext.Creators.FirstOrDefaultAsync(creator => creator.UserId == userId);
@@ -162,7 +162,7 @@ public class CreatorService : ICreatorService
             if (!_accountHelper.CheckUserExists(userId))
                 throw new UnauthorizedAccessException("User ID not found.");
 
-            if (!CheckCreatorExists(userId))
+            if (!CheckCreatorExistsByUserId(userId))
                 throw new UnauthorizedAccessException("Creator not found.");
 
             var creator = _postgresDbContext.Creators.FirstOrDefault(creator => creator.UserId == userId);
