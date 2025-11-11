@@ -7,7 +7,7 @@ public class AffiliateLink
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string LinkId { get; set; }
+    public Guid LinkId { get; set; }
     
     [Required]
     public Guid CreatorId  { get; set; }
