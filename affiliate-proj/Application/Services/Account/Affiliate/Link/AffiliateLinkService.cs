@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Application.Interfaces.Account;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Affiliate.Link;
@@ -9,20 +10,20 @@ namespace affiliate_proj.Application.Services.Account.Affiliate.Link;
 public class AffiliateLinkService : IAffiliateLinkService
 {
     private readonly IAffiliateLinkRepository _affiliateLinkRepository;
-    private readonly IAccountHelper _accountHelper;
     private readonly IStoreService _storeService;
+    private readonly ICreatorService _creatorService;
     private readonly IShopifyProductRepository _shopifyProductRepository;
     private readonly IConfiguration _configuration;
     private readonly ILogger<AffiliateLinkService> _logger;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository, ILogger<AffiliateLinkService> logger)
+    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository, ILogger<AffiliateLinkService> logger, ICreatorService creatorService)
     {
-        _accountHelper = accountHelper;
         _storeService = storeService;
         _configuration = configuration;
         _shopifyProductRepository = shopifyProductRepository;
         _affiliateLinkRepository = affiliateLinkRepository;
         _logger = logger;
+        _creatorService = creatorService;
     }
 
     public async Task<AffiliateLinkDTO?> SetAffiliateLinkAsync(CreateAffiliateLinkDTO createAffiliateLinkDto)
@@ -32,8 +33,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         // Get ProductLink and validate exists in db
         // Set Clicks to 0
         
-        // TODO: Change to CreatorService call
-        if (!_accountHelper.CheckUserExists(createAffiliateLinkDto.CreatorId))
+        if (!await _creatorService.CheckCreatorExistsAsync(createAffiliateLinkDto.CreatorId))
         {
             _logger.LogError("Creator not found: {creatorId}", createAffiliateLinkDto.CreatorId);
             throw new Exception("Creator does not exist.");
