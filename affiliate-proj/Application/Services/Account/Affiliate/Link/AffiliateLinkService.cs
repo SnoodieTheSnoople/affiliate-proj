@@ -79,4 +79,9 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         return await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
     }
+
+    public async Task<List<AffiliateLinkDTO>?> GetAffiliateLinksByCreatorIdAsync(Guid creatorId)
+    {
+        throw new NotImplementedException();
+    }
 }
