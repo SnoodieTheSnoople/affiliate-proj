@@ -40,7 +40,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         }
 
         [HttpGet("get-affiliate-links")]
-        public async Task<IActionResult> GetAffiliateLinks()
+        public async Task<IActionResult> GetAffiliateLinks([FromBody] CreateAffiliateLinkDTO createAffiliateLinkDTO)
         {
             try
             {
