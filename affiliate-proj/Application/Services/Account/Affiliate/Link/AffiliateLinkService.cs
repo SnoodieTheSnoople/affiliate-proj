@@ -88,7 +88,7 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("CreatorId cannot be empty.");
         }
         
-        throw new NotImplementedException();
+        return await _affiliateLinkRepository.GetAffiliateLinksByCreatorIdAsync(creatorId);
     }
 
     public async Task<List<AffiliateLinkDTO>?> GetAffiliateLinksByStoreIdAsync(Guid storeId)
