@@ -251,4 +251,9 @@ public class CreatorService : ICreatorService
             return null;
         }
     }
+
+    public bool CheckCreatorExists(Guid creatorId)
+    {
+        throw new NotImplementedException();
+    }
 }
