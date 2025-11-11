@@ -37,8 +37,13 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
                  x.ProductLink == entity.ProductLink));
     }
     
-    public async Task<List<AffiliateLinkDTO>> GetAffiliateLinksByCreatorOrStoreIdAsync(Guid id)
+    public async Task<List<AffiliateLinkDTO>> GetAffiliateLinksByCreatorIdAsync(Guid id)
     {
+        if (id == Guid.Empty)
+            throw new ArgumentException("ID cannot be empty.", nameof(id));
+        
+        var entities = await _dbContext.AffiliateLinks.FirstOrDefaultAsync(x => x.CreatorId == id);
+        
         throw new NotImplementedException();
     }
     
