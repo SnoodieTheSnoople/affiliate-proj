@@ -44,7 +44,19 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         {
             try
             {
-                return Ok();
+                if (createAffiliateLinkDTO.CreatorId != Guid.Empty && createAffiliateLinkDTO.StoreId == Guid.Empty)
+                {
+                    // Method Call
+                    return Ok();
+                }
+
+                if (createAffiliateLinkDTO.StoreId != Guid.Empty && createAffiliateLinkDTO.CreatorId == Guid.Empty)
+                {
+                    // Method Call
+                    return Ok();
+                }
+
+                return BadRequest("Invalid input data.");
             }
             catch (Exception e)
             {
