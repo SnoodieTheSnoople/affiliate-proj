@@ -46,13 +46,11 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
             {
                 if (createAffiliateLinkDTO.CreatorId != Guid.Empty && createAffiliateLinkDTO.StoreId == Guid.Empty)
                 {
-                    // Method Call
                     return Ok(_affiliateLinkService.GetAffiliateLinksByCreatorIdAsync(createAffiliateLinkDTO.CreatorId));
                 }
 
                 if (createAffiliateLinkDTO.StoreId != Guid.Empty && createAffiliateLinkDTO.CreatorId == Guid.Empty)
                 {
-                    // Method Call
                     return Ok(_affiliateLinkService.GetAffiliateLinksByStoreIdAsync(createAffiliateLinkDTO.StoreId));
                 }
 
