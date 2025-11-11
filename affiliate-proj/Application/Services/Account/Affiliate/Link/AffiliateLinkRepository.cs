@@ -52,7 +52,15 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<List<AffiliateLinkDTO>> GetAffiliateLinksByStoreIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        if (id == Guid.Empty)
+            throw new ArgumentException("ID cannot be empty.", nameof(id));
+
+        var entities = await _dbContext.AffiliateLinks
+            .Where(link => link.StoreId == id)
+            .Select(link => ConvertEntityToDto(link))
+            .ToListAsync();
+        
+        return entities;
     }
 
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
