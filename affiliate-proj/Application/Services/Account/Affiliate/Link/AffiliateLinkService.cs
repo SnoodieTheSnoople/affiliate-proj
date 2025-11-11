@@ -82,6 +82,12 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<List<AffiliateLinkDTO>?> GetAffiliateLinksByCreatorIdAsync(Guid creatorId)
     {
+        if (creatorId == Guid.Empty)
+        {
+            _logger.LogError("Invalid CreatorId: {creatorId}", creatorId);
+            throw new Exception("CreatorId cannot be empty.");
+        }
+        
         throw new NotImplementedException();
     }
 
