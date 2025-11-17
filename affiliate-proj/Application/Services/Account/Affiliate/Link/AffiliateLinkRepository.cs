@@ -115,6 +115,11 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         return ConvertEntityToDto(existingEntity);
     }
 
+    public async Task<AffiliateLinkDTO> UpdateAffiliateLinkActiveStatusAsync(Guid linkId, bool isActive)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> DeleteAffiliateLinkAsync(Guid linkId)
     {
         if (linkId == Guid.Empty)
