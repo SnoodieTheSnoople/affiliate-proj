@@ -87,6 +87,9 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<List<AffiliateLinkDTO>> GetAffiliateLinkByIdAsync(Guid linkId)
     {
+        if (linkId == Guid.Empty)
+            throw new ArgumentException("Link ID cannot be empty.", nameof(linkId));
+        
         throw new NotImplementedException();
     }
 
