@@ -128,6 +128,11 @@ public class AffiliateLinkService : IAffiliateLinkService
         return await _affiliateLinkRepository.UpdateAffiliateLinkAsync(affiliateLinkDto);
     }
 
+    public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkActiveStatusAsync(Guid affiliateLinkId, bool isActive)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> DeleteAffiliateLinkAsync(Guid affiliateLinkId)
     {
         if (affiliateLinkId == Guid.Empty)
