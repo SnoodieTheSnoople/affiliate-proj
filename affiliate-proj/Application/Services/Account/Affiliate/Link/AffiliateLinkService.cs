@@ -109,6 +109,10 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
     {
+        // Validate LinkId exists.
+        // Throw if not found.
+        // If found, update fields.
+        
         throw new NotImplementedException();
     }
 }
