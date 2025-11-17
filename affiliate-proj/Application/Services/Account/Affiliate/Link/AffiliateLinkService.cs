@@ -106,4 +106,9 @@ public class AffiliateLinkService : IAffiliateLinkService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
+    {
+        throw new NotImplementedException();
+    }
 }
