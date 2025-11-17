@@ -73,3 +73,18 @@ Content-Type: application/json
   "RefParam": "",
   "ProductLink": ""
 }
+
+###
+// Validated to succeed to update existing link, refParam, and set IsActive to true
+PUT {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257821b",
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Link": "https://1fa2e2f0da2b.ngrok-free.app/aff456",
+  "RefParam": "aff456",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card",
+  "IsActive": true
+}
