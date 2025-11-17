@@ -120,6 +120,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         // Throw if not found.
         // If found, update fields.
         
+        // TODO: Validate link fields (similar to SetAffiliateLinkAsync)
         if (await _affiliateLinkRepository.GetAffiliateLinkByIdAsync(affiliateLinkDto.LinkId) == null)
         {
             _logger.LogError("Affiliate link not found: {linkId}", affiliateLinkDto.LinkId);
