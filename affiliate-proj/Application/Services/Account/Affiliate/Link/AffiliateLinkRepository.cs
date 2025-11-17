@@ -85,12 +85,12 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         return entities;
     }
 
-    public async Task<AffiliateLinkDTO> GetAffiliateLinkByIdAsync(Guid linkId)
+    public async Task<AffiliateLink?> GetAffiliateLinkByIdAsync(Guid linkId)
     {
         if (linkId == Guid.Empty)
             throw new ArgumentException("Link ID cannot be empty.", nameof(linkId));
-        
-        throw new NotImplementedException();
+
+        return await _dbContext.AffiliateLinks.FindAsync(linkId);
     }
 
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
