@@ -31,4 +31,5 @@ public class AffiliateLink
     public string ProductLink { get; set; }
     public int Clicks { get; set; }
     public DateTime CreatedAt { get; set; }
+    public bool IsActive { get; set; }
 }

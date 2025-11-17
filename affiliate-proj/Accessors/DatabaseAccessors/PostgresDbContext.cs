@@ -131,6 +131,7 @@ public class PostgresDbContext : DbContext
             builder.Property(link => link.ProductLink).HasColumnName("product_link");
             builder.Property(link => link.Clicks).HasColumnName("clicks");
             builder.Property(link => link.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+            builder.Property(link => link.IsActive).HasColumnName("is_active");
         });
 
         modelBuilder.Entity<AffiliateCode>(builder =>
