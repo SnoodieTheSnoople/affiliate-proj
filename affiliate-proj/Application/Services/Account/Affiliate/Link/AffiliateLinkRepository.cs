@@ -117,6 +117,10 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<AffiliateLinkDTO> UpdateAffiliateLinkActiveStatusAsync(Guid linkId, bool isActive)
     {
+        if (linkId == Guid.Empty)
+            throw new ArgumentException("Link ID cannot be empty.", nameof(linkId));
+        
+        
         throw new NotImplementedException();
     }
 
