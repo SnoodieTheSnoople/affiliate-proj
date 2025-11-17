@@ -88,6 +88,12 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
             }
         }
 
+        [HttpPatch("update-affiliate-link-active-status")]
+        public async Task<IActionResult> UpdateAffiliateLinkActiveStatus([FromBody] AffiliateLinkDTO affiliateLinkDTO)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpDelete("delete-affiliate-link")]
         public async Task<IActionResult> DeleteAffiliateLink([FromQuery] Guid linkId)
         {
