@@ -88,3 +88,19 @@ Content-Type: application/json
   "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card",
   "IsActive": true
 }
+
+###
+// Validated to succeed to update IsActive to false
+PATCH {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link-active-status
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257821b",
+  "Link": "",
+  "RefParam": "",
+  "ProductLink": "",
+  "IsActive": false
+}
+
+###
+// TODO: Add test for DELETE
