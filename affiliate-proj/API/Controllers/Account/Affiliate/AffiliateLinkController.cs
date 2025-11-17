@@ -91,6 +91,20 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         [HttpPatch("update-affiliate-link-active-status")]
         public async Task<IActionResult> UpdateAffiliateLinkActiveStatus([FromBody] AffiliateLinkDTO affiliateLinkDTO)
         {
+            try
+            {
+                if (affiliateLinkDTO.LinkId == Guid.Empty)
+                {
+                    return BadRequest("Invalid AffiliateLinkId.");
+                }
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
             throw new NotImplementedException();
         }
 
