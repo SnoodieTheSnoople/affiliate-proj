@@ -79,7 +79,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
                     return BadRequest("Invalid input data.");
                 }
                 
-                return Ok();
+                return Ok(await _affiliateLinkService.UpdateAffiliateLinkAsync(affiliateLinkDTO));
             }
             catch (Exception e)
             {
