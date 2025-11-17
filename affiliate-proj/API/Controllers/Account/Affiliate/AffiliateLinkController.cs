@@ -19,6 +19,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         [HttpPost("set-affiliate-link")]
         public async Task<IActionResult> SetAffiliateLink([FromBody] CreateAffiliateLinkDTO createAffiliateLinkDTO)
         {
+            // TODO: Modify to accommodate change for IsActive field
             try
             {
                 if (createAffiliateLinkDTO.CreatorId == Guid.Empty ||
