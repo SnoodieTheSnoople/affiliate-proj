@@ -115,6 +115,11 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         return ConvertEntityToDto(existingEntity);
     }
 
+    public async Task<bool> DeleteAffiliateLinkAsync(Guid linkId)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink
