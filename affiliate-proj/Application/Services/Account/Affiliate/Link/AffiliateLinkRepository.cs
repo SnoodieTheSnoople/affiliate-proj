@@ -95,7 +95,19 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
     {
-        throw new NotImplementedException();
+        var existingEntity = await _dbContext.AffiliateLinks.FindAsync(affiliateLinkDto.LinkId);
+        
+        if (existingEntity == null)
+            throw new KeyNotFoundException("Affiliate link not found.");
+        
+        existingEntity.Link = affiliateLinkDto.Link;
+        existingEntity.RefParam = affiliateLinkDto.RefParam;
+        existingEntity.ProductLink = affiliateLinkDto.ProductLink;
+        existingEntity.IsActive = affiliateLinkDto.IsActive;
+        await _dbContext.SaveChangesAsync();
+        
+        existingEntity = await _dbContext.AffiliateLinks.FindAsync(affiliateLinkDto.LinkId);
+        return ConvertEntityToDto(existingEntity);
     }
 
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
