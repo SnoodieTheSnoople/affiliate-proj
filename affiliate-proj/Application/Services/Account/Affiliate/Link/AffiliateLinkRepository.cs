@@ -93,6 +93,11 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         return await _dbContext.AffiliateLinks.FindAsync(linkId);
     }
 
+    public async Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
     {
         return new AffiliateLink
