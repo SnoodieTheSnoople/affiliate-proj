@@ -135,7 +135,7 @@ public class AffiliateLinkService : IAffiliateLinkService
             _logger.LogError("Invalid AffiliateLinkId: {affiliateLinkId}", affiliateLinkId);
             throw new Exception("AffiliateLinkId cannot be empty.");
         }
-        
-        throw new NotImplementedException();
+
+        return await _affiliateLinkRepository.DeleteAffiliateLinkAsync(affiliateLinkId);
     }
 }

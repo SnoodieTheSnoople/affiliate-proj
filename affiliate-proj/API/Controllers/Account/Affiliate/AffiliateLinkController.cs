@@ -98,7 +98,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
                     return BadRequest("Invalid AffiliateLinkId.");
                 }
                 
-                return Ok();
+                return Ok(await _affiliateLinkService.DeleteAffiliateLinkAsync(affiliateLinkId));
             }
             catch (Exception e)
             {
