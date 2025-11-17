@@ -89,16 +89,16 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         }
 
         [HttpDelete("delete-affiliate-link")]
-        public async Task<IActionResult> DeleteAffiliateLink([FromQuery] Guid affiliateLinkId)
+        public async Task<IActionResult> DeleteAffiliateLink([FromQuery] Guid linkId)
         {
             try 
             {
-                if (affiliateLinkId == Guid.Empty)
+                if (linkId == Guid.Empty)
                 {
                     return BadRequest("Invalid AffiliateLinkId.");
                 }
                 
-                return Ok(await _affiliateLinkService.DeleteAffiliateLinkAsync(affiliateLinkId));
+                return Ok(await _affiliateLinkService.DeleteAffiliateLinkAsync(linkId));
             }
             catch (Exception e)
             {
