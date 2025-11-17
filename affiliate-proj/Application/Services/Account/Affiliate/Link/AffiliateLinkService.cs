@@ -136,7 +136,7 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("AffiliateLinkId cannot be empty.");
         }
         
-        throw new NotImplementedException();
+        return await _affiliateLinkRepository.UpdateAffiliateLinkActiveStatusAsync(affiliateLinkId, isActive);
     }
 
     public async Task<bool> DeleteAffiliateLinkAsync(Guid affiliateLinkId)
