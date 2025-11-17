@@ -117,7 +117,21 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<bool> DeleteAffiliateLinkAsync(Guid linkId)
     {
-        throw new NotImplementedException();
+        if (linkId == Guid.Empty)
+            throw new ArgumentException("Link ID cannot be empty.", nameof(linkId));
+        
+        var entity = await _dbContext.AffiliateLinks.FindAsync(linkId);
+        if (entity == null)
+            throw new KeyNotFoundException("Affiliate link not found.");
+        
+        _dbContext.AffiliateLinks.Remove(entity);
+        await _dbContext.SaveChangesAsync();
+        
+        entity = await _dbContext.AffiliateLinks.FindAsync(linkId);
+        if (entity != null)
+            return false;
+        
+        return true;
     }
 
     private AffiliateLink ConvertDtoToEntity(CreateAffiliateLinkDTO affiliateLink)
