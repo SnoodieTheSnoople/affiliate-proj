@@ -113,6 +113,12 @@ public class AffiliateLinkService : IAffiliateLinkService
         // Throw if not found.
         // If found, update fields.
         
+        if (await _affiliateLinkRepository.GetAffiliateLinkByIdAsync(affiliateLinkDto.LinkId) == null)
+        {
+            _logger.LogError("Affiliate link not found: {linkId}", affiliateLinkDto.LinkId);
+            throw new Exception("Affiliate link does not exist.");
+        }
+        
         throw new NotImplementedException();
     }
 }
