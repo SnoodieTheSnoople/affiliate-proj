@@ -64,7 +64,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         }
         
         [HttpPut("update-affiliate-link")]
-        public async Task<IActionResult> UpdateAffiliateLink()
+        public async Task<IActionResult> UpdateAffiliateLink([FromBody] AffiliateLinkDTO affiliateLinkDTO)
         {
             try
             {
