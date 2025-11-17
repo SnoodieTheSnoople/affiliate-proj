@@ -54,7 +54,8 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
                 RefParam = link.RefParam,
                 ProductLink = link.ProductLink,
                 Clicks = link.Clicks,
-                CreatedAt = link.CreatedAt
+                CreatedAt = link.CreatedAt,
+                IsActive = link.IsActive
             })
             .ToListAsync();
         
@@ -78,7 +79,8 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
                 RefParam = link.RefParam,
                 ProductLink = link.ProductLink,
                 Clicks = link.Clicks,
-                CreatedAt = link.CreatedAt
+                CreatedAt = link.CreatedAt,
+                IsActive = link.IsActive
             })
             .ToListAsync();
         
@@ -159,7 +161,8 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
             Link = affiliateLink.Link,
             RefParam = affiliateLink.RefParam,
             ProductLink = affiliateLink.ProductLink,
-            Clicks = affiliateLink.Clicks
+            Clicks = affiliateLink.Clicks,
+            IsActive = affiliateLink.IsActive
         };
     }
     

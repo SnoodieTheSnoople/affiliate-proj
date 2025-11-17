@@ -76,6 +76,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         _logger.LogInformation("RefParam set to {refParam}", createAffiliateLinkDto.RefParam);
         _logger.LogInformation("ProductLink set to {productLink}", createAffiliateLinkDto.ProductLink);
         _logger.LogInformation("Clicks initialized to {clicks}", createAffiliateLinkDto.Clicks);
+        _logger.LogInformation("IsActive set to {isActive}", createAffiliateLinkDto.IsActive);
         
         return await _affiliateLinkRepository.SetAffiliateLinkAsync(createAffiliateLinkDto);
     }
