@@ -119,6 +119,6 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("Affiliate link does not exist.");
         }
         
-        throw new NotImplementedException();
+        return await _affiliateLinkRepository.UpdateAffiliateLinkAsync(affiliateLinkDto);
     }
 }
