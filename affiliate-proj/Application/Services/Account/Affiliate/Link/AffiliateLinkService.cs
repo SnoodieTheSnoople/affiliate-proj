@@ -130,6 +130,12 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkActiveStatusAsync(Guid affiliateLinkId, bool isActive)
     {
+        if (affiliateLinkId == Guid.Empty)
+        {
+            _logger.LogError("Invalid AffiliateLinkId: {affiliateLinkId}", affiliateLinkId);
+            throw new Exception("AffiliateLinkId cannot be empty.");
+        }
+        
         throw new NotImplementedException();
     }
 
