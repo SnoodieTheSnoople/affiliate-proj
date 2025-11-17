@@ -127,4 +127,9 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         return await _affiliateLinkRepository.UpdateAffiliateLinkAsync(affiliateLinkDto);
     }
+
+    public async Task<bool> DeleteAffiliateLinkAsync(Guid affiliateLinkId)
+    {
+        throw new NotImplementedException();
+    }
 }
