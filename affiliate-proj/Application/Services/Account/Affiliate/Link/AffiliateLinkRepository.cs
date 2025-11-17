@@ -89,8 +89,13 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
     {
         if (linkId == Guid.Empty)
             throw new ArgumentException("Link ID cannot be empty.", nameof(linkId));
-
-        return await _dbContext.AffiliateLinks.FindAsync(linkId);
+        
+        var entity = await _dbContext.AffiliateLinks.FindAsync(linkId);
+        
+        if (entity == null)
+            return null;
+        
+        return ConvertEntityToDto(entity);
     }
 
     public async Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
