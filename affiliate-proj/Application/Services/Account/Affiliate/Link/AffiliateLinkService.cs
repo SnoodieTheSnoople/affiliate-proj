@@ -104,7 +104,13 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<AffiliateLinkDTO?> GetAffiliateLinkByIdAsync(Guid affiliateLinkId)
     {
-        throw new NotImplementedException();
+        if (affiliateLinkId == Guid.Empty)
+        {
+            _logger.LogError("Invalid AffiliateLinkId: {affiliateLinkId}", affiliateLinkId);
+            throw new Exception("AffiliateLinkId cannot be empty.");
+        }
+        
+        return await _affiliateLinkRepository.GetAffiliateLinkByIdAsync(affiliateLinkId);
     }
 
     public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
