@@ -130,6 +130,12 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<bool> DeleteAffiliateLinkAsync(Guid affiliateLinkId)
     {
+        if (affiliateLinkId == Guid.Empty)
+        {
+            _logger.LogError("Invalid AffiliateLinkId: {affiliateLinkId}", affiliateLinkId);
+            throw new Exception("AffiliateLinkId cannot be empty.");
+        }
+        
         throw new NotImplementedException();
     }
 }
