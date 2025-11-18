@@ -26,7 +26,8 @@ public class AffiliateCodeController : ControllerBase
             {
                 return BadRequest("Invalid input data.");
             }
-            throw new NotImplementedException();
+
+            return Ok();
         }
         catch (Exception e)
         {
