@@ -27,7 +27,7 @@ public class AffiliateCodeController : ControllerBase
                 return BadRequest("Invalid input data.");
             }
 
-            return Ok();
+            return Ok(await _affiliateCodeService.SetAffiliateCodeAsync(createAffiliateCodeDto));
         }
         catch (Exception e)
         {
