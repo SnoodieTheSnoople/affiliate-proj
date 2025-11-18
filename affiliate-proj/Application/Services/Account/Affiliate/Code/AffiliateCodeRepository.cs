@@ -20,4 +20,9 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         
         throw new NotImplementedException();
     }
+    
+    private AffiliateCodeDTO ConvertEntityToDto(object entity)
+    {
+        throw new NotImplementedException();
+    }
 }
