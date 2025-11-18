@@ -152,4 +152,9 @@ public class AffiliateLinkService : IAffiliateLinkService
 
         return await _affiliateLinkRepository.DeleteAffiliateLinkAsync(affiliateLinkId);
     }
+
+    private bool IsLinkValid(Uri affiliateLinkUri, string refParam)
+    {
+        throw new NotImplementedException();
+    }
 }
