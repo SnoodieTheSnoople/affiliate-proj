@@ -4,5 +4,6 @@ namespace affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 
 public interface IAffiliateCodeRepository
 {
+    Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto);
     Task<AffiliateCodeDTO?> GetAffiliateCodeAsync(string code);
 }

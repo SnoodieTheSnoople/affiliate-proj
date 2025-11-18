@@ -15,6 +15,11 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         _dbContext = dbContext;
     }
 
+    public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<AffiliateCodeDTO?> GetAffiliateCodeAsync(string code)
     {
         if (String.IsNullOrEmpty(code)) 
