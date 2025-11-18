@@ -28,7 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="API\Controllers\Account\Affiliate\" />
       <Folder Include="API\Webhooks\Shopify\" />
     </ItemGroup>
 
