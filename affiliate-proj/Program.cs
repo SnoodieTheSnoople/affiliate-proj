@@ -97,6 +97,7 @@ public class Program
         builder.Services.AddScoped<ICommissionRatesRepository, CommissionRatesRepository>();
         builder.Services.AddScoped<IAffiliateLinkService, AffiliateLinkService>();
         builder.Services.AddScoped<IAffiliateLinkRepository, AffiliateLinkRepository>();
+        builder.Services.AddScoped<IAffiliateCodeService, AffiliateCodeService>();
         
         /* Store Service */
         builder.Services.AddScoped<IStoreService, StoreService>();
