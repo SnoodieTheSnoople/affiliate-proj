@@ -18,13 +18,21 @@ public class AffiliateCodeController : ControllerBase
     [HttpPost("set-affiliate-code")]
     public async Task<IActionResult> SetAffiliateCode([FromBody] CreateAffiliateCodeDTO createAffiliateCodeDto)
     {
-        if (createAffiliateCodeDto.CreatorId == Guid.Empty || createAffiliateCodeDto.StoreId == Guid.Empty || 
-            string.IsNullOrEmpty(createAffiliateCodeDto.Code) || createAffiliateCodeDto.ValidFor <= 0 ||
-            createAffiliateCodeDto.ExpiryDate <= DateTime.Today)
+        try
         {
-            return BadRequest("Invalid input data.");
+            if (createAffiliateCodeDto.CreatorId == Guid.Empty || createAffiliateCodeDto.StoreId == Guid.Empty || 
+                string.IsNullOrEmpty(createAffiliateCodeDto.Code) || createAffiliateCodeDto.ValidFor <= 0 ||
+                createAffiliateCodeDto.ExpiryDate <= DateTime.Today)
+            {
+                return BadRequest("Invalid input data.");
+            }
+            throw new NotImplementedException();
         }
-        throw new NotImplementedException();
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     
     [HttpGet("get-affiliate-code")]
