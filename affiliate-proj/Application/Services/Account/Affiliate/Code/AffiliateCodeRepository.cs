@@ -28,6 +28,20 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         return ConvertEntityToDto(await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x => x.Code == code));
     }
     
+    private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
+    {
+        return new AffiliateCode
+        {
+            CreatorId = dto.CreatorId,
+            StoreId = dto.StoreId,
+            Code = dto.Code,
+            IsActive = dto.IsActive,
+            ValidFor = dto.ValidFor,
+            ExpiryDate = dto.ExpiryDate,
+            ProductLink = dto.ProductLink
+        };
+    }
+    
     private AffiliateCodeDTO? ConvertEntityToDto(AffiliateCode? entity)
     {
         if (entity == null)
