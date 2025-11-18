@@ -1,10 +1,18 @@
 ﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Core.DTOs.Affiliate.Code;
 
 namespace affiliate_proj.Application.Services.Account.Affiliate.Code;
 
 public class AffiliateCodeService : IAffiliateCodeService
 {
+    private readonly ICreatorService _creatorService;
+
+    public AffiliateCodeService(ICreatorService creatorService)
+    {
+        _creatorService = creatorService;
+    }
+
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
     {
         // Validate if Creator and Store exists
