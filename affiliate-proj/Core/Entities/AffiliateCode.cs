@@ -33,4 +33,7 @@ public class AffiliateCode
     [Required]
     public DateTime ExpiryDate { get; set; }
     public DateTime CreatedAt { get; set; }
+    
+    [Required]
+    public string ProductLink { get; set; }
 }

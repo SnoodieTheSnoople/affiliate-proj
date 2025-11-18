@@ -10,4 +10,5 @@ public class AffiliateCodeDTO
     public int ValidFor { get; set; }
     public DateTime ExpiryDate { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string ProductLink { get; set; }
 }
