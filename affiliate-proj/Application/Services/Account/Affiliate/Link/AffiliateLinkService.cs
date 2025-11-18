@@ -145,15 +145,16 @@ public class AffiliateLinkService : IAffiliateLinkService
         return await _affiliateLinkRepository.DeleteAffiliateLinkAsync(affiliateLinkId);
     }
 
-    private bool IsLinkValid(CreateAffiliateLinkDTO createAffiliateLinkDto)
+    private bool IsLinkValid(string affiliateLink, string refParam)
     {
         var baseUrl = new Uri(_configuration.GetValue<string>("Shopify:BaseUrl"));
-        var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
+        var affiliateLinkUri = new Uri(affiliateLink);
+        
         var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
         var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
         
         var path = affiliateLinkUri.AbsolutePath.Trim('/');
-        var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(createAffiliateLinkDto.RefParam);
+        var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(refParam);
         
         if (!isSchemeSame || !isHostSame || !isValidPath) 
             return false;
