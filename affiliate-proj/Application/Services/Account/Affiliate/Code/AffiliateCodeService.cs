@@ -1,4 +1,5 @@
-﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Affiliate.Code;

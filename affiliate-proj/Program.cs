@@ -2,6 +2,7 @@ using System.Text;
 using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces;
 using affiliate_proj.Application.Interfaces.Account;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Account.Rates;
