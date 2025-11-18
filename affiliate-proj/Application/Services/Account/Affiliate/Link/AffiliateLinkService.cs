@@ -1,5 +1,4 @@
-﻿using affiliate_proj.Application.Interfaces.Account;
-using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Store;
@@ -16,7 +15,9 @@ public class AffiliateLinkService : IAffiliateLinkService
     private readonly IConfiguration _configuration;
     private readonly ILogger<AffiliateLinkService> _logger;
 
-    public AffiliateLinkService(IAccountHelper accountHelper, IStoreService storeService, IConfiguration configuration, IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository, ILogger<AffiliateLinkService> logger, ICreatorService creatorService)
+    public AffiliateLinkService(IStoreService storeService, IConfiguration configuration, 
+        IShopifyProductRepository shopifyProductRepository, IAffiliateLinkRepository affiliateLinkRepository, 
+        ILogger<AffiliateLinkService> logger, ICreatorService creatorService)
     {
         _storeService = storeService;
         _configuration = configuration;
