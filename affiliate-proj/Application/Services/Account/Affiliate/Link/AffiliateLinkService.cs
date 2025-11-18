@@ -153,7 +153,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         return await _affiliateLinkRepository.DeleteAffiliateLinkAsync(affiliateLinkId);
     }
 
-    private async Task<bool> IsLinkValid(CreateAffiliateLinkDTO createAffiliateLinkDto)
+    private bool IsLinkValid(CreateAffiliateLinkDTO createAffiliateLinkDto)
     {
         var baseUrl = new Uri(_configuration.GetValue<string>("Shopify:BaseUrl"));
         var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
