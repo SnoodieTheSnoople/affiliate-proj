@@ -2,6 +2,7 @@
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 using affiliate_proj.Core.DTOs.Affiliate.Code;
 using affiliate_proj.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Account.Affiliate.Code;
 
@@ -18,8 +19,8 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
     {
         if (String.IsNullOrEmpty(code)) 
             throw new ArgumentException("Code cannot be null or empty", nameof(code));
-        
-        throw new NotImplementedException();
+
+        return ConvertEntityToDto(await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x => x.Code == code));
     }
     
     private AffiliateCodeDTO? ConvertEntityToDto(AffiliateCode? entity)
