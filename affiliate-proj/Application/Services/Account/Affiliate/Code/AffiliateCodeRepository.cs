@@ -15,6 +15,8 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO?> GetAffiliateCodeAsync(string code)
     {
+        if (String.IsNullOrEmpty(code)) return null;
+        
         throw new NotImplementedException();
     }
 }
