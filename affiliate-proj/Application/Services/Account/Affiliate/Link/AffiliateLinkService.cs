@@ -153,8 +153,28 @@ public class AffiliateLinkService : IAffiliateLinkService
         return await _affiliateLinkRepository.DeleteAffiliateLinkAsync(affiliateLinkId);
     }
 
-    private bool IsLinkValid(Uri affiliateLinkUri, string refParam)
+    private async Task<bool> IsLinkValid(CreateAffiliateLinkDTO createAffiliateLinkDto)
     {
+        var baseUrl = new Uri(_configuration.GetValue<string>("Shopify:BaseUrl"));
+        var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
+        var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
+        var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
+        
+        var path = affiliateLinkUri.AbsolutePath.Trim('/');
+        var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(createAffiliateLinkDto.RefParam);
+        
+        if (!isSchemeSame || !isHostSame || !isValidPath)
+        {
+            _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
+            throw new Exception("Invalid link.");
+        }
+        
+        if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(createAffiliateLinkDto.ProductLink, 
+                createAffiliateLinkDto.StoreId) == null)
+        {
+            _logger.LogError("Shopify product not found.");
+            throw new Exception("Product link does not exist.");
+        }
         throw new NotImplementedException();
     }
 }
