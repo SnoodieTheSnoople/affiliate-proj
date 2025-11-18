@@ -145,6 +145,7 @@ public class PostgresDbContext : DbContext
             builder.Property(code => code.ValidFor).HasColumnName("valid_for");
             builder.Property(code => code.ExpiryDate).HasColumnName("expiry_date");
             builder.Property(code => code.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+            builder.Property(code => code.ProductLink).HasColumnName("product_link");
         });
     }
 
