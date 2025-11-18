@@ -33,6 +33,11 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Creator does not exist.");
         }
         
+        _logger.LogInformation("Creator found: {CreatorId}", createAffiliateCodeDto.CreatorId);
+        
+        await _storeService.GetStoreByIdAsync(createAffiliateCodeDto.StoreId);
+        _logger.LogInformation("Store found: {StoreId}", createAffiliateCodeDto.StoreId);
+        
         throw new NotImplementedException();
     }
 }
