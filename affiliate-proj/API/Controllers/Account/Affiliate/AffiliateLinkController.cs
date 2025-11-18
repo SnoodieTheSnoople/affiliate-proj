@@ -1,6 +1,5 @@
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Core.DTOs.Affiliate.Link;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers.Account.Affiliate
