@@ -7,10 +7,12 @@ namespace affiliate_proj.Application.Services.Account.Affiliate.Code;
 public class AffiliateCodeService : IAffiliateCodeService
 {
     private readonly ICreatorService _creatorService;
+    private readonly ILogger<AffiliateCodeService> _logger;
 
-    public AffiliateCodeService(ICreatorService creatorService)
+    public AffiliateCodeService(ICreatorService creatorService, ILogger<AffiliateCodeService> logger)
     {
         _creatorService = creatorService;
+        _logger = logger;
     }
 
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
