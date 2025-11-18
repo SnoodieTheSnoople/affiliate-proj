@@ -40,6 +40,12 @@ public class AffiliateCodeService : IAffiliateCodeService
         
         await _storeService.GetStoreByIdAsync(createAffiliateCodeDto.StoreId);
         _logger.LogInformation("Store found: {StoreId}", createAffiliateCodeDto.StoreId);
+
+        if (await _affiliateCodeRepository.GetAffiliateCodeAsync(createAffiliateCodeDto.Code) != null)
+        {
+            _logger.LogInformation("Affiliate code found: {Code}", createAffiliateCodeDto.Code);
+            throw new Exception("Affiliate code already exists.");
+        }
         
         throw new NotImplementedException();
     }
