@@ -168,13 +168,7 @@ public class AffiliateLinkService : IAffiliateLinkService
             _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
             throw new Exception("Invalid link.");
         }
-        
-        if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(createAffiliateLinkDto.ProductLink, 
-                createAffiliateLinkDto.StoreId) == null)
-        {
-            _logger.LogError("Shopify product not found.");
-            throw new Exception("Product link does not exist.");
-        }
-        throw new NotImplementedException();
+
+        return true;
     }
 }
