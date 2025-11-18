@@ -8,16 +8,18 @@ namespace affiliate_proj.Application.Services.Account.Affiliate.Code;
 
 public class AffiliateCodeService : IAffiliateCodeService
 {
+    private readonly IAffiliateCodeRepository _affiliateCodeRepository;
     private readonly ICreatorService _creatorService;
     private readonly IStoreService _storeService;
     private readonly ILogger<AffiliateCodeService> _logger;
 
     public AffiliateCodeService(ICreatorService creatorService, ILogger<AffiliateCodeService> logger, 
-        IStoreService storeService)
+        IStoreService storeService, IAffiliateCodeRepository affiliateCodeRepository)
     {
         _creatorService = creatorService;
         _logger = logger;
         _storeService = storeService;
+        _affiliateCodeRepository = affiliateCodeRepository;
     }
 
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
