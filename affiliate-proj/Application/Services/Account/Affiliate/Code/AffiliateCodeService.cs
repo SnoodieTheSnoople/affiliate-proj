@@ -54,6 +54,6 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Invalid expiry date.");
         }
         
-        throw new NotImplementedException();
+        return await _affiliateCodeRepository.SetAffiliateCodeAsync(createAffiliateCodeDto);
     }
 }
