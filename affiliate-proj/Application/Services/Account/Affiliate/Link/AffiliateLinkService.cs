@@ -47,15 +47,7 @@ public class AffiliateLinkService : IAffiliateLinkService
         
         // Link validation
         // TODO: Move to separate validator method. Refactor for security and depth.
-        var baseUrl = new Uri(_configuration.GetValue<string>("Shopify:BaseUrl"));
-        var affiliateLinkUri = new Uri(createAffiliateLinkDto.Link);
-        var isSchemeSame = affiliateLinkUri.Scheme == baseUrl.Scheme;
-        var isHostSame = affiliateLinkUri.Host == baseUrl.Host;
-        
-        var path = affiliateLinkUri.AbsolutePath.Trim('/');
-        var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(createAffiliateLinkDto.RefParam);
-        
-        if (!isSchemeSame || !isHostSame || !isValidPath)
+        if (!IsLinkValid(createAffiliateLinkDto))
         {
             _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
             throw new Exception("Invalid link.");
@@ -163,11 +155,8 @@ public class AffiliateLinkService : IAffiliateLinkService
         var path = affiliateLinkUri.AbsolutePath.Trim('/');
         var isValidPath = !string.IsNullOrEmpty(path) && path.Contains(createAffiliateLinkDto.RefParam);
         
-        if (!isSchemeSame || !isHostSame || !isValidPath)
-        {
-            _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
-            throw new Exception("Invalid link.");
-        }
+        if (!isSchemeSame || !isHostSame || !isValidPath) 
+            return false;
 
         return true;
     }
