@@ -17,7 +17,23 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
     {
-        throw new NotImplementedException();
+        var entity = ConvertDtoToEntity(createAffiliateCodeDto);
+        
+        var checkExists = await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x =>
+            x.CreatorId == entity.CreatorId && x.StoreId == entity.StoreId && x.Code == entity.Code
+            && x.ProductLink == entity.ProductLink);
+
+        if (checkExists != null)
+        {
+            return ConvertEntityToDto(checkExists);
+        }
+        
+        await _dbContext.AffiliateCodes.AddAsync(entity);
+        await  _dbContext.SaveChangesAsync();
+        
+        return ConvertEntityToDto(await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x =>
+            x.CreatorId == entity.CreatorId && x.StoreId == entity.StoreId && x.Code == entity.Code
+            && x.ProductLink == entity.ProductLink));
     }
 
     public async Task<AffiliateCodeDTO?> GetAffiliateCodeAsync(string code)
