@@ -23,6 +23,12 @@ public class AffiliateCodeService : IAffiliateCodeService
         // Validate date expiry using the ValidFor field
         // Create new code entry in db
         
+        if (!await _creatorService.CheckCreatorExistsAsync(createAffiliateCodeDto.CreatorId))
+        {
+            _logger.LogError("Creator not found: {creatorId}", createAffiliateCodeDto.CreatorId);
+            throw new Exception("Creator does not exist.");
+        }
+        
         throw new NotImplementedException();
     }
 }
