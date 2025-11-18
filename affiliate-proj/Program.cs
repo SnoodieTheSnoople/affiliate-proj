@@ -100,6 +100,7 @@ public class Program
         builder.Services.AddScoped<IAffiliateLinkService, AffiliateLinkService>();
         builder.Services.AddScoped<IAffiliateLinkRepository, AffiliateLinkRepository>();
         builder.Services.AddScoped<IAffiliateCodeService, AffiliateCodeService>();
+        builder.Services.AddScoped<IAffiliateCodeRepository, AffiliateCodeRepository>();
         
         /* Store Service */
         builder.Services.AddScoped<IStoreService, StoreService>();
