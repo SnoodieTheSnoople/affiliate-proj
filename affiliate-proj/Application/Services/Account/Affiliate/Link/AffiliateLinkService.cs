@@ -46,7 +46,6 @@ public class AffiliateLinkService : IAffiliateLinkService
         _logger.LogInformation("Store found: {StoreId}", createAffiliateLinkDto.StoreId);
         
         // Link validation
-        // TODO: Move to separate validator method. Refactor for security and depth.
         if (!IsLinkValid(createAffiliateLinkDto.Link, createAffiliateLinkDto.RefParam))
         {
             _logger.LogError("Invalid affiliate link: {link}", createAffiliateLinkDto.Link);
