@@ -7,6 +7,12 @@ public class AffiliateCodeService : IAffiliateCodeService
 {
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
     {
+        // Validate if Creator and Store exists
+        // Get ProductLink and validate exists in db
+        // Validate code uniqueness
+        // Validate date expiry using the ValidFor field
+        // Create new code entry in db
+        
         throw new NotImplementedException();
     }
 }
