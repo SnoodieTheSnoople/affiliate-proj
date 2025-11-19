@@ -37,8 +37,8 @@ public class AffiliateCodeController : ControllerBase
         }
     }
     
-    [HttpGet("get-affiliate-code")]
-    public async Task<IActionResult> GetAffiliateCode()
+    [HttpGet("get-affiliate-codes")]
+    public async Task<IActionResult> GetAffiliateCodes()
     {
         try
         {
