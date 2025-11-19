@@ -54,7 +54,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
                         createAffiliateCodeDto.StoreId));
                 }
 
-                return BadRequest();
+                return BadRequest("Invalid input data.");
             }
             catch (Exception e)
             {
