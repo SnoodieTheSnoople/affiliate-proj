@@ -46,7 +46,27 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync(Guid creatorId)
     {
-        throw new NotImplementedException();
+        if (creatorId == Guid.Empty)
+            throw new ArgumentException("CreatorId cannot be empty", nameof(creatorId));
+        
+        var entities = await _dbContext.AffiliateCodes
+            .AsNoTracking()
+            .Where(code => code.CreatorId == creatorId)
+            .Select(code => new AffiliateCodeDTO
+            {
+                CodeId = code.CodeId,
+                CreatorId = code.CreatorId,
+                StoreId = code.StoreId,
+                Code = code.Code,
+                IsActive = code.IsActive,
+                ValidFor = code.ValidFor,
+                ExpiryDate = code.ExpiryDate,
+                CreatedAt = code.CreatedAt,
+                ProductLink = code.ProductLink
+            })
+            .ToListAsync();
+        
+        return entities;
     }
 
     public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync(Guid storeId)
