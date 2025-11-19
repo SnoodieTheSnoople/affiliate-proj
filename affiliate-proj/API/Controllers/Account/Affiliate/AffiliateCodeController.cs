@@ -3,73 +3,76 @@ using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Core.DTOs.Affiliate.Code;
 using Microsoft.AspNetCore.Mvc;
 
-namespace affiliate_proj.API.Controllers.Account.Affiliate;
-
-[Microsoft.AspNetCore.Components.Route("api/[controller]")]
-[ApiController]
-public class AffiliateCodeController : ControllerBase
+namespace affiliate_proj.API.Controllers.Account.Affiliate
 {
-    private readonly IAffiliateCodeService _affiliateCodeService;
-
-    public AffiliateCodeController(IAffiliateCodeService affiliateCodeService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AffiliateCodeController : ControllerBase
     {
-        _affiliateCodeService = affiliateCodeService;
-    }
+        private readonly IAffiliateCodeService _affiliateCodeService;
 
-    [HttpPost("set-affiliate-code")]
-    public async Task<IActionResult> SetAffiliateCode([FromBody] CreateAffiliateCodeDTO createAffiliateCodeDto)
-    {
-        try
+        public AffiliateCodeController(IAffiliateCodeService affiliateCodeService)
         {
-            if (createAffiliateCodeDto.CreatorId == Guid.Empty || createAffiliateCodeDto.StoreId == Guid.Empty || 
-                string.IsNullOrEmpty(createAffiliateCodeDto.Code) || createAffiliateCodeDto.ValidFor <= 0 ||
-                createAffiliateCodeDto.ExpiryDate <= DateTime.Today)
+            _affiliateCodeService = affiliateCodeService;
+        }
+
+        [HttpPost("set-affiliate-code")]
+        public async Task<IActionResult> SetAffiliateCode([FromBody] CreateAffiliateCodeDTO createAffiliateCodeDto)
+        {
+            try
             {
-                return BadRequest("Invalid input data.");
-            }
+                if (createAffiliateCodeDto.CreatorId == Guid.Empty || createAffiliateCodeDto.StoreId == Guid.Empty ||
+                    string.IsNullOrEmpty(createAffiliateCodeDto.Code) || createAffiliateCodeDto.ValidFor <= 0 ||
+                    createAffiliateCodeDto.ExpiryDate <= DateTime.Today)
+                {
+                    return BadRequest("Invalid input data.");
+                }
 
-            return Ok(await _affiliateCodeService.SetAffiliateCodeAsync(createAffiliateCodeDto));
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return BadRequest(e.Message);
-        }
-    }
-    
-    [HttpGet("get-affiliate-codes")]
-    public async Task<IActionResult> GetAffiliateCodes([FromBody] CreateAffiliateCodeDTO createAffiliateCodeDto)
-    {
-        try
-        {
-            if (createAffiliateCodeDto.CreatorId != Guid.Empty && createAffiliateCodeDto.StoreId == Guid.Empty)
+                return Ok(await _affiliateCodeService.SetAffiliateCodeAsync(createAffiliateCodeDto));
+            }
+            catch (Exception e)
             {
-                return Ok(await _affiliateCodeService.GetAffiliateCodesByCreatorIdAsync(createAffiliateCodeDto.CreatorId));
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
             }
-            
-            if (createAffiliateCodeDto.StoreId != Guid.Empty && createAffiliateCodeDto.CreatorId == Guid.Empty)
-            {
-                return Ok(await _affiliateCodeService.GetAffiliateCodesByStoreIdAsync(createAffiliateCodeDto.StoreId));
-            }
-
-            return BadRequest();
         }
-        catch (Exception e)
+
+        [HttpGet("get-affiliate-codes")]
+        public async Task<IActionResult> GetAffiliateCodes([FromBody] CreateAffiliateCodeDTO createAffiliateCodeDto)
         {
-            Console.WriteLine(e);
-            return BadRequest(e.Message);
-        }
-    }
+            try
+            {
+                if (createAffiliateCodeDto.CreatorId != Guid.Empty && createAffiliateCodeDto.StoreId == Guid.Empty)
+                {
+                    return Ok(await _affiliateCodeService.GetAffiliateCodesByCreatorIdAsync(createAffiliateCodeDto
+                        .CreatorId));
+                }
 
-    [HttpPut("update-affiliate-code")]
-    public async Task<IActionResult> UpdateAffiliateCode()
-    {
-        throw new NotImplementedException();
-    }
-    
-    [HttpDelete("delete-affiliate-code")]
-    public async Task<IActionResult> DeleteAffiliateCode()
-    {
-        throw new NotImplementedException();
+                if (createAffiliateCodeDto.StoreId != Guid.Empty && createAffiliateCodeDto.CreatorId == Guid.Empty)
+                {
+                    return Ok(await _affiliateCodeService.GetAffiliateCodesByStoreIdAsync(
+                        createAffiliateCodeDto.StoreId));
+                }
+
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("update-affiliate-code")]
+        public async Task<IActionResult> UpdateAffiliateCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete("delete-affiliate-code")]
+        public async Task<IActionResult> DeleteAffiliateCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
