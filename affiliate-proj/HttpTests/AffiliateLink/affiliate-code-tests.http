@@ -16,3 +16,45 @@ Content-Type: application/json
 }
 
 ###
+// Validated to retrieve by CreatorId
+GET {{affiliate_proj_HostAddress}}/api/AffiliateCode/get-affiliate-codes
+Content-Type: application/json
+
+{
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "Code": "",
+  "ProductLink": ""
+}
+
+###
+// Validated to retrieve by StoreId
+GET {{affiliate_proj_HostAddress}}/api/AffiliateCode/get-affiliate-codes
+Content-Type: application/json
+
+{
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Code": "",
+  "ProductLink": ""
+}
+
+###
+// Validated to fail to retrieve with no parameters
+GET {{affiliate_proj_HostAddress}}/api/AffiliateCode/get-affiliate-codes
+Content-Type: application/json
+
+{
+  "Code": "", 
+  "ProductLink": ""
+}
+
+###
+// Validated to fail to retrieve with StoreId and CreatorId
+GET {{affiliate_proj_HostAddress}}/api/AffiliateCode/get-affiliate-codes
+Content-Type: application/json
+
+{
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "Code": "",
+  "ProductLink": ""
+}
