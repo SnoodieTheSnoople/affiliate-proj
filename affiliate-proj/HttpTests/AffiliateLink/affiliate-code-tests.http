@@ -1,0 +1,18 @@
+﻿@affiliate_proj_HostAddress = http://localhost:5177
+
+###
+// Validated to succeed and create entry in DB
+POST {{affiliate_proj_HostAddress}}/api/AffiliateCode/set-affiliate-code
+Content-Type: application/json
+
+{
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Code": "AFFCODE123",
+  "IsActive": true,
+  "ValidFor": 30,
+  "ExpiryDate": "2025-12-19T23:59:59Z",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card"
+}
+
+###
