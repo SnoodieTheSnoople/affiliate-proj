@@ -57,12 +57,12 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.SetAffiliateCodeAsync(createAffiliateCodeDto);
     }
 
-    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync()
+    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync(Guid creatorId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync()
+    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync(Guid storeId)
     {
         throw new NotImplementedException();
     }
