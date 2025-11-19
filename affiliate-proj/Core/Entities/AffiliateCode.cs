@@ -7,7 +7,7 @@ public class AffiliateCode
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string CodeId { get; set; }
+    public Guid CodeId { get; set; }
     
     [Required]
     public Guid CreatorId { get; set; }

@@ -2,7 +2,7 @@
 
 public class AffiliateCodeDTO
 {
-    public string CodeId { get; set; }
+    public Guid CodeId { get; set; }
     public Guid CreatorId { get; set; }
     public Guid StoreId { get; set; }
     public string Code { get; set; }
