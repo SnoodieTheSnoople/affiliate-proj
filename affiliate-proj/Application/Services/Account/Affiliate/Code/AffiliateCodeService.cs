@@ -59,11 +59,17 @@ public class AffiliateCodeService : IAffiliateCodeService
 
     public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync(Guid creatorId)
     {
+        if (creatorId == Guid.Empty)
+            throw new ArgumentException("Creator ID cannot be empty", nameof(creatorId));
+        
         throw new NotImplementedException();
     }
 
     public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync(Guid storeId)
     {
+        if (storeId == Guid.Empty)
+            throw new ArgumentException("Store ID cannot be empty", nameof(storeId));
+        
         throw new NotImplementedException();
     }
 }
