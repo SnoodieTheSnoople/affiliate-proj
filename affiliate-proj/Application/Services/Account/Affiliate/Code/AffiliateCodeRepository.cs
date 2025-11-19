@@ -43,7 +43,17 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
         return ConvertEntityToDto(await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x => x.Code == code));
     }
-    
+
+    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync(Guid creatorId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync(Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
     {
         return new AffiliateCode
