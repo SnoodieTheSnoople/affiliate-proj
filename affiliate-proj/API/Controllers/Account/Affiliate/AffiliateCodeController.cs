@@ -42,7 +42,17 @@ public class AffiliateCodeController : ControllerBase
     {
         try
         {
-            return Ok();
+            if (createAffiliateCodeDto.CreatorId != Guid.Empty && createAffiliateCodeDto.StoreId == Guid.Empty)
+            {
+                return Ok();
+            }
+            
+            if (createAffiliateCodeDto.StoreId != Guid.Empty && createAffiliateCodeDto.CreatorId == Guid.Empty)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
         catch (Exception e)
         {
