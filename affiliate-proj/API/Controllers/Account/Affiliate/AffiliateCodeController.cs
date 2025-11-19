@@ -40,7 +40,15 @@ public class AffiliateCodeController : ControllerBase
     [HttpGet("get-affiliate-code")]
     public async Task<IActionResult> GetAffiliateCode()
     {
-        throw new NotImplementedException();
+        try
+        {
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPut("update-affiliate-code")]
