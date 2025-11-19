@@ -44,12 +44,12 @@ public class AffiliateCodeController : ControllerBase
         {
             if (createAffiliateCodeDto.CreatorId != Guid.Empty && createAffiliateCodeDto.StoreId == Guid.Empty)
             {
-                return Ok();
+                return Ok(await _affiliateCodeService.GetAffiliateCodesByCreatorIdAsync(createAffiliateCodeDto.CreatorId));
             }
             
             if (createAffiliateCodeDto.StoreId != Guid.Empty && createAffiliateCodeDto.CreatorId == Guid.Empty)
             {
-                return Ok();
+                return Ok(await _affiliateCodeService.GetAffiliateCodesByStoreIdAsync(createAffiliateCodeDto.StoreId));
             }
 
             return BadRequest();
