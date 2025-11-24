@@ -104,9 +104,9 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Product link does not exist.");
         }
 
-        if (await _affiliateCodeRepository.GetAffiliateCodeAsync(affiliateCodeDto.Code) == null)
+        if (await _affiliateCodeRepository.GetAffiliateCodeByIdAsync(affiliateCodeDto.CodeId) == null)
         {
-            _logger.LogError("Affiliate code not found: {Code}", affiliateCodeDto.Code);
+            _logger.LogError("Affiliate code not found: {CodeId}", affiliateCodeDto.CodeId);
             throw new Exception("Affiliate code does not exist.");
         }
         
