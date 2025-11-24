@@ -75,6 +75,11 @@ public class AffiliateCodeService : IAffiliateCodeService
 
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
     {
+        // Validate input data
+        // Validate if CodeId exists
+        // Validate if Code has changed and if new code is unique
+        // Update the code entry in db
+        
         if (String.IsNullOrEmpty(affiliateCodeDto.Code))
             throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
         
