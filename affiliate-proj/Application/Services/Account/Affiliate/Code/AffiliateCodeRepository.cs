@@ -94,6 +94,11 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         return entities;
     }
 
+    public async Task<AffiliateCodeDTO?> GetAffiliateCodeByIdAsync(Guid codeId)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
     {
         return new AffiliateCode
