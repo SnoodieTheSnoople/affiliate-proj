@@ -103,6 +103,12 @@ public class AffiliateCodeService : IAffiliateCodeService
             _logger.LogError("Shopify product not found.");
             throw new Exception("Product link does not exist.");
         }
+
+        if (await _affiliateCodeRepository.GetAffiliateCodeAsync(affiliateCodeDto.Code) == null)
+        {
+            _logger.LogError("Affiliate code not found: {Code}", affiliateCodeDto.Code);
+            throw new Exception("Affiliate code does not exist.");
+        }
         
         throw new NotImplementedException();
     }
