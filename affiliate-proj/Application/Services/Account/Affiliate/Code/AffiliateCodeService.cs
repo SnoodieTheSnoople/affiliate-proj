@@ -75,6 +75,10 @@ public class AffiliateCodeService : IAffiliateCodeService
 
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
     {
+        if (String.IsNullOrEmpty(affiliateCodeDto.Code))
+            throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
+        
+        
         throw new NotImplementedException();
     }
 }
