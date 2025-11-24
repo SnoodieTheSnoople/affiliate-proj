@@ -96,6 +96,9 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO?> GetAffiliateCodeByIdAsync(Guid codeId)
     {
+        if (codeId == Guid.Empty)
+            throw new ArgumentException("CodeId cannot be empty", nameof(codeId));
+        
         throw new NotImplementedException();
     }
 
