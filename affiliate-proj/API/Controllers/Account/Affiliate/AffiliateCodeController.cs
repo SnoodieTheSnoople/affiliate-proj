@@ -64,7 +64,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         }
 
         [HttpPut("update-affiliate-code")]
-        public async Task<IActionResult> UpdateAffiliateCode()
+        public async Task<IActionResult> UpdateAffiliateCode([FromBody] AffiliateCodeDTO affiliateCodeDto)
         {
             throw new NotImplementedException();
         }
