@@ -72,4 +72,9 @@ public class AffiliateCodeService : IAffiliateCodeService
         
         return await _affiliateCodeRepository.GetAffiliateCodesByStoreIdAsync(storeId);
     }
+
+    public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
+    {
+        throw new NotImplementedException();
+    }
 }
