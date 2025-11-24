@@ -99,7 +99,7 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         if (codeId == Guid.Empty)
             throw new ArgumentException("CodeId cannot be empty", nameof(codeId));
         
-        throw new NotImplementedException();
+        return ConvertEntityToDto(await _dbContext.AffiliateCodes.FirstOrDefaultAsync(x => x.CodeId == codeId));
     }
 
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
