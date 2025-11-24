@@ -110,8 +110,6 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Affiliate code does not exist.");
         }
         
-        
-        
-        throw new NotImplementedException();
+        return await _affiliateCodeRepository.UpdateAffiliateCodeAsync(affiliateCodeDto);
     }
 }
