@@ -104,7 +104,20 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
     {
-        throw new NotImplementedException();
+        var existingEntity = await _dbContext.AffiliateCodes.FindAsync(affiliateCodeDto.CodeId);
+        
+        if (existingEntity == null)
+            throw new Exception("Affiliate code not found.");
+        
+        existingEntity.Code = affiliateCodeDto.Code;
+        existingEntity.IsActive = affiliateCodeDto.IsActive;
+        existingEntity.ValidFor = affiliateCodeDto.ValidFor;
+        existingEntity.ExpiryDate = affiliateCodeDto.ExpiryDate;
+        existingEntity.ProductLink = affiliateCodeDto.ProductLink;
+        await _dbContext.SaveChangesAsync();
+        
+        existingEntity = await _dbContext.AffiliateCodes.FindAsync(affiliateCodeDto.CodeId);
+        return ConvertEntityToDto(existingEntity);
     }
 
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
