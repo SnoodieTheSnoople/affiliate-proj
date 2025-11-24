@@ -80,6 +80,10 @@ public class AffiliateCodeService : IAffiliateCodeService
         // Validate if Code has changed and if new code is unique
         // Update the code entry in db
         
+        if (affiliateCodeDto.CodeId == Guid.Empty || affiliateCodeDto.CreatorId == Guid.Empty ||
+            affiliateCodeDto.StoreId == Guid.Empty)
+            throw new ArgumentException("IDs cannot be empty");
+        
         if (String.IsNullOrEmpty(affiliateCodeDto.Code))
             throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
         
@@ -89,6 +93,8 @@ public class AffiliateCodeService : IAffiliateCodeService
             _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
             throw new Exception("Invalid expiry date.");
         }
+        
+        
         
         throw new NotImplementedException();
     }
