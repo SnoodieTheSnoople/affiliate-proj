@@ -78,6 +78,12 @@ public class AffiliateCodeService : IAffiliateCodeService
         if (String.IsNullOrEmpty(affiliateCodeDto.Code))
             throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
         
+        var expiryDate = DateTime.UtcNow.Date.AddDays(affiliateCodeDto.ValidFor);
+        if (expiryDate != affiliateCodeDto.ExpiryDate.Date)
+        {
+            _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
+            throw new Exception("Invalid expiry date.");
+        }
         
         throw new NotImplementedException();
     }
