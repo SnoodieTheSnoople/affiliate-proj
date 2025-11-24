@@ -96,8 +96,13 @@ public class AffiliateCodeService : IAffiliateCodeService
             _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
             throw new Exception("Invalid expiry date.");
         }
-        
-        
+
+        if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(affiliateCodeDto.ProductLink,
+                affiliateCodeDto.StoreId) == null)
+        {
+            _logger.LogError("Shopify product not found.");
+            throw new Exception("Product link does not exist.");
+        }
         
         throw new NotImplementedException();
     }
