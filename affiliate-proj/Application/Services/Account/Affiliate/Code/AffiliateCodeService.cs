@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
+using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Core.DTOs.Affiliate.Code;
 
@@ -11,15 +12,17 @@ public class AffiliateCodeService : IAffiliateCodeService
     private readonly IAffiliateCodeRepository _affiliateCodeRepository;
     private readonly ICreatorService _creatorService;
     private readonly IStoreService _storeService;
+    private readonly IShopifyProductRepository _shopifyProductRepository;
     private readonly ILogger<AffiliateCodeService> _logger;
 
     public AffiliateCodeService(ICreatorService creatorService, ILogger<AffiliateCodeService> logger, 
-        IStoreService storeService, IAffiliateCodeRepository affiliateCodeRepository)
+        IStoreService storeService, IAffiliateCodeRepository affiliateCodeRepository, IShopifyProductRepository shopifyProductRepository)
     {
         _creatorService = creatorService;
         _logger = logger;
         _storeService = storeService;
         _affiliateCodeRepository = affiliateCodeRepository;
+        _shopifyProductRepository = shopifyProductRepository;
     }
 
     public async Task<AffiliateCodeDTO> SetAffiliateCodeAsync(CreateAffiliateCodeDTO createAffiliateCodeDto)
