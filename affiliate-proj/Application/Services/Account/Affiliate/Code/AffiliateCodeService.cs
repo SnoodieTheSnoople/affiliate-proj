@@ -122,6 +122,11 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.UpdateAffiliateCodeAsync(affiliateCodeDto);
     }
 
+    public async Task<AffiliateCodeDTO> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive)
+    {
+        throw new NotImplementedException();
+    }
+
     private bool IsDateValid(int daysValidFor, DateTime givenDate)
     {
         var expiryDate = DateTime.UtcNow.Date.AddDays(daysValidFor);

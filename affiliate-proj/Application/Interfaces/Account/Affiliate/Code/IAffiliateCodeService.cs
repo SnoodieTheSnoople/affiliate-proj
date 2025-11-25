@@ -8,4 +8,5 @@ public interface IAffiliateCodeService
     Task<List<AffiliateCodeDTO>> GetAffiliateCodesByCreatorIdAsync(Guid creatorId);
     Task<List<AffiliateCodeDTO>> GetAffiliateCodesByStoreIdAsync(Guid storeId);
     Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto);
+    Task<AffiliateCodeDTO> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive);
 }
