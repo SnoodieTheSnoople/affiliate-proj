@@ -134,19 +134,23 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         return ConvertEntityToDto(existingEntity);
     }
 
-    public async Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId)
+    public async Task<bool> DeleteAffiliateCodeAsync(Guid codeId)
     {
         var entityToDelete = await _dbContext.AffiliateCodes.FindAsync(codeId);
         
         if (entityToDelete == null)
-            return null;
+            return true;
         
         _dbContext.AffiliateCodes.Remove(entityToDelete);
         await _dbContext.SaveChangesAsync();
         
         // Expected return should be null.
         entityToDelete = await _dbContext.AffiliateCodes.FindAsync(codeId);
-        return ConvertEntityToDto(entityToDelete);
+
+        if (entityToDelete != null)
+            return false;
+        
+        return true;
     }
 
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)

@@ -133,7 +133,7 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.UpdateAffiliateCodeStatusAsync(codeId, isActive);
     }
 
-    public async Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId)
+    public async Task<bool> DeleteAffiliateCodeAsync(Guid codeId)
     {
         if (codeId == Guid.Empty)
         {
