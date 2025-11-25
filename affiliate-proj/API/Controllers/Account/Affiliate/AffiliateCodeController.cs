@@ -86,6 +86,15 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         [HttpPatch("update-affiliate-code-active-status")]
         public async Task<IActionResult> UpdateAffiliateCodeActiveStatus([FromBody] AffiliateCodeDTO affiliateCodeDto)
         {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
             throw new NotImplementedException();
         }
 
