@@ -124,6 +124,12 @@ public class AffiliateCodeService : IAffiliateCodeService
 
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive)
     {
+        if (codeId == Guid.Empty)
+        {
+            _logger.LogError("CodeId cannot be empty");
+            throw new ArgumentException("CodeId cannot be empty", nameof(codeId));
+        }
+        
         throw new NotImplementedException();
     }
 
