@@ -122,7 +122,16 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO?> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive)
     {
-        throw new NotImplementedException();
+        var existingEntity = await _dbContext.AffiliateCodes.FindAsync(codeId);
+        
+        if (existingEntity == null)
+            throw new Exception("Affiliate code not found.");
+        
+        existingEntity.IsActive = isActive;
+        await _dbContext.SaveChangesAsync();
+        
+        existingEntity = await _dbContext.AffiliateCodes.FindAsync(codeId);
+        return ConvertEntityToDto(existingEntity);
     }
 
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
