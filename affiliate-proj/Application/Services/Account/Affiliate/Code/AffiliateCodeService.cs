@@ -79,10 +79,6 @@ public class AffiliateCodeService : IAffiliateCodeService
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
     {
         // Validate input data
-        // Validate if CodeId exists
-        // Validate if Code has changed and if new code is unique
-        // Update the code entry in db
-        
         if (affiliateCodeDto.CodeId == Guid.Empty || affiliateCodeDto.CreatorId == Guid.Empty ||
             affiliateCodeDto.StoreId == Guid.Empty)
             throw new ArgumentException("IDs cannot be empty");
@@ -90,6 +86,7 @@ public class AffiliateCodeService : IAffiliateCodeService
         if (String.IsNullOrEmpty(affiliateCodeDto.Code))
             throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
         
+        // Validate date expiry using the ValidFor field
         var expiryDate = DateTime.UtcNow.Date.AddDays(affiliateCodeDto.ValidFor);
         if (expiryDate != affiliateCodeDto.ExpiryDate.Date)
         {
@@ -97,19 +94,35 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Invalid expiry date.");
         }
 
+        // Validate if ProductLink exists
         if (await _shopifyProductRepository.CheckShopifyProductExistsByLinkAsync(affiliateCodeDto.ProductLink,
                 affiliateCodeDto.StoreId) == null)
         {
             _logger.LogError("Shopify product not found.");
             throw new Exception("Product link does not exist.");
         }
+        
+        // Validate if CodeId exists
+        var codeEntity = await _affiliateCodeRepository.GetAffiliateCodeByIdAsync(affiliateCodeDto.CodeId);
 
-        if (await _affiliateCodeRepository.GetAffiliateCodeByIdAsync(affiliateCodeDto.CodeId) == null)
+        if (codeEntity == null)
         {
             _logger.LogError("Affiliate code not found: {CodeId}", affiliateCodeDto.CodeId);
             throw new Exception("Affiliate code does not exist.");
         }
+
+        // Validate if Code has changed and if new code is unique
+        if (affiliateCodeDto.Code != codeEntity.Code)
+        {
+            // Code has changed, check for uniqueness
+            if (await _affiliateCodeRepository.GetAffiliateCodeAsync(affiliateCodeDto.Code) != null)
+            {
+                _logger.LogError("New affiliate code already exists. Affiliate code must be unique.");
+                throw new Exception("New affiliate code already exists. Affiliate code must be unique.");
+            }
+        }
         
+        // Update the code entry in db
         return await _affiliateCodeRepository.UpdateAffiliateCodeAsync(affiliateCodeDto);
     }
 }
