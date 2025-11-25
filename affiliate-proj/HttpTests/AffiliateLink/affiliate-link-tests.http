@@ -90,6 +90,36 @@ Content-Type: application/json
 }
 
 ###
+// Validated to fail due to new link being incorrectly formatted and RefParam being different
+PUT {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257821b",
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Link": "https://1fa2e2f0da2b.ngrok-free.app/123aff",
+  "RefParam": "aff456",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card",
+  "IsActive": true
+}
+
+###
+// Validated to succeed and update link, refParam, and set IsActive to false
+PUT {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257821b",
+  "CreatorId": "b65b5723-4cad-4be0-990c-0f5f6eaac233",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Link": "https://1fa2e2f0da2b.ngrok-free.app/25AFFOFFER",
+  "RefParam": "25AFFOFFER",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card",
+  "IsActive": false
+}
+
+###
 // Validated to succeed to update IsActive to false
 PATCH {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link-active-status
 Content-Type: application/json
@@ -103,4 +133,51 @@ Content-Type: application/json
 }
 
 ###
-// TODO: Add test for DELETE
+// Validated to succeed to update IsActive to true
+PATCH {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link-active-status
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257821b",
+  "Link": "",
+  "RefParam": "",
+  "ProductLink": "",
+  "IsActive": true
+}
+
+###
+// Validated to fail due to incorrect LinkId
+PATCH {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link-active-status
+Content-Type: application/json
+
+{
+  "LinkId": "019a92c8-7264-7e3d-933d-584e3257852b",
+  "Link": "",
+  "RefParam": "",
+  "ProductLink": "",
+  "IsActive": false
+}
+
+###
+// Validated to fail due to incorrect LinkId
+PATCH {{affiliate_proj_HostAddress}}/api/AffiliateLink/update-affiliate-link-active-status
+Content-Type: application/json
+
+{
+  "Link": "",
+  "RefParam": "",
+  "ProductLink": "",
+  "IsActive": false
+}
+
+###
+// Validated to fail due to incorrect LinkId
+
+DELETE {{affiliate_proj_HostAddress}}/api/AffiliateLink/delete-affiliate-link?linkId=019a92c8-7264-7e3d-933d-584e3257852b
+Content-Type: application/json
+
+###
+// Validated to succeed and delete existing link
+
+DELETE {{affiliate_proj_HostAddress}}/api/AffiliateLink/delete-affiliate-link?linkId=019a92c8-7264-7e3d-933d-584e3257821b
+Content-Type: application/json
