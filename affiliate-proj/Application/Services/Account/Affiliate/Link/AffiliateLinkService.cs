@@ -119,6 +119,13 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("Affiliate link does not exist.");
         }
         
+        // Link validation
+        if (!IsLinkValid(affiliateLinkDto.Link, affiliateLinkDto.RefParam))
+        {
+            _logger.LogError("Invalid affiliate link: {link}", affiliateLinkDto.Link);
+            throw new Exception("Invalid link.");
+        }
+        
         return await _affiliateLinkRepository.UpdateAffiliateLinkAsync(affiliateLinkDto);
     }
 
