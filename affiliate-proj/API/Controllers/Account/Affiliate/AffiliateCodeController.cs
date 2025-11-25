@@ -91,14 +91,14 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
                 if (affiliateCodeDto.CodeId == Guid.Empty)
                     return BadRequest("Invalid input data.");
                 
-                return Ok();
+                return Ok(await _affiliateCodeService.UpdateAffiliateCodeStatusAsync(affiliateCodeDto.CodeId,
+                    affiliateCodeDto.IsActive));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            throw new NotImplementedException();
         }
 
         [HttpDelete("delete-affiliate-code")]
