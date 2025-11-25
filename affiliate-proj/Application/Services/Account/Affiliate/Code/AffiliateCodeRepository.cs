@@ -134,6 +134,11 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         return ConvertEntityToDto(existingEntity);
     }
 
+    public async Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId)
+    {
+        throw new NotImplementedException();
+    }
+
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
     {
         return new AffiliateCode

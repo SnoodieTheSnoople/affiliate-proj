@@ -11,4 +11,5 @@ public interface IAffiliateCodeRepository
     Task<AffiliateCodeDTO?> GetAffiliateCodeByIdAsync(Guid codeId);
     Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto);
     Task<AffiliateCodeDTO> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive);
+    Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId);
 }
