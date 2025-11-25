@@ -133,6 +133,17 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.UpdateAffiliateCodeStatusAsync(codeId, isActive);
     }
 
+    public async Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId)
+    {
+        if (codeId == Guid.Empty)
+        {
+            _logger.LogError("CodeId cannot be empty");
+            throw new ArgumentException("CodeId cannot be empty", nameof(codeId));
+        }
+        
+        throw new NotImplementedException();
+    }
+
     private bool IsDateValid(int daysValidFor, DateTime givenDate)
     {
         var expiryDate = DateTime.UtcNow.Date.AddDays(daysValidFor);
