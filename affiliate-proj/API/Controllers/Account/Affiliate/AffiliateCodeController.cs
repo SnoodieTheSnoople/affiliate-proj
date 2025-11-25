@@ -102,9 +102,20 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         }
 
         [HttpDelete("delete-affiliate-code")]
-        public async Task<IActionResult> DeleteAffiliateCode()
+        public async Task<IActionResult> DeleteAffiliateCode([FromQuery] Guid codeId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (codeId == Guid.Empty)
+                    return BadRequest("Invalid input data.");
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
     }
 }
