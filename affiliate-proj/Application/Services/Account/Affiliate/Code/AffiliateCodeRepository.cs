@@ -136,7 +136,17 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
 
     public async Task<AffiliateCodeDTO?> DeleteAffiliateCodeAsync(Guid codeId)
     {
-        throw new NotImplementedException();
+        var entityToDelete = await _dbContext.AffiliateCodes.FindAsync(codeId);
+        
+        if (entityToDelete == null)
+            return null;
+        
+        _dbContext.AffiliateCodes.Remove(entityToDelete);
+        await _dbContext.SaveChangesAsync();
+        
+        // Expected return should be null.
+        entityToDelete = await _dbContext.AffiliateCodes.FindAsync(codeId);
+        return ConvertEntityToDto(entityToDelete);
     }
 
     private AffiliateCode ConvertDtoToEntity(CreateAffiliateCodeDTO dto)
