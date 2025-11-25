@@ -128,6 +128,13 @@ public class AffiliateCodeService : IAffiliateCodeService
 
     private bool IsDateValid(int daysValidFor, DateTime givenDate)
     {
-        throw new NotImplementedException();
+        var expiryDate = DateTime.UtcNow.Date.AddDays(daysValidFor);
+        if (expiryDate != givenDate)
+        {
+            _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
+            return false;
+        }
+
+        return true;
     }
 }
