@@ -88,6 +88,9 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
         {
             try
             {
+                if (affiliateCodeDto.CodeId == Guid.Empty)
+                    return BadRequest("Invalid input data.");
+                
                 return Ok();
             }
             catch (Exception e)
