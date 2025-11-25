@@ -120,7 +120,7 @@ public class AffiliateCodeRepository : IAffiliateCodeRepository
         return ConvertEntityToDto(existingEntity);
     }
 
-    public async Task<AffiliateCodeDTO?> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive)
+    public async Task<AffiliateCodeDTO> UpdateAffiliateCodeStatusAsync(Guid codeId, bool isActive)
     {
         var existingEntity = await _dbContext.AffiliateCodes.FindAsync(codeId);
         
