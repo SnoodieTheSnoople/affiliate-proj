@@ -125,4 +125,9 @@ public class AffiliateCodeService : IAffiliateCodeService
         // Update the code entry in db
         return await _affiliateCodeRepository.UpdateAffiliateCodeAsync(affiliateCodeDto);
     }
+
+    private bool IsDateValid(int daysValidFor, DateTime givenDate)
+    {
+        throw new NotImplementedException();
+    }
 }
