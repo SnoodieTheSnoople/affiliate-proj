@@ -141,7 +141,7 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new ArgumentException("CodeId cannot be empty", nameof(codeId));
         }
         
-        throw new NotImplementedException();
+        return await _affiliateCodeRepository.DeleteAffiliateCodeAsync(codeId);
     }
 
     private bool IsDateValid(int daysValidFor, DateTime givenDate)

@@ -109,7 +109,7 @@ namespace affiliate_proj.API.Controllers.Account.Affiliate
                 if (codeId == Guid.Empty)
                     return BadRequest("Invalid input data.");
                 
-                return Ok();
+                return Ok(await _affiliateCodeService.DeleteAffiliateCodeAsync(codeId));
             }
             catch (Exception e)
             {
