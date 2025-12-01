@@ -123,3 +123,65 @@ Content-Type: application/json
   "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card",
   "IsActive": true
 }
+
+###
+// Validated to fail to create duplicate Code for different record in DB
+POST {{affiliate_proj_HostAddress}}/api/AffiliateCode/set-affiliate-code
+Content-Type: application/json
+
+{
+  "CreatorId": "13ff4306-e924-47f0-9190-90f4d3d8c174",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Code": "25OFFCODE5",
+  "IsActive": true,
+  "ValidFor": 5,
+  "ExpiryDate": "2025-12-06T23:59:59Z",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card"
+}
+
+###
+// Test case to test IsDateValid in POST - Validated to fail to create entry in DB with invalid ExpiryDate
+POST {{affiliate_proj_HostAddress}}/api/AffiliateCode/set-affiliate-code
+Content-Type: application/json
+
+{
+  "CreatorId": "13ff4306-e924-47f0-9190-90f4d3d8c174",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Code": "AFFCODE123",
+  "IsActive": true,
+  "ValidFor": 5,
+  "ExpiryDate": "2025-12-05T23:59:59Z",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card"
+}
+
+###
+// Test case to test IsDateValid in POST - Validated to succeed to create entry in DB with valid ExpiryDate
+POST {{affiliate_proj_HostAddress}}/api/AffiliateCode/set-affiliate-code
+Content-Type: application/json
+
+{
+  "CreatorId": "13ff4306-e924-47f0-9190-90f4d3d8c174",
+  "StoreId": "0198be6e-cda3-739f-9f30-6f51578c97de",
+  "Code": "AFFCODE123",
+  "IsActive": true,
+  "ValidFor": 4,
+  "ExpiryDate": "2025-12-05T23:59:59Z",
+  "ProductLink": "affiliate-project-dev-test.myshopify.com/products/gift-card"
+}
+
+###
+// Validated to succeed and update only IsActive status in DB
+PATCH {{affiliate_proj_HostAddress}}/api/AffiliateCode/update-affiliate-code-active-status
+Content-Type: application/json
+
+{
+  "CodeId": "019a9ca5-f3b7-74ce-9c0e-274d896eeefc",
+  "IsActive": false,
+  "Code": "",
+  "ProductLink": ""
+}
+
+###
+// Validated to succeed and delete entry in DB
+DELETE {{affiliate_proj_HostAddress}}/api/AffiliateCode/delete-affiliate-code?codeId=019adada-33d5-7c15-9f69-da0b4a19c95a
+Content-Type: application/json
