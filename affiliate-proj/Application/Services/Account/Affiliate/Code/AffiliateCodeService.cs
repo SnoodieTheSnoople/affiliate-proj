@@ -50,12 +50,8 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new Exception("Affiliate code already exists.");
         }
         
-        var expiryDate = DateTime.UtcNow.Date.AddDays(createAffiliateCodeDto.ValidFor);
-        if (expiryDate != createAffiliateCodeDto.ExpiryDate.Date)
-        {
-            _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
+        if (!IsDateValid(createAffiliateCodeDto.ValidFor, createAffiliateCodeDto.ExpiryDate))
             throw new Exception("Invalid expiry date.");
-        }
         
         return await _affiliateCodeRepository.SetAffiliateCodeAsync(createAffiliateCodeDto);
     }
