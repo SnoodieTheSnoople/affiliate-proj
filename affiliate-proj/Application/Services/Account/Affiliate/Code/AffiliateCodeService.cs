@@ -87,7 +87,7 @@ public class AffiliateCodeService : IAffiliateCodeService
             throw new ArgumentException("Code cannot be null or empty", nameof(affiliateCodeDto.Code));
         
         // Validate date expiry using the ValidFor field
-        if (IsDateValid(affiliateCodeDto.ValidFor, affiliateCodeDto.CreatedAt))
+        if (!IsDateValid(affiliateCodeDto.ValidFor, affiliateCodeDto.ExpiryDate))
             throw new Exception("Invalid expiry date.");
 
         // Validate if ProductLink exists
@@ -147,7 +147,8 @@ public class AffiliateCodeService : IAffiliateCodeService
     private bool IsDateValid(int daysValidFor, DateTime givenDate)
     {
         var expiryDate = DateTime.UtcNow.Date.AddDays(daysValidFor);
-        if (expiryDate != givenDate)
+        _logger.LogInformation("Validating expiry date: {expiryDate}, {givenDate}", expiryDate.Date, givenDate.Date);
+        if (expiryDate.Date != givenDate.Date)
         {
             _logger.LogInformation("Invalid expiry date for code: {expiryDate}", expiryDate);
             return false;
