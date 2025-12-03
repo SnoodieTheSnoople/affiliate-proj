@@ -104,6 +104,35 @@ namespace affiliate_proj.API.Webhooks.Shopify
         [HttpPost("orders/cancelled")]
         public async Task<IActionResult> CancelOrderAsync()
         {
+            try
+            {
+                Request.EnableBuffering();
+                
+                using var reader = new StreamReader(Request.Body, leaveOpen: true);
+                var body = await reader.ReadToEndAsync();
+                
+                Request.Body.Position = 0;
+                
+                var isValid = await _shopifyRequestValidationUtility.IsAuthenticWebhookAsync(Request.Headers, Request.Body,
+                    _configuration.GetValue<string>("Shopify:ApiSecret"));
+
+                if (!isValid)
+                    return BadRequest();
+                
+                var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
+                
+                var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
+                    Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
+                
+                Console.WriteLine(pretty);
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
             throw new NotImplementedException();
         }
 
