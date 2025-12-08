@@ -2,7 +2,7 @@ namespace affiliate_proj.Core.Entities;
 
 public class Conversion
 {
-    public string ConversionId { get; set; }
+    public Guid ConversionId { get; set; }
     public string StoreId  { get; set; }
     public string Link  { get; set; }
     public int Clicks { get; set; }
