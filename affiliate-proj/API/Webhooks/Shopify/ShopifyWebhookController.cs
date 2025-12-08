@@ -84,11 +84,16 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     return BadRequest();
                 
                 var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
+                Console.WriteLine($"Order Created:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                                  $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
+                                  $"{order.LandingSite}, {order.ReferringSite}\n" +
+                                  $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
+                                  $"{order.CurrentSubtotalPrice}");
                 
                 var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
                     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
                 
-                Console.WriteLine(pretty);
+                // Console.WriteLine(pretty);
                 
                 return Ok();
             }
@@ -156,10 +161,16 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 
                 var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
                 
+                Console.WriteLine($"Order Paid:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                                  $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
+                                  $"{order.LandingSite}, {order.ReferringSite}\n" +
+                                  $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
+                                  $"{order.CurrentSubtotalPrice}");
+                
                 var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
                     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
                 
-                Console.WriteLine(pretty);
+                // Console.WriteLine(pretty);
                 
                 return Ok();
             }
