@@ -2,5 +2,6 @@
 
 public interface IConversionService
 {
-    
+    Task SetConversionAsync(string webhookId, string shopifyOrderId, string code, string landingSite, 
+        string referralSite, string currency, string orderStatus, int orderCost);
 }
