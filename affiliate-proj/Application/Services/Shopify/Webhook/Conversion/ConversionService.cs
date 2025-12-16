@@ -30,18 +30,20 @@ public class ConversionService : IConversionService
         // TODO: Find out LandingSiteRef (referring_site) output
 
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
+        var clicks = 0;
 
         if (!String.IsNullOrEmpty(landingSite))
         {
             // Query DB and get AffiliateLink details
             var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
+            clicks = affiliateLink.Clicks;
         }
         
         var newConversion = new Core.Entities.Conversion
         {
             StoreId = store.StoreId,
             Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
-            // If link is available then retrieve clicks
+            Clicks =  clicks,
             Code = String.IsNullOrEmpty(code) ? "" : code,
             ShopifyOrderId = shopifyOrderId,
             OrderCost = orderCost,
@@ -52,6 +54,10 @@ public class ConversionService : IConversionService
             LandingSiteRef = String.IsNullOrEmpty(referralSite) ? "" : referralSite,
             Note = code,
         };
+        
+        // Make call to repository
+        
+        // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
         throw new NotImplementedException();
     }
 }
