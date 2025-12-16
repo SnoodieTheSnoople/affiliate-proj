@@ -100,6 +100,11 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         return ConvertEntityToDto(entity);
     }
 
+    public async Task<AffiliateLinkDTO?> GetAffiliateLinkByLinkAsync(string link)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
     {
         var existingEntity = await _dbContext.AffiliateLinks.FindAsync(affiliateLinkDto.LinkId);

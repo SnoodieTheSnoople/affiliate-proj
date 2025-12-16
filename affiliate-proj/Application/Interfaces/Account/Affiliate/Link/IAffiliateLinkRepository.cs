@@ -9,6 +9,7 @@ public interface IAffiliateLinkRepository
     Task<List<AffiliateLinkDTO>> GetAffiliateLinksByCreatorIdAsync(Guid id);
     Task<List<AffiliateLinkDTO>> GetAffiliateLinksByStoreIdAsync(Guid id);
     Task<AffiliateLinkDTO?> GetAffiliateLinkByIdAsync(Guid linkId);
+    Task<AffiliateLinkDTO?> GetAffiliateLinkByLinkAsync(string link);
     Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto);
     Task<AffiliateLinkDTO> UpdateAffiliateLinkActiveStatusAsync(Guid linkId, bool isActive);
     Task<bool> DeleteAffiliateLinkAsync(Guid linkId);
