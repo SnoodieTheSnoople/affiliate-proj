@@ -106,6 +106,11 @@ public class AffiliateLinkService : IAffiliateLinkService
         return await _affiliateLinkRepository.GetAffiliateLinkByIdAsync(affiliateLinkId);
     }
 
+    public async Task<AffiliateLinkDTO?> GetAffiliateLinkByLinkAsync(string link)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
     {
         // Validate LinkId exists.
