@@ -105,8 +105,12 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
         if (String.IsNullOrEmpty(link))
             throw new ArgumentException("Link cannot be empty.", nameof(link));
         
+        var entity = await _dbContext.AffiliateLinks.FirstOrDefaultAsync(x => x.Link == link);
+
+        if (entity == null)
+            return null;
         
-        throw new NotImplementedException();
+        return ConvertEntityToDto(entity);
     }
 
     public async Task<AffiliateLinkDTO> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
