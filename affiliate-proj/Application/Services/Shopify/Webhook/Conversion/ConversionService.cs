@@ -8,6 +8,10 @@ public class ConversionService : IConversionService
         string landingSite,
         string referralSite, string currency, string orderStatus, int orderCost)
     {
+        // Query DB to find StoreId using StoreUrl
+        // Check if Link, Code, LandingSite, LandingSiteRef are null.
+        // TODO: Current assumption. CODE IS NOTE
+        
         var newConversion = new Core.Entities.Conversion
         {
             // Find StoreId
