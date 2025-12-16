@@ -1,4 +1,6 @@
-﻿using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
+﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Store;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
@@ -7,11 +9,15 @@ public class ConversionService : IConversionService
 {
     private readonly IShopifyStoreHelper _shopifyStoreHelper;
     private readonly ILogger<ConversionService> _logger;
+    private readonly IAffiliateLinkService _affiliateLinkService;
+    private readonly IAffiliateCodeService _affiliateCodeService;
 
-    public ConversionService(IShopifyStoreHelper shopifyStoreHelper, ILogger<ConversionService> logger)
+    public ConversionService(IShopifyStoreHelper shopifyStoreHelper, ILogger<ConversionService> logger, IAffiliateLinkService affiliateLinkService, IAffiliateCodeService affiliateCodeService)
     {
         _shopifyStoreHelper = shopifyStoreHelper;
         _logger = logger;
+        _affiliateLinkService = affiliateLinkService;
+        _affiliateCodeService = affiliateCodeService;
     }
 
     public async Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
