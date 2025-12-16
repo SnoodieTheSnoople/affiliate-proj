@@ -114,7 +114,7 @@ public class AffiliateLinkService : IAffiliateLinkService
             throw new Exception("Link cannot be empty.");
         }
         
-        throw new NotImplementedException();
+        return await _affiliateLinkRepository.GetAffiliateLinkByLinkAsync(link);
     }
 
     public async Task<AffiliateLinkDTO?> UpdateAffiliateLinkAsync(AffiliateLinkDTO affiliateLinkDto)
