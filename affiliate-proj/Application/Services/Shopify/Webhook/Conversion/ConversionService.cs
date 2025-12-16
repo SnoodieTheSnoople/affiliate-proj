@@ -21,6 +21,8 @@ public class ConversionService : IConversionService
         // Query DB to find StoreId using StoreUrl
         // Check if Link, Code, LandingSite, LandingSiteRef are null.
         // TODO: Current assumption. CODE IS NOTE
+
+        var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         
         var newConversion = new Core.Entities.Conversion
         {
