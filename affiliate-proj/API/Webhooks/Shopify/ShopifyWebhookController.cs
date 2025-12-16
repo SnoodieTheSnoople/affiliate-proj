@@ -181,7 +181,21 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 
                 // Console.WriteLine(pretty);
                 
-                return Ok();
+                string domain = Request.Headers["X-Shopify-Shop-Domain"].ToString();
+                var orderId = (long) order.Id;
+                var orderNum = (int) order.OrderNumber;
+                var note = order.Note;
+                var landingSite = order.LandingSite;
+                var referralSite = order.ReferringSite;
+                var currency = order.Currency;
+                var financialStatus = order.FinancialStatus;
+                var price = (decimal) order.CurrentSubtotalPrice;
+                
+                await _conversionService.SetConversionAsync(domain, shopifyWebhookId: orderId, shopifyOrderId: orderNum,
+                    code: note, landingSite: landingSite, referralSite: referralSite, currency: currency,
+                    orderStatus: financialStatus, orderCost: price);
+
+                    return Ok();
             }
             catch (Exception e)
             {
