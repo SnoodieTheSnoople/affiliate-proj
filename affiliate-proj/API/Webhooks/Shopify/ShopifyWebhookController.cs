@@ -1,6 +1,7 @@
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using ShopifySharp;
 using ShopifySharp.Utilities;
 
@@ -160,8 +161,14 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     return BadRequest();
                 
                 var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
+
+                // foreach (var headers in Request.Headers)
+                // {
+                //     Console.WriteLine($"{headers.Key}: {headers.Value}");
+                // }
                 
-                Console.WriteLine($"Order Paid:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()}\n" +
+                                  $"Order Paid:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
                                   $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
                                   $"{order.LandingSite}, {order.ReferringSite}\n" +
                                   $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
