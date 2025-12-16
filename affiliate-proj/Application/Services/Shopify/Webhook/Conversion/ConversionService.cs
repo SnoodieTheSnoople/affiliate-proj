@@ -14,20 +14,25 @@ public class ConversionService : IConversionService
         _logger = logger;
     }
 
-    public async Task SetConversionAsync(string domain, string shopifyWebhookId, string shopifyOrderId, string code,
+    public async Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
         string landingSite,
-        string referralSite, string currency, string orderStatus, int orderCost)
+        string referralSite, string currency, string orderStatus, decimal orderCost)
     {
         // Query DB to find StoreId using StoreUrl
         // Check if Link, Code, LandingSite, LandingSiteRef are null.
         // TODO: Current assumption. CODE IS NOTE
+        // TODO: Find out LandingSiteRef (referring_site) output
 
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
+
+        if (!String.IsNullOrEmpty(landingSite))
+        {
+            // Query DB and get AffiliateLink details
+        }
         
         var newConversion = new Core.Entities.Conversion
         {
             StoreId = store.StoreId,
-            // Use Store Link?
             Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             // If link is available then retrieve clicks
             Code = String.IsNullOrEmpty(code) ? "" : code,
