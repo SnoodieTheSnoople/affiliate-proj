@@ -108,6 +108,12 @@ public class AffiliateLinkService : IAffiliateLinkService
 
     public async Task<AffiliateLinkDTO?> GetAffiliateLinkByLinkAsync(string link)
     {
+        if (String.IsNullOrEmpty(link))
+        {
+            _logger.LogError("Invalid Link: {link}", link);
+            throw new Exception("Link cannot be empty.");
+        }
+        
         throw new NotImplementedException();
     }
 
