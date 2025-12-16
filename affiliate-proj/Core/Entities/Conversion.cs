@@ -7,8 +7,8 @@ public class Conversion
     public string Link  { get; set; }
     public int Clicks { get; set; }
     public string Code  { get; set; }
-    public string ShopifyOrderId { get; set; }
-    public float OrderCost  { get; set; }
+    public long ShopifyOrderId { get; set; }
+    public decimal OrderCost  { get; set; }
     public string Currency { get; set; }
     public string OrderStatus { get; set; }
     public DateTime OrderCreated  { get; set; }
