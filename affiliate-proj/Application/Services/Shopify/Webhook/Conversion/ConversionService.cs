@@ -10,6 +10,7 @@ public class ConversionService : IConversionService
         var newConversion = new Core.Entities.Conversion
         {
             // Find StoreId
+            // Use Store Link?
             Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             // If link is available then retrieve clicks
             Code = String.IsNullOrEmpty(code) ? "" : code,
