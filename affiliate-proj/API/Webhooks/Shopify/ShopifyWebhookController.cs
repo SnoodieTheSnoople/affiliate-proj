@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
@@ -15,17 +16,19 @@ namespace affiliate_proj.API.Webhooks.Shopify
         private readonly IConfiguration _configuration;
         private readonly IShopifyStoreHelper _shopifyStoreHelper;
         private readonly IStoreService _storeService;
+        private readonly IConversionService _conversionService;
 
         public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, 
             IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
             IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, 
-            IStoreService storeService)
+            IStoreService storeService, IConversionService conversionService)
         {
             _shopifyWebhookService = shopifyWebhookService;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
             _configuration = configuration;
             _shopifyStoreHelper = shopifyStoreHelper;
             _storeService = storeService;
+            _conversionService = conversionService;
         }
         
         [HttpPost("app/uninstalled")]
