@@ -102,6 +102,10 @@ public class AffiliateLinkRepository : IAffiliateLinkRepository
 
     public async Task<AffiliateLinkDTO?> GetAffiliateLinkByLinkAsync(string link)
     {
+        if (String.IsNullOrEmpty(link))
+            throw new ArgumentException("Link cannot be empty.", nameof(link));
+        
+        
         throw new NotImplementedException();
     }
 
