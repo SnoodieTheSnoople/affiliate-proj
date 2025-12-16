@@ -1,7 +1,6 @@
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
 using ShopifySharp;
 using ShopifySharp.Utilities;
 
