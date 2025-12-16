@@ -11,6 +11,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Data;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Account;
@@ -23,6 +24,7 @@ using affiliate_proj.Application.Services.Shopify.Data;
 using affiliate_proj.Application.Services.Shopify.Data.Factories;
 using affiliate_proj.Application.Services.Shopify.Data.Product;
 using affiliate_proj.Application.Services.Shopify.Webhook;
+using affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Services.Store;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -118,6 +120,8 @@ public class Program
         /* Webhook Service */
         builder.Services.AddScoped<IShopifyWebhookService, ShopifyWebhookService>();
         builder.Services.AddScoped<IShopifyWebhookRepository, ShopifyWebhookRepository>();
+
+        builder.Services.AddScoped<IConversionService, ConversionService>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
