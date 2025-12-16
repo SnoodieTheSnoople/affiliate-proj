@@ -4,7 +4,8 @@ namespace affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
 
 public class ConversionService : IConversionService
 {
-    public async Task SetConversionAsync(string shopifyWebhookId, string shopifyOrderId, string code, string landingSite, 
+    public async Task SetConversionAsync(string domain, string shopifyWebhookId, string shopifyOrderId, string code,
+        string landingSite,
         string referralSite, string currency, string orderStatus, int orderCost)
     {
         var newConversion = new Core.Entities.Conversion
