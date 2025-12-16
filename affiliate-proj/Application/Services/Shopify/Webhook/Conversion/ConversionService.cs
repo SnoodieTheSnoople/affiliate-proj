@@ -34,6 +34,7 @@ public class ConversionService : IConversionService
         if (!String.IsNullOrEmpty(landingSite))
         {
             // Query DB and get AffiliateLink details
+            var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
         }
         
         var newConversion = new Core.Entities.Conversion
