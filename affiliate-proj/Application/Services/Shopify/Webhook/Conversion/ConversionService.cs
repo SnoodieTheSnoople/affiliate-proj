@@ -31,6 +31,7 @@ public class ConversionService : IConversionService
 
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         var clicks = 0;
+        var orderCreated = DateTime.UtcNow;
 
         if (!String.IsNullOrEmpty(landingSite))
         {
@@ -49,7 +50,7 @@ public class ConversionService : IConversionService
             OrderCost = orderCost,
             Currency = currency,
             OrderStatus = orderStatus,
-            OrderCreated = DateTime.UtcNow,
+            OrderCreated = orderCreated,
             LandingSite = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             LandingSiteRef = String.IsNullOrEmpty(referralSite) ? "" : referralSite,
             Note = code,
