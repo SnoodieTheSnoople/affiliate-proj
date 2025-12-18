@@ -2,5 +2,5 @@
 
 public interface IConversionRepository
 {
-    
+    Task SetConversionAsync();
 }
