@@ -11,13 +11,15 @@ public class ConversionService : IConversionService
     private readonly ILogger<ConversionService> _logger;
     private readonly IAffiliateLinkService _affiliateLinkService;
     private readonly IAffiliateCodeService _affiliateCodeService;
+    private readonly IConversionRepository _conversionRepository;
 
-    public ConversionService(IShopifyStoreHelper shopifyStoreHelper, ILogger<ConversionService> logger, IAffiliateLinkService affiliateLinkService, IAffiliateCodeService affiliateCodeService)
+    public ConversionService(IShopifyStoreHelper shopifyStoreHelper, ILogger<ConversionService> logger, IAffiliateLinkService affiliateLinkService, IAffiliateCodeService affiliateCodeService, IConversionRepository conversionRepository)
     {
         _shopifyStoreHelper = shopifyStoreHelper;
         _logger = logger;
         _affiliateLinkService = affiliateLinkService;
         _affiliateCodeService = affiliateCodeService;
+        _conversionRepository = conversionRepository;
     }
 
     public async Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
