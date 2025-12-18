@@ -2,6 +2,7 @@
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Store;
+using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
 
@@ -42,7 +43,7 @@ public class ConversionService : IConversionService
             clicks = affiliateLink.Clicks;
         }
         
-        var newConversion = new Core.Entities.Conversion
+        var newConversion = new CreateConversion()
         {
             StoreId = store.StoreId,
             Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
@@ -59,6 +60,7 @@ public class ConversionService : IConversionService
         };
         
         // Make call to repository
+        await _conversionRepository.SetConversionAsync(newConversion);
         
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
         throw new NotImplementedException();
