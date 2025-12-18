@@ -123,7 +123,7 @@ public class PostgresDbContext : DbContext
         modelBuilder.Entity<AffiliateLink>(builder =>
         {
             builder.ToTable("affiliate_links");
-            builder.Property(link => link.LinkId).HasColumnName("link_id");
+            builder.Property(link => link.LinkId).HasColumnName("link_id").ValueGeneratedOnAdd();
             builder.Property(link => link.CreatorId).HasColumnName("creator_id");
             builder.Property(link => link.StoreId).HasColumnName("store_id");
             builder.Property(link => link.Link).HasColumnName("affiliate_link");
@@ -137,7 +137,7 @@ public class PostgresDbContext : DbContext
         modelBuilder.Entity<AffiliateCode>(builder =>
         {
             builder.ToTable("affiliate_codes");
-            builder.Property(code => code.CodeId).HasColumnName("code_id");
+            builder.Property(code => code.CodeId).HasColumnName("code_id").ValueGeneratedOnAdd();
             builder.Property(code => code.CreatorId).HasColumnName("creator_id");
             builder.Property(code => code.StoreId).HasColumnName("store_id");
             builder.Property(code => code.Code).HasColumnName("affiliate_code");
@@ -146,6 +146,25 @@ public class PostgresDbContext : DbContext
             builder.Property(code => code.ExpiryDate).HasColumnName("expiry_date");
             builder.Property(code => code.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
             builder.Property(code => code.ProductLink).HasColumnName("product_link");
+        });
+
+        modelBuilder.Entity<Conversion>(builder =>
+        {
+            builder.ToTable("conversions");
+            builder.Property(conversion => conversion.ConversionId).HasColumnName("conversion_id").ValueGeneratedOnAdd();
+            builder.Property(conversion => conversion.StoreId).HasColumnName("store_id");
+            builder.Property(conversion => conversion.Link).HasColumnName("affiliate_link");
+            builder.Property(conversion => conversion.Clicks).HasColumnName("clicks");
+            builder.Property(conversion => conversion.Code).HasColumnName("affiliate_code");
+            builder.Property(conversion => conversion.ShopifyOrderId).HasColumnName("shopify_order_id");
+            builder.Property(conversion => conversion.OrderCost).HasColumnName("order_cost");
+            builder.Property(conversion => conversion.Currency).HasColumnName("currency");
+            builder.Property(conversion => conversion.OrderStatus).HasColumnName("order_status");
+            builder.Property(conversion => conversion.OrderCreated).HasColumnName("order_created");
+            builder.Property(conversion => conversion.LandingSite).HasColumnName("landing_site");
+            builder.Property(conversion => conversion.LandingSiteRef).HasColumnName("landing_site_ref");
+            builder.Property(conversion => conversion.Note).HasColumnName("note");
+            builder.Property(conversion => conversion.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
         });
     }
 
