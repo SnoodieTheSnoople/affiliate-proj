@@ -44,7 +44,7 @@ public class ConversionService : IConversionService
             StoreId = store.StoreId,
             Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             Clicks =  clicks,
-            Code = String.IsNullOrEmpty(code) ? "" : code,
+            Code = String.IsNullOrEmpty(code) ? "" : code.Trim(),
             ShopifyOrderId = shopifyOrderId,
             OrderCost = orderCost,
             Currency = currency,
