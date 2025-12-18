@@ -122,6 +122,7 @@ public class Program
         builder.Services.AddScoped<IShopifyWebhookRepository, ShopifyWebhookRepository>();
 
         builder.Services.AddScoped<IConversionService, ConversionService>();
+        builder.Services.AddScoped<IConversionRepository, ConversionRepository>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
