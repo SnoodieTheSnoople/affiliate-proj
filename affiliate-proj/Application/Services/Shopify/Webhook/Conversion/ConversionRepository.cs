@@ -7,6 +7,8 @@ public class ConversionRepository : IConversionRepository
 {
     public async Task SetConversionAsync(CreateConversion createConversion)
     {
+        var entity = ConvertDtoToEntity(createConversion);
+        
         throw new NotImplementedException();
     }
 
