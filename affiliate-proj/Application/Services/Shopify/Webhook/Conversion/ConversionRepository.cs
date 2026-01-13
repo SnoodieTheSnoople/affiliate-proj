@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
 
@@ -17,6 +18,14 @@ public class ConversionRepository : IConversionRepository
     {
         var entity = ConvertDtoToEntity(createConversion);
         
+        var checkExists = await _dbContext.Conversions.FirstOrDefaultAsync(x => 
+            x.ShopifyOrderId == entity.ShopifyOrderId && x.StoreId == entity.StoreId);
+        
+        if (checkExists != null)
+        {
+            return;
+        }
+
         throw new NotImplementedException();
     }
 
