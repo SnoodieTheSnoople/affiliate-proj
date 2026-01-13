@@ -9,4 +9,23 @@ public class ConversionRepository : IConversionRepository
     {
         throw new NotImplementedException();
     }
+
+    private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
+    {
+        return new Core.Entities.Conversion
+        {
+            StoreId = createConversion.StoreId,
+            Link = createConversion.Link,
+            Clicks = createConversion.Clicks,
+            Code = createConversion.Code,
+            ShopifyOrderId = createConversion.ShopifyOrderId,
+            OrderCost = createConversion.OrderCost,
+            Currency = createConversion.Currency,
+            OrderStatus = createConversion.OrderStatus,
+            OrderCreated = createConversion.OrderCreated,
+            LandingSite = createConversion.LandingSite,
+            LandingSiteRef = createConversion.LandingSiteRef,
+            Note = createConversion.Note,
+        };
+    }
 }
