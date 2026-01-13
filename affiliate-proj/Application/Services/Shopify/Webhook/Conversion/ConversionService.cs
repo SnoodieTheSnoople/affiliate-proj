@@ -34,8 +34,6 @@ public class ConversionService : IConversionService
 
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         var clicks = 0;
-        // var orderCreated = DateTime.UtcNow;
-        var orderCreated = shopifyOrderCreated;
 
         if (!String.IsNullOrEmpty(landingSite))
         {
@@ -54,7 +52,7 @@ public class ConversionService : IConversionService
             OrderCost = orderCost,
             Currency = currency,
             OrderStatus = orderStatus,
-            OrderCreated = orderCreated, // TODO: Check if Webhook send order creation time
+            OrderCreated = shopifyOrderCreated, // TODO: Check if Webhook send order creation time
             LandingSite = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             LandingSiteRef = String.IsNullOrEmpty(referralSite) ? "" : referralSite,
             Note = code,
