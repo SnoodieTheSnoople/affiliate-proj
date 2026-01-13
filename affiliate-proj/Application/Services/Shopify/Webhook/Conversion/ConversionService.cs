@@ -63,6 +63,5 @@ public class ConversionService : IConversionService
         await _conversionRepository.SetConversionAsync(newConversion);
         
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
-        throw new NotImplementedException();
     }
 }
