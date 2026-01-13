@@ -34,7 +34,8 @@ public class ConversionService : IConversionService
 
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         var clicks = 0;
-        var orderCreated = DateTime.UtcNow;
+        // var orderCreated = DateTime.UtcNow;
+        var orderCreated = shopifyOrderCreated;
 
         if (!String.IsNullOrEmpty(landingSite))
         {
