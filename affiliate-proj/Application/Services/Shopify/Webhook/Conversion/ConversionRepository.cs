@@ -25,8 +25,9 @@ public class ConversionRepository : IConversionRepository
         {
             return;
         }
-
-        throw new NotImplementedException();
+        
+        await _dbContext.Conversions.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
     }
 
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
