@@ -169,7 +169,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 //     Console.WriteLine($"{headers.Key}: {headers.Value}");
                 // }
                 
-                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()}\n" +
+                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()} | {order.CreatedAt}\n" +
                                   $"Order Paid:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
                                   $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
                                   $"{order.LandingSite}, {order.ReferringSite}\n" +
@@ -202,8 +202,6 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            
-            throw new NotImplementedException();
         }
 
         [HttpPost("orders/fulfilled")]
