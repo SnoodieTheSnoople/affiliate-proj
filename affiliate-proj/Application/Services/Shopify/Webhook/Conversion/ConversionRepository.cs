@@ -30,6 +30,26 @@ public class ConversionRepository : IConversionRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ConversionDTO>> GetConversionsByStoreIdAsync(Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ConversionDTO>> GetConversionsByCodeAsync(string code)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ConversionDTO>> GetConversionsByLandingSiteAsync(string landingSite)
+    {
+        throw new NotImplementedException();
+    }
+
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
     {
         return new Core.Entities.Conversion
