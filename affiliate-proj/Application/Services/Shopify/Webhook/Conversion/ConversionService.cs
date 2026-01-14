@@ -41,6 +41,11 @@ public class ConversionService : IConversionService
             var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
             clicks = affiliateLink.Clicks;
         }
+
+        if (!String.IsNullOrEmpty(code))
+        {
+            // Query DB and get AffiliateCode details
+        }
         
         var newConversion = new CreateConversion()
         {
