@@ -72,6 +72,11 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.GetAffiliateCodesByStoreIdAsync(storeId);
     }
 
+    public async Task<AffiliateCodeDTO> GetAffiliateCodeByCodeAsync(string code)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
     {
         // Validate input data
