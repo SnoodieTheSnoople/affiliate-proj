@@ -150,7 +150,6 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            throw new NotImplementedException();
             // TODO: Change order_status to "cancelled" in Conversion table based on shopify_order_id
         }
 
