@@ -72,12 +72,12 @@ public class AffiliateCodeService : IAffiliateCodeService
         return await _affiliateCodeRepository.GetAffiliateCodesByStoreIdAsync(storeId);
     }
 
-    public async Task<AffiliateCodeDTO> GetAffiliateCodeByCodeAsync(string code)
+    public async Task<AffiliateCodeDTO?> GetAffiliateCodeByCodeAsync(string code)
     {
         if (String.IsNullOrEmpty(code))
             throw new ArgumentException("Code cannot be null or empty", nameof(code));
-        
-        throw new NotImplementedException();
+
+        return await _affiliateCodeRepository.GetAffiliateCodeAsync(code);
     }
 
     public async Task<AffiliateCodeDTO> UpdateAffiliateCodeAsync(AffiliateCodeDTO affiliateCodeDto)
