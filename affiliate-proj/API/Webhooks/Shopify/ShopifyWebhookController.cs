@@ -71,6 +71,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
         [HttpPost("orders/create")]
         public async Task<IActionResult> CreateOrderAsync()
         {
+            // May not be used and may be removed later
             try
             {
                 Request.EnableBuffering();
@@ -87,14 +88,17 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     return BadRequest();
                 
                 var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
-                Console.WriteLine($"Order Created:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()} | {order.CreatedAt}\n" +
+                                  $"Order Created:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
                                   $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
-                                  $"{order.LandingSite}, {order.ReferringSite}\n" +
-                                  $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
+                                  $"{order.LandingSite} / {String.IsNullOrEmpty(order.LandingSite)}, " +
+                                  $"{order.ReferringSite} / {String.IsNullOrEmpty(order.ReferringSite)}\n" +
+                                  $"Attributes: {order.Currency}, {order.FinancialStatus} / {String.IsNullOrEmpty(order.FinancialStatus)}, " +
+                                  $"{order.FulfillmentStatus}, " +
                                   $"{order.CurrentSubtotalPrice}");
                 
-                var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
-                    Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
+                // var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
+                //     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
                 
                 // Console.WriteLine(pretty);
                 
@@ -105,8 +109,6 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 Console.WriteLine(e);
                 return BadRequest(e.Message);
             }
-            
-            throw new NotImplementedException();
         }
 
         [HttpPost("orders/cancelled")]
