@@ -45,6 +45,11 @@ public class ConversionService : IConversionService
         if (!String.IsNullOrEmpty(code))
         {
             // Query DB and get AffiliateCode details
+            var affiliateCode = await _affiliateCodeService.GetAffiliateCodeByCodeAsync(code);
+
+            // If no affiliate code found, early return and do not add record
+            if (affiliateCode == null)
+                return;
         }
         
         var newConversion = new CreateConversion()
