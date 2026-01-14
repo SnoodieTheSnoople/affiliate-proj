@@ -131,10 +131,17 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 
                 var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
                 
-                var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
-                    Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
+                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()} | {order.CreatedAt}\n" +
+                                  $"Order Cancelled:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                                  $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
+                                  $"{order.LandingSite}, {order.ReferringSite}\n" +
+                                  $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
+                                  $"{order.CurrentSubtotalPrice}");
                 
-                Console.WriteLine(pretty);
+                // var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
+                //     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
+                //
+                // Console.WriteLine(pretty);
                 
                 return Ok();
             }
