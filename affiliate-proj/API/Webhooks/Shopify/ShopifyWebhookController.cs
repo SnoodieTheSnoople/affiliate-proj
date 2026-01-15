@@ -218,7 +218,41 @@ namespace affiliate_proj.API.Webhooks.Shopify
         [HttpPost("orders/fulfilled")]
         public async Task<IActionResult> FulfilledOrderAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                Request.EnableBuffering();
+                
+                using var reader = new StreamReader(Request.Body, leaveOpen: true);
+                var body = await reader.ReadToEndAsync();
+                
+                Request.Body.Position = 0;
+                
+                var isValid = await _shopifyRequestValidationUtility.IsAuthenticWebhookAsync(Request.Headers, Request.Body,
+                    _configuration.GetValue<string>("Shopify:ApiSecret"));
+
+                if (!isValid)
+                    return BadRequest();
+                
+                var order = Newtonsoft.Json.JsonConvert.DeserializeObject<Order>(body);
+                
+                Console.WriteLine($"Store: {Request.Headers["X-Shopify-Shop-Domain"].ToString()} | {order.CreatedAt}\n" +
+                                  $"Order Fulfilled:\nID: {order.Id} | Order Number: {order.OrderNumber}\n" +
+                                  $"Referral: {order.Note}, {order.NoteAttributes.Count()}, " +
+                                  $"{order.LandingSite}, {order.ReferringSite}\n" +
+                                  $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
+                                  $"{order.CurrentSubtotalPrice}");
+                
+                // Search by Domain, ShopifyOrderId
+                // Update financialStatus 
+                // Can reuse Cancellation method. Separate concerns
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
+            }
         }
         
         /* \\\\\\\\\\\\\\\ BELOW IS PREDOMINANTLY USED FOR DEV AND NOT INTENDED FOR PROD /////////////// */
