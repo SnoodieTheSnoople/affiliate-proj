@@ -246,7 +246,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 // Update financialStatus 
                 // Can reuse Cancellation method. Separate concerns
                 
-                await _conversionService.UpdateConversionFulfilleddAsync(
+                await _conversionService.UpdateConversionFulfilledAsync(
                     Request.Headers["X-Shopify-Shop-Domain"].ToString(), (int) order.OrderNumber, 
                     order.FinancialStatus);
                 

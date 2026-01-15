@@ -96,7 +96,7 @@ public class ConversionService : IConversionService
         await _conversionRepository.UpdateConversionCancelledAsync(store.StoreId, shopifyOrderId, orderStatus);
     }
 
-    public async Task UpdateConversionFulfilleddAsync(string domain, int shopifyOrderId, string orderStatus)
+    public async Task UpdateConversionFulfilledAsync(string domain, int shopifyOrderId, string orderStatus)
     {
         throw new NotImplementedException();
     }
