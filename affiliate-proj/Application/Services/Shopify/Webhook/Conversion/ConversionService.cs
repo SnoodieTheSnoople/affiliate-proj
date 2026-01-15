@@ -76,6 +76,18 @@ public class ConversionService : IConversionService
 
     public async Task UpdateConversionCancelledAsync(string domain, int shopifyOrderId, string orderStatus)
     {
+        if (String.IsNullOrEmpty(domain))
+        {
+            _logger.LogWarning("Domain is null or empty in UpdateConversionCancelledAsync");
+            return;
+        }
+
+        if (String.IsNullOrEmpty(orderStatus))
+        {
+            _logger.LogWarning("OrderStatus is null or empty in UpdateConversionCancelledAsync");
+            return;
+        }
+        
         throw new NotImplementedException();
     }
 }
