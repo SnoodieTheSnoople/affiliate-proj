@@ -74,6 +74,9 @@ public class ConversionService : IConversionService
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
     }
 
+    /*
+     * "Cancelled" order status refers to "refunded" orders in Shopify if payment has been made.
+     */
     public async Task UpdateConversionCancelledAsync(string domain, int shopifyOrderId, string orderStatus)
     {
         if (String.IsNullOrEmpty(domain))
@@ -91,5 +94,10 @@ public class ConversionService : IConversionService
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         
         await _conversionRepository.UpdateConversionCancelledAsync(store.StoreId, shopifyOrderId, orderStatus);
+    }
+
+    public async Task UpdateConversionFulfilleddAsync(string domain, int shopifyOrderId, string orderStatus)
+    {
+        throw new NotImplementedException();
     }
 }
