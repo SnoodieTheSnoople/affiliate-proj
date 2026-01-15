@@ -88,6 +88,8 @@ public class ConversionService : IConversionService
             return;
         }
         
+        var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
+        
         throw new NotImplementedException();
     }
 }
