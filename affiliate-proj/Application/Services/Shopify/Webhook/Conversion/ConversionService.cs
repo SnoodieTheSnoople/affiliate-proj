@@ -73,4 +73,9 @@ public class ConversionService : IConversionService
         
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
     }
+
+    public async Task UpdateConversionCancelledAsync(string domain, int shopifyOrderId, string orderStatus)
+    {
+        throw new NotImplementedException();
+    }
 }
