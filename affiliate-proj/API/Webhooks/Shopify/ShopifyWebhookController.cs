@@ -157,6 +157,10 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 // Search by Domain, ShopifyOrderId
                 // Update financialStatus 
                 
+                await _conversionService.UpdateConversionCancelledAsync(
+                    Request.Headers["X-Shopify-Shop-Domain"].ToString(), (int) order.OrderNumber
+                    , order.FinancialStatus);
+                
                 return Ok();
             }
             catch (Exception e)
