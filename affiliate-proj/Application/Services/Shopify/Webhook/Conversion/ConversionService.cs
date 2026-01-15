@@ -62,7 +62,7 @@ public class ConversionService : IConversionService
             OrderCost = orderCost,
             Currency = currency,
             OrderStatus = orderStatus,
-            OrderCreated = shopifyOrderCreated, // TODO: Check if Webhook send order creation time
+            OrderCreated = shopifyOrderCreated,
             LandingSite = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
             LandingSiteRef = String.IsNullOrEmpty(referralSite) ? "" : referralSite,
             Note = code,
