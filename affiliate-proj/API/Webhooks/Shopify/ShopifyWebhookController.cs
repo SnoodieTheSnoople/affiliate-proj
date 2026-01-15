@@ -138,22 +138,6 @@ namespace affiliate_proj.API.Webhooks.Shopify
                                   $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
                                   $"{order.CurrentSubtotalPrice}");
                 
-                // var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
-                //     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
-                //
-                // Console.WriteLine(pretty);
-                
-                // string domain = Request.Headers["X-Shopify-Shop-Domain"].ToString();
-                // var orderId = (long) order.Id;
-                // var orderNum = (int) order.OrderNumber;
-                // var note = order.Note;
-                // var landingSite = order.LandingSite;
-                // var referralSite = order.ReferringSite;
-                // var currency = order.Currency;
-                // var financialStatus = order.FinancialStatus;
-                // var price = (decimal) order.CurrentSubtotalPrice;
-                // var orderCreatedAt = order.CreatedAt.Value;
-                
                 // Search by Domain, ShopifyOrderId
                 // Update financialStatus 
                 
