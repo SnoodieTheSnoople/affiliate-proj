@@ -90,6 +90,8 @@ public class ConversionService : IConversionService
         
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         
-        throw new NotImplementedException();
+        await _conversionRepository.UpdateConversionCancelledAsync(store.StoreId, shopifyOrderId, orderStatus);
+        
+        // throw new NotImplementedException();
     }
 }
