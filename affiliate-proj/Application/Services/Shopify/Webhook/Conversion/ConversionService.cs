@@ -91,7 +91,5 @@ public class ConversionService : IConversionService
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         
         await _conversionRepository.UpdateConversionCancelledAsync(store.StoreId, shopifyOrderId, orderStatus);
-        
-        // throw new NotImplementedException();
     }
 }
