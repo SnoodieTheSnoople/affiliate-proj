@@ -50,6 +50,11 @@ public class ConversionRepository : IConversionRepository
         throw new NotImplementedException();
     }
 
+    public async Task UpdateConversionCancelledAsync(string storeId, int shopifyOrderId, string orderStatus)
+    {
+        throw new NotImplementedException();
+    }
+
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
     {
         return new Core.Entities.Conversion
