@@ -50,7 +50,7 @@ public class ConversionRepository : IConversionRepository
         throw new NotImplementedException();
     }
 
-    public async Task UpdateConversionCancelledAsync(string storeId, int shopifyOrderId, string orderStatus)
+    public async Task UpdateConversionCancelledAsync(Guid storeId, int shopifyOrderId, string orderStatus)
     {
         throw new NotImplementedException();
     }

@@ -9,5 +9,5 @@ public interface IConversionRepository
     Task<List<ConversionDTO>> GetConversionsByStoreIdAsync(Guid storeId);
     Task<List<ConversionDTO>> GetConversionsByCodeAsync(string code);
     Task<List<ConversionDTO>> GetConversionsByLandingSiteAsync(string landingSite);
-    Task UpdateConversionCancelledAsync(string storeId, int shopifyOrderId, string orderStatus);
+    Task UpdateConversionCancelledAsync(Guid storeId, int shopifyOrderId, string orderStatus);
 }
