@@ -112,5 +112,7 @@ public class ConversionService : IConversionService
         }
         
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
+        
+        await _conversionRepository.UpdateConversionFulfilledAsync(store.StoreId, shopifyOrderId, orderStatus);
     }
 }
