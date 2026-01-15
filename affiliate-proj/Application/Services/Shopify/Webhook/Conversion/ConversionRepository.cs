@@ -64,6 +64,11 @@ public class ConversionRepository : IConversionRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public async Task UpdateConversionFulfilledAsync(Guid storeId, int shopifyOrderId, string orderStatus)
+    {
+        throw new NotImplementedException();
+    }
+
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
     {
         return new Core.Entities.Conversion
