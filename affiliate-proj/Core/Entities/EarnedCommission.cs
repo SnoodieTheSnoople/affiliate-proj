@@ -2,10 +2,10 @@ namespace affiliate_proj.Core.Entities;
 
 public class EarnedCommission
 {
-    public string CommissionId { get; set; }
-    public string CreatorId  { get; set; }
-    public string StoreId { get; set; }
-    public string ConversionId  { get; set; }
-    public float OrderCost   { get; set; }
-    public float AmtEarned  { get; set; }
+    public Guid CommissionId { get; set; }
+    public Guid CreatorId  { get; set; }
+    public Guid StoreId { get; set; }
+    public Guid ConversionId  { get; set; }
+    public decimal OrderCost   { get; set; }
+    public decimal AmtEarned  { get; set; }
 }
