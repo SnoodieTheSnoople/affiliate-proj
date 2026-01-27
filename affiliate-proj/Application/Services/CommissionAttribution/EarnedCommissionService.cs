@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
+using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
@@ -21,13 +22,17 @@ public class EarnedCommissionService : IEarnedCommissionService
     private readonly ICreatorService _creatorService;
     private readonly IAffiliateCodeService _affiliateCodeService;
     private readonly IAffiliateLinkService _affiliateLinkService;
+    private readonly ICommissionRatesService _commissionRatesService;
 
-    public EarnedCommissionService(IConversionService conversionService, ICreatorService creatorService, IAffiliateCodeService affiliateCodeService, IAffiliateLinkService affiliateLinkService)
+    public EarnedCommissionService(IConversionService conversionService, ICreatorService creatorService, 
+        IAffiliateCodeService affiliateCodeService, IAffiliateLinkService affiliateLinkService, 
+        ICommissionRatesService commissionRatesService)
     {
         _conversionService = conversionService;
         _creatorService = creatorService;
         _affiliateCodeService = affiliateCodeService;
         _affiliateLinkService = affiliateLinkService;
+        _commissionRatesService = commissionRatesService;
     }
 
     public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
