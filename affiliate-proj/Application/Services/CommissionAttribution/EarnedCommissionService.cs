@@ -1,4 +1,5 @@
 ﻿using affiliate_proj.Application.Interfaces.CommissionAttribution;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.CommissionAttribution;
@@ -12,6 +13,14 @@ public class EarnedCommissionService : IEarnedCommissionService
      * 4. Update the EarnedCommission entity with the finalized amount.
      * 5. Next step to use TotalCommission
      */
+
+    private readonly IConversionService _conversionService;
+
+    public EarnedCommissionService(IConversionService conversionService)
+    {
+        _conversionService = conversionService;
+    }
+
     public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
     {
         /*
