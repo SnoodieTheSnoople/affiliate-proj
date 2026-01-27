@@ -99,6 +99,11 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         };
     }
 
+    public async Task<CommissionRateDTO?> GetCommissioNRateByCreatorIdAndStoreIdAsync(Guid creatorId, Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<CommissionRateDTO?> GetCommissionRateByStoreIdAndCreatorIdAndIsAcceptedAsync(Guid storeId, Guid creatorId)
     {
         if (storeId == Guid.Empty)
