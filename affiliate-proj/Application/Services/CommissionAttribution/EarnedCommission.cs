@@ -1,6 +1,9 @@
-﻿namespace affiliate_proj.Application.Services.CommissionAttribution;
+﻿using affiliate_proj.Application.Interfaces.CommissionAttribution;
+using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
-public class EarnedCommission
+namespace affiliate_proj.Application.Services.CommissionAttribution;
+
+public class EarnedCommission : IEarnedCommission
 {
     /*
      * 1. Upon order_status fulfilled, calculate the commission based on the predefined rate for the store and creator.
@@ -9,4 +12,8 @@ public class EarnedCommission
      * 4. Update the EarnedCommission entity with the finalized amount.
      * 5. Next step to use TotalCommission
      */
+    public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
+    {
+        throw new NotImplementedException();
+    }
 }
