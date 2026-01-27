@@ -6,6 +6,7 @@ using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Account.Rates;
+using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify;
 using affiliate_proj.Application.Interfaces.Shopify.Data;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
@@ -19,6 +20,7 @@ using affiliate_proj.Application.Services.Account.Affiliate.Code;
 using affiliate_proj.Application.Services.Account.Affiliate.Link;
 using affiliate_proj.Application.Services.Account.Creator;
 using affiliate_proj.Application.Services.Account.Rates;
+using affiliate_proj.Application.Services.CommissionAttribution;
 using affiliate_proj.Application.Services.Shopify;
 using affiliate_proj.Application.Services.Shopify.Data;
 using affiliate_proj.Application.Services.Shopify.Data.Factories;
@@ -123,6 +125,9 @@ public class Program
 
         builder.Services.AddScoped<IConversionService, ConversionService>();
         builder.Services.AddScoped<IConversionRepository, ConversionRepository>();
+        
+        /* CommissionAttribution Service */
+        builder.Services.AddScoped<IEarnedCommissionService, EarnedCommissionService>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
