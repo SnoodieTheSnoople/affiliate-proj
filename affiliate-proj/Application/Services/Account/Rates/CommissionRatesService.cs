@@ -56,6 +56,11 @@ public class CommissionRatesService : ICommissionRatesService
         return await _commissionRatesRepository.GetCommissionRateByRateIdAsync(rateId);
     }
 
+    public async Task<CommissionRateDTO?> GetCommissionRateByCreatorAndStoreIdsAsync(Guid creatorId, Guid storeId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO)
     {
         if (commissionRateDTO == null)
