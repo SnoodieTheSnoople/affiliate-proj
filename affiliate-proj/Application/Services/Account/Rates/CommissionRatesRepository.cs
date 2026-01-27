@@ -101,6 +101,9 @@ public class CommissionRatesRepository : ICommissionRatesRepository
 
     public async Task<CommissionRateDTO?> GetCommissioNRateByCreatorIdAndStoreIdAsync(Guid creatorId, Guid storeId)
     {
+        if (creatorId == Guid.Empty || storeId == Guid.Empty)
+            throw new NullReferenceException();
+        
         throw new NotImplementedException();
     }
 
