@@ -14,6 +14,13 @@ public class EarnedCommissionService : IEarnedCommissionService
      */
     public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
     {
+        /*
+         * 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
+         * 2. Lookup CommissionRates based on StoreId and CreatorId to get the commission rate.
+         * 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
+         * 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
+         * 5. Call repository to save EarnedCommission entity.
+         */
         throw new NotImplementedException();
     }
 }
