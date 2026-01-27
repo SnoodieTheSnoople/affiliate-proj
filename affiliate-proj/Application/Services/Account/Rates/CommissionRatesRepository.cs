@@ -104,7 +104,18 @@ public class CommissionRatesRepository : ICommissionRatesRepository
         if (creatorId == Guid.Empty || storeId == Guid.Empty)
             throw new NullReferenceException();
         
-        throw new NotImplementedException();
+        var result = await _postgresDbContext.CommissionRates.FirstOrDefaultAsync(rate => 
+            rate.CreatorId == creatorId && rate.StoreId == storeId && rate.IsAccepted == true);
+
+        return new CommissionRateDTO
+        {
+            RateId = result.RateId,
+            CreatedAt = result.CreatedAt,
+            CreatorId = result.CreatorId,
+            StoreId = result.StoreId,
+            Rate = result.Rate,
+            IsAccepted = result.IsAccepted,
+        };
     }
 
     public async Task<CommissionRateDTO?> GetCommissionRateByStoreIdAndCreatorIdAndIsAcceptedAsync(Guid storeId, Guid creatorId)
