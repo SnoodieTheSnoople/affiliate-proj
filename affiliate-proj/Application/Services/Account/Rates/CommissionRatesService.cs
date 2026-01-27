@@ -61,7 +61,7 @@ public class CommissionRatesService : ICommissionRatesService
         if (creatorId == Guid.Empty || storeId == Guid.Empty)
             throw new NullReferenceException();
         
-        throw new NotImplementedException();
+        return await _commissionRatesRepository.GetCommissioNRateByCreatorIdAndStoreIdAsync(creatorId, storeId);
     }
 
     public async Task<CommissionRateDTO> UpdateCommissionRateAsync(CommissionRateDTO commissionRateDTO)
