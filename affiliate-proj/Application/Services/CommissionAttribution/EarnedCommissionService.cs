@@ -63,6 +63,8 @@ public class EarnedCommissionService : IEarnedCommissionService
             return;
         }
         
+        // TODO: Create CommissionRatesService method to GetRateByStoreAndCreatorAsync
+        
         throw new NotImplementedException();
     }
 }
