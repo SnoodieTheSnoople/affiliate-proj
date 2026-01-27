@@ -63,7 +63,7 @@ public class EarnedCommissionService : IEarnedCommissionService
             return;
         }
         
-        // TODO: Create CommissionRatesService method to GetRateByStoreAndCreatorAsync
+        var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         
         throw new NotImplementedException();
     }
