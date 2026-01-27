@@ -3,7 +3,7 @@ using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.CommissionAttribution;
 
-public class EarnedCommission : IEarnedCommission
+public class EarnedCommissionService : IEarnedCommissionService
 {
     /*
      * 1. Upon order_status fulfilled, calculate the commission based on the predefined rate for the store and creator.
