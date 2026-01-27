@@ -45,10 +45,12 @@ public class EarnedCommissionService : IEarnedCommissionService
         if (!String.IsNullOrEmpty(conversionDto.Code))
         {
             // Lookup affiliate code to get CreatorId
+            creatorId = (await _affiliateCodeService.GetAffiliateCodeByCodeAsync(conversionDto.Code)).CreatorId;
         }
         else if (!String.IsNullOrEmpty(conversionDto.LandingSite) && !String.IsNullOrEmpty(conversionDto.LandingSiteRef))
         {
             // Lookup landing site/ref to get CreatorId
+            creatorId = (await _affiliateLinkService.GetAffiliateLinkByLinkAsync(conversionDto.LandingSite)).CreatorId;
         }
         else
         {
