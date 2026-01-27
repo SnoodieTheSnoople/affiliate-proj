@@ -1,4 +1,7 @@
-﻿using affiliate_proj.Application.Interfaces.CommissionAttribution;
+﻿using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
+using affiliate_proj.Application.Interfaces.Account.Creator;
+using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
@@ -15,10 +18,16 @@ public class EarnedCommissionService : IEarnedCommissionService
      */
 
     private readonly IConversionService _conversionService;
+    private readonly ICreatorService _creatorService;
+    private readonly IAffiliateCodeService _affiliateCodeService;
+    private readonly IAffiliateLinkService _affiliateLinkService;
 
-    public EarnedCommissionService(IConversionService conversionService)
+    public EarnedCommissionService(IConversionService conversionService, ICreatorService creatorService, IAffiliateCodeService affiliateCodeService, IAffiliateLinkService affiliateLinkService)
     {
         _conversionService = conversionService;
+        _creatorService = creatorService;
+        _affiliateCodeService = affiliateCodeService;
+        _affiliateLinkService = affiliateLinkService;
     }
 
     public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
@@ -30,6 +39,23 @@ public class EarnedCommissionService : IEarnedCommissionService
          * 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
          * 5. Call repository to save EarnedCommission entity.
          */
+        
+        var creatorId = Guid.Empty;
+
+        if (!String.IsNullOrEmpty(conversionDto.Code))
+        {
+            // Lookup affiliate code to get CreatorId
+        }
+        else if (!String.IsNullOrEmpty(conversionDto.LandingSite) && !String.IsNullOrEmpty(conversionDto.LandingSiteRef))
+        {
+            // Lookup landing site/ref to get CreatorId
+        }
+        else
+        {
+            // No attribution possible
+            return;
+        }
+        
         throw new NotImplementedException();
     }
 }
