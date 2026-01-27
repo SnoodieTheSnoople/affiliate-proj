@@ -58,6 +58,9 @@ public class CommissionRatesService : ICommissionRatesService
 
     public async Task<CommissionRateDTO?> GetCommissionRateByCreatorAndStoreIdsAsync(Guid creatorId, Guid storeId)
     {
+        if (creatorId == Guid.Empty || storeId == Guid.Empty)
+            throw new NullReferenceException();
+        
         throw new NotImplementedException();
     }
 
