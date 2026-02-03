@@ -1,6 +1,6 @@
 namespace affiliate_proj.Core.DTOs.EarnedCommission;
 
-public class CreateEarnedCommission
+public class CreateEarnedCommissionDTO
 {
     public Guid CreatorId  { get; set; }
     public Guid StoreId { get; set; }
