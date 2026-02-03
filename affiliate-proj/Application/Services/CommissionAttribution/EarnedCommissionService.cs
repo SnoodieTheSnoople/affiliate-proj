@@ -23,16 +23,18 @@ public class EarnedCommissionService : IEarnedCommissionService
     private readonly IAffiliateCodeService _affiliateCodeService;
     private readonly IAffiliateLinkService _affiliateLinkService;
     private readonly ICommissionRatesService _commissionRatesService;
+    private readonly ILogger<EarnedCommissionService> _logger;
 
     public EarnedCommissionService(IConversionService conversionService, ICreatorService creatorService, 
         IAffiliateCodeService affiliateCodeService, IAffiliateLinkService affiliateLinkService, 
-        ICommissionRatesService commissionRatesService)
+        ICommissionRatesService commissionRatesService, ILogger<EarnedCommissionService> logger)
     {
         _conversionService = conversionService;
         _creatorService = creatorService;
         _affiliateCodeService = affiliateCodeService;
         _affiliateLinkService = affiliateLinkService;
         _commissionRatesService = commissionRatesService;
+        _logger = logger;
     }
 
     public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
