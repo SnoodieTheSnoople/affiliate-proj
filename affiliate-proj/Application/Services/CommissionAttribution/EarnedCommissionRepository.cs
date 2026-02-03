@@ -24,13 +24,16 @@ public class EarnedCommissionRepository : IEarnedCommissionRepository
 
         if (checkExists != null)
         {
-            // ConvertEntityToDto
+            return ConvertEntityToDto(checkExists);
         }
         
         await _dbContext.EarnedCommissions.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         
-        throw new NotImplementedException();
+        checkExists = await _dbContext.EarnedCommissions.FirstOrDefaultAsync(x =>
+            x.ConversionId == entity.ConversionId);
+        
+        return ConvertEntityToDto(checkExists);
     }
     
     private EarnedCommission ConvertDtoToEntity(CreateEarnedCommissionDTO dto)
