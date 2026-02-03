@@ -4,6 +4,7 @@ using affiliate_proj.Application.Interfaces.Account.Creator;
 using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
+using affiliate_proj.Core.DTOs.EarnedCommission;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.CommissionAttribution;
@@ -72,6 +73,15 @@ public class EarnedCommissionService : IEarnedCommissionService
         var commissionAmount = conversionDto.OrderCost * (decimal) rate.Rate;
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
         
+        
+        var newEarnedCommission = new CreateEarnedCommissionDTO
+        {
+            CreatorId = creatorId,
+            StoreId = conversionDto.StoreId,
+            ConversionId = conversionDto.ConversionId,
+            OrderCost = conversionDto.OrderCost,
+            AmtEarned = commissionAmount
+        };
         
         throw new NotImplementedException();
     }
