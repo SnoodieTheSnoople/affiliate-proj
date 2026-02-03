@@ -2,6 +2,7 @@
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Core.DTOs.EarnedCommission;
 using affiliate_proj.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace affiliate_proj.Application.Services.CommissionAttribution;
 
@@ -16,6 +17,19 @@ public class EarnedCommissionRepository : IEarnedCommissionRepository
 
     public async Task<EarnedCommissionDTO> SetEarnedCommission(CreateEarnedCommissionDTO createEarnedCommissionDto)
     {
+        var entity = ConvertDtoToEntity(createEarnedCommissionDto);
+        
+        var checkExists = await _dbContext.EarnedCommissions.FirstOrDefaultAsync(x =>
+            x.ConversionId == entity.ConversionId);
+
+        if (checkExists != null)
+        {
+            // ConvertEntityToDto
+        }
+        
+        await _dbContext.EarnedCommissions.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+        
         throw new NotImplementedException();
     }
     
