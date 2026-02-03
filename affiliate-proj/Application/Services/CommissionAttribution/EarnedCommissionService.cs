@@ -88,6 +88,6 @@ public class EarnedCommissionService : IEarnedCommissionService
             AmtEarned = commissionAmount
         };
         
-        throw new NotImplementedException();
+        await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);
     }
 }
