@@ -128,6 +128,7 @@ public class Program
         
         /* CommissionAttribution Service */
         builder.Services.AddScoped<IEarnedCommissionService, EarnedCommissionService>();
+        builder.Services.AddScoped<IEarnedCommissionRepository, EarnedCommissionRepository>();
         
         /* ShopifySharp Utilities */
         builder.Services.AddScoped<IShopifyRequestValidationUtility, ShopifyRequestValidationUtility>();
