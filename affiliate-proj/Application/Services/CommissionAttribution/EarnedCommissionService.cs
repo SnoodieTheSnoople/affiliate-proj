@@ -67,7 +67,10 @@ public class EarnedCommissionService : IEarnedCommissionService
         
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         
+        _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
+            conversionDto.OrderCost, rate.Rate);
         var commissionAmount = conversionDto.OrderCost * (decimal) rate.Rate;
+        _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
         // TODO: Handle commissionAmount converting decimal to float or float to decimal.
         
         throw new NotImplementedException();
