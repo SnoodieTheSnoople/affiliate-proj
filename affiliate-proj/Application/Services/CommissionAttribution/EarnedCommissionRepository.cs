@@ -44,4 +44,17 @@ public class EarnedCommissionRepository : IEarnedCommissionRepository
             AmtEarned = dto.AmtEarned
         };
     }
+
+    private EarnedCommissionDTO ConvertEntityToDto(EarnedCommission entity)
+    {
+        return new EarnedCommissionDTO
+        {
+            CommissionId = entity.ConversionId,
+            CreatorId = entity.CreatorId,
+            StoreId = entity.StoreId,
+            ConversionId = entity.ConversionId,
+            OrderCost = entity.OrderCost,
+            AmtEarned = entity.AmtEarned
+        };
+    }
 }
