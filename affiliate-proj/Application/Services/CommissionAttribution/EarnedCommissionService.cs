@@ -88,6 +88,9 @@ public class EarnedCommissionService : IEarnedCommissionService
             AmtEarned = commissionAmount
         };
         
+        // 5. Call repository to save EarnedCommission entity.
         await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);
+        
+        // TODO: Separate concerns. Keep this method for calculation only.
     }
 }
