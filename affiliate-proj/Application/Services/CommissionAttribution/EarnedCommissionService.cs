@@ -71,7 +71,7 @@ public class EarnedCommissionService : IEarnedCommissionService
             conversionDto.OrderCost, rate.Rate);
         var commissionAmount = conversionDto.OrderCost * (decimal) rate.Rate;
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
-        // TODO: Handle commissionAmount converting decimal to float or float to decimal.
+        
         
         throw new NotImplementedException();
     }
