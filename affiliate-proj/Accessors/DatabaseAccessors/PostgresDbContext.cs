@@ -15,6 +15,7 @@ public class PostgresDbContext : DbContext
     public DbSet<AffiliateLink> AffiliateLinks { get; set; }
     public DbSet<AffiliateCode> AffiliateCodes { get; set; }
     public DbSet<Conversion> Conversions { get; set; }
+    public DbSet<EarnedCommission> EarnedCommissions { get; set; }
     
     public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
@@ -166,6 +167,17 @@ public class PostgresDbContext : DbContext
             builder.Property(conversion => conversion.LandingSiteRef).HasColumnName("landing_site_ref");
             builder.Property(conversion => conversion.Note).HasColumnName("note");
             builder.Property(conversion => conversion.CreatedAt).HasColumnName("created_at").ValueGeneratedOnAddOrUpdate();
+        });
+
+        modelBuilder.Entity<EarnedCommission>(builder =>
+        {
+            builder.ToTable("earned_commissions");
+            builder.Property(earnedCommission => earnedCommission.CommissionId).HasColumnName("commission_id").ValueGeneratedOnAdd();
+            builder.Property(earnedCommission => earnedCommission.CreatorId ).HasColumnName("creator_id");
+            builder.Property(earnedCommission => earnedCommission.StoreId).HasColumnName("store_id");
+            builder.Property(earnedCommission => earnedCommission.ConversionId).HasColumnName("conversion_id");
+            builder.Property(earnedCommission => earnedCommission.OrderCost).HasColumnName("order_cost");
+            builder.Property(earnedCommission => earnedCommission.AmtEarned).HasColumnName("amt_earned");
         });
     }
 
