@@ -48,6 +48,7 @@ public class EarnedCommissionService : IEarnedCommissionService
          * 5. Call repository to save EarnedCommission entity.
          */
         
+        // 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
         var creatorId = Guid.Empty;
 
         if (!String.IsNullOrEmpty(conversionDto.Code))
@@ -66,14 +67,16 @@ public class EarnedCommissionService : IEarnedCommissionService
             return;
         }
         
+        // 2. Lookup CommissionRates based on StoreId and CreatorId to get the commission rate.
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         
+        // 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
         _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
             conversionDto.OrderCost, rate.Rate);
         var commissionAmount = conversionDto.OrderCost * (decimal) rate.Rate;
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
         
-        
+        // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
         var newEarnedCommission = new CreateEarnedCommissionDTO
         {
             CreatorId = creatorId,
