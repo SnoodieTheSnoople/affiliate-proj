@@ -96,8 +96,6 @@ public class EarnedCommissionService : IEarnedCommissionService
 
         // 5. Call repository to save EarnedCommission entity.
         await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);*/
-
-        // TODO: Separate concerns. Keep this method for calculation only.
     }
 
     public async Task SetEarnedCommissionAsync(ConversionDTO conversionDto)
