@@ -41,7 +41,7 @@ public class EarnedCommissionService : IEarnedCommissionService
         _earnedCommissionRepository = earnedCommissionRepository;
     }
 
-    public async Task<Decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto, CommissionRateDTO commissionRateDto)
+    public async Task<Decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto, Guid creatorId)
     {
         /*// 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
         var creatorId = Guid.Empty;
@@ -65,18 +65,19 @@ public class EarnedCommissionService : IEarnedCommissionService
             // No attribution possible
             return;
         }
+        */
         
         // 2. Lookup CommissionRates based on StoreId and CreatorId to get the commission rate.
         _logger.LogInformation("Getting rate for CreatorId: {creatorId} and StoreId: {storeId}", creatorId, conversionDto.StoreId);
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         _logger.LogInformation("RateId: {rateId}", rate.RateId);
-        */
+        
         
         // 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
         
         _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
-            conversionDto.OrderCost, commissionRateDto.Rate);
-        var commissionAmount = conversionDto.OrderCost * ((decimal) commissionRateDto.Rate / 100);
+            conversionDto.OrderCost, rate.Rate);
+        var commissionAmount = conversionDto.OrderCost * ((decimal) rate.Rate / 100);
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
 
         return commissionAmount;
@@ -109,11 +110,7 @@ public class EarnedCommissionService : IEarnedCommissionService
             return;
         }
         
-        _logger.LogInformation("Getting rate for CreatorId: {creatorId} and StoreId: {storeId}", creatorId, conversionDto.StoreId);
-        var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
-        _logger.LogInformation("RateId: {rateId}", rate.RateId);
-        
-        var commissionAmount = await CalculateAttributedCommissionAsync(conversionDto, rate);
+        var commissionAmount = await CalculateAttributedCommissionAsync(conversionDto, creatorId);
         
         // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
         var newEarnedCommission = new CreateEarnedCommissionDTO

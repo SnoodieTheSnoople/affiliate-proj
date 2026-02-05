@@ -5,6 +5,7 @@ namespace affiliate_proj.Application.Interfaces.CommissionAttribution;
 
 public interface IEarnedCommissionService
 {
-    public Task<decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto, CommissionRateDTO commissionRateDto);
+    public Task<decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto,
+        Guid creatorId);
     public Task SetEarnedCommissionAsync(ConversionDTO conversionDto);
 }
