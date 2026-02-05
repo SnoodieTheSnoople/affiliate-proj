@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace affiliate_proj.API.Controllers.Test.CommissionAttribution
 {
-    [Route("api/[controller]")]
+    [Route("api/test/[controller]")]
     [ApiController]
     public class EarnedCommissionController : ControllerBase
     {
