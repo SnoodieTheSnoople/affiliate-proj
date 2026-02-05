@@ -99,6 +99,24 @@ public class EarnedCommissionService : IEarnedCommissionService
 
     private async Task<Guid> GetCreatorIdFromConversionAsync(ConversionDTO conversionDto)
     {
-        throw new NotImplementedException();
+        // 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
+        var creatorId = Guid.Empty;
+
+        if (!String.IsNullOrEmpty(conversionDto.Code))
+        {
+            // Lookup affiliate code to get CreatorId
+            _logger.LogInformation("Code: {code}", conversionDto.Code);
+            return (await _affiliateCodeService.GetAffiliateCodeByCodeAsync(conversionDto.Code)).CreatorId;
+        }
+
+        if (!String.IsNullOrEmpty(conversionDto.LandingSite) && !String.IsNullOrEmpty(conversionDto.LandingSiteRef))
+        {
+            // Lookup landing site/ref to get CreatorId
+            _logger.LogInformation("LandingSite: {landingSite}, LandingSiteRef: {landingSiteRef}", conversionDto.LandingSite, conversionDto.LandingSiteRef);
+            return (await _affiliateLinkService.GetAffiliateLinkByLinkAsync(conversionDto.LandingSite)).CreatorId;
+        }
+
+        // No attribution possible
+        return creatorId;
     }
 }
