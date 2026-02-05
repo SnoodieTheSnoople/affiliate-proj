@@ -91,4 +91,9 @@ public class EarnedCommissionService : IEarnedCommissionService
         
         // TODO: Separate concerns. Keep this method for calculation only.
     }
+
+    public async Task SetEarnedCommissionAsync(ConversionDTO conversionDto)
+    {
+        throw new NotImplementedException();
+    }
 }
