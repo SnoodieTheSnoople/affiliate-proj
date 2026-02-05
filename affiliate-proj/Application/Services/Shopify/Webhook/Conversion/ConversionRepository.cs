@@ -79,6 +79,8 @@ public class ConversionRepository : IConversionRepository
 
         conversion = await _dbContext.Conversions.FirstOrDefaultAsync(x => 
             x.StoreId == storeId && x.ShopifyOrderId == shopifyOrderId);
+        
+        return ConvertEntityToDto(conversion);
     }
 
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
@@ -118,6 +120,6 @@ public class ConversionRepository : IConversionRepository
             LandingSiteRef = conversion.LandingSiteRef,
             Note = conversion.Note,
             CreatedAt = conversion.CreatedAt,
-        }
+        };
     }
 }
