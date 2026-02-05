@@ -73,6 +73,7 @@ public class EarnedCommissionService : IEarnedCommissionService
         */
         
         // 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
+        
         _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
             conversionDto.OrderCost, commissionRateDto.Rate);
         var commissionAmount = conversionDto.OrderCost * ((decimal) commissionRateDto.Rate / 100);
@@ -112,6 +113,8 @@ public class EarnedCommissionService : IEarnedCommissionService
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         _logger.LogInformation("RateId: {rateId}", rate.RateId);
         
+        var commissionAmount = await CalculateAttributedCommissionAsync(conversionDto, rate);
+        
         // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
         var newEarnedCommission = new CreateEarnedCommissionDTO
         {
@@ -122,7 +125,10 @@ public class EarnedCommissionService : IEarnedCommissionService
             AmtEarned = commissionAmount
         };
         
-        throw new NotImplementedException();
+        // 5. Call repository to save EarnedCommission entity.
+        await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);
+        
+        // TODO: Test and refactor
     }
 
     private async Task<Guid> GetCreatorIdFromConversionAsync(ConversionDTO conversionDto)
