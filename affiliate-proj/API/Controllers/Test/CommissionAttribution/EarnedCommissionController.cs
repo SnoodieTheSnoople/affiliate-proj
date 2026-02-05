@@ -1,4 +1,5 @@
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
+using affiliate_proj.Core.DTOs.Shopify.Conversion;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,20 @@ namespace affiliate_proj.API.Controllers.Test.CommissionAttribution
         {
             _earnedCommissionService = earnedCommissionService;
             _logger = logger;
+        }
+
+        [HttpPost("calculate-attributed-commission")]
+        public async Task<ActionResult> CalculateAttributedCommissionAsync([FromBody] ConversionDTO conversionDto)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest();
+            }
         }
     }
 }
