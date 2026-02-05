@@ -96,4 +96,9 @@ public class EarnedCommissionService : IEarnedCommissionService
     {
         throw new NotImplementedException();
     }
+
+    private async Task<Guid> GetCreatorIdFromConversionAsync(ConversionDTO conversionDto)
+    {
+        throw new NotImplementedException();
+    }
 }
