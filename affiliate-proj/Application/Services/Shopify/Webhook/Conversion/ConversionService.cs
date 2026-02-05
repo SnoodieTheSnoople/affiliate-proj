@@ -97,22 +97,22 @@ public class ConversionService : IConversionService
     }
 
     // Can reuse Cancellation method. Separate concerns in case of future different handling.
-    public async Task UpdateConversionFulfilledAsync(string domain, int shopifyOrderId, string orderStatus)
+    public async Task<ConversionDTO?> UpdateConversionFulfilledAsync(string domain, int shopifyOrderId, string orderStatus)
     {
         if (String.IsNullOrEmpty(domain))
         {
             _logger.LogWarning("Domain is null or empty in UpdateConversionCancelledAsync");
-            return;
+            return null;
         }
 
         if (String.IsNullOrEmpty(orderStatus))
         {
             _logger.LogWarning("OrderStatus is null or empty in UpdateConversionCancelledAsync");
-            return;
+            return null;
         }
         
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         
-        await _conversionRepository.UpdateConversionFulfilledAsync(store.StoreId, shopifyOrderId, orderStatus);
+        return await _conversionRepository.UpdateConversionFulfilledAsync(store.StoreId, shopifyOrderId, orderStatus);
     }
 }
