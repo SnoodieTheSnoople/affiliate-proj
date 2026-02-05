@@ -253,7 +253,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     Request.Headers["X-Shopify-Shop-Domain"].ToString(), (int) order.OrderNumber, 
                     order.FinancialStatus);
                 
-                await _earnedCommissionService.CalculateAttributedCommissionAsync(conversion);
+                await _earnedCommissionService.SetEarnedCommissionAsync(conversion);
                 
                 return Ok();
             }
