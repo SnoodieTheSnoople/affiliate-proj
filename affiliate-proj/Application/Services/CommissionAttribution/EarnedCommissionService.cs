@@ -48,12 +48,16 @@ public class EarnedCommissionService : IEarnedCommissionService
         if (!String.IsNullOrEmpty(conversionDto.Code))
         {
             // Lookup affiliate code to get CreatorId
+            _logger.LogInformation("Code: {code}", conversionDto.Code);
             creatorId = (await _affiliateCodeService.GetAffiliateCodeByCodeAsync(conversionDto.Code)).CreatorId;
+            _logger.LogInformation("CreatorId from code: {creatorId}", creatorId);
         }
         else if (!String.IsNullOrEmpty(conversionDto.LandingSite) && !String.IsNullOrEmpty(conversionDto.LandingSiteRef))
         {
             // Lookup landing site/ref to get CreatorId
+            _logger.LogInformation("LandingSite: {landingSite}, LandingSiteRef: {landingSiteRef}", conversionDto.LandingSite, conversionDto.LandingSiteRef);
             creatorId = (await _affiliateLinkService.GetAffiliateLinkByLinkAsync(conversionDto.LandingSite)).CreatorId;
+            _logger.LogInformation("CreatorId from landing site/ref: {creatorId}", creatorId);
         }
         else
         {
@@ -62,12 +66,14 @@ public class EarnedCommissionService : IEarnedCommissionService
         }
         
         // 2. Lookup CommissionRates based on StoreId and CreatorId to get the commission rate.
+        _logger.LogInformation("Getting rate for CreatorId: {creatorId} and StoreId: {storeId}", creatorId, conversionDto.StoreId);
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
+        _logger.LogInformation("RateId: {rateId}", rate.RateId);
         
         // 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
         _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
             conversionDto.OrderCost, rate.Rate);
-        var commissionAmount = conversionDto.OrderCost * (decimal) rate.Rate;
+        var commissionAmount = conversionDto.OrderCost * ((decimal) rate.Rate / 100);
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
         
         // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
