@@ -64,18 +64,21 @@ public class ConversionRepository : IConversionRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateConversionFulfilledAsync(Guid storeId, int shopifyOrderId, string orderStatus)
+    public async Task<ConversionDTO?> UpdateConversionFulfilledAsync(Guid storeId, int shopifyOrderId, string orderStatus)
     {
         var conversion = await _dbContext.Conversions.FirstOrDefaultAsync(x =>
             x.StoreId == storeId && x.ShopifyOrderId == shopifyOrderId);
 
         if (conversion == null)
         {
-            return;
+            return null;
         }
         
         conversion.OrderStatus = orderStatus;
         await _dbContext.SaveChangesAsync();
+
+        conversion = await _dbContext.Conversions.FirstOrDefaultAsync(x => 
+            x.StoreId == storeId && x.ShopifyOrderId == shopifyOrderId);
     }
 
     private Core.Entities.Conversion ConvertDtoToEntity(CreateConversion createConversion)
@@ -95,5 +98,26 @@ public class ConversionRepository : IConversionRepository
             LandingSiteRef = createConversion.LandingSiteRef,
             Note = createConversion.Note,
         };
+    }
+
+    private ConversionDTO ConvertEntityToDto(Core.Entities.Conversion conversion)
+    {
+        return new ConversionDTO
+        {
+            ConversionId = conversion.ConversionId,
+            StoreId = conversion.StoreId,
+            Link = conversion.Link,
+            Clicks = conversion.Clicks,
+            Code = conversion.Code,
+            ShopifyOrderId = conversion.ShopifyOrderId,
+            OrderCost = conversion.OrderCost,
+            Currency = conversion.Currency,
+            OrderStatus = conversion.OrderStatus,
+            OrderCreated = conversion.OrderCreated,
+            LandingSite = conversion.LandingSite,
+            LandingSiteRef = conversion.LandingSiteRef,
+            Note = conversion.Note,
+            CreatedAt = conversion.CreatedAt,
+        }
     }
 }
