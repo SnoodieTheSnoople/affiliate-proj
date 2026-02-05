@@ -23,6 +23,8 @@ namespace affiliate_proj.API.Controllers.Test.CommissionAttribution
         {
             try
             {
+                _logger.LogInformation("Calculating Attributed Commission");
+                await _earnedCommissionService.CalculateAttributedCommissionAsync(conversionDto);
                 return Ok();
             }
             catch (Exception e)
