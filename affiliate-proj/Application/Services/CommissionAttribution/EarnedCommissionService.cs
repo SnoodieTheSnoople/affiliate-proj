@@ -5,6 +5,7 @@ using affiliate_proj.Application.Interfaces.Account.Rates;
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Core.DTOs.EarnedCommission;
+using affiliate_proj.Core.DTOs.Rates;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.CommissionAttribution;
@@ -40,9 +41,9 @@ public class EarnedCommissionService : IEarnedCommissionService
         _earnedCommissionRepository = earnedCommissionRepository;
     }
 
-    public async Task CalculateAttributedCommissionAsync(ConversionDTO conversionDto)
+    public async Task<Decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto, CommissionRateDTO commissionRateDto)
     {
-        // 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
+        /*// 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
         var creatorId = Guid.Empty;
 
         if (!String.IsNullOrEmpty(conversionDto.Code))
@@ -69,12 +70,47 @@ public class EarnedCommissionService : IEarnedCommissionService
         _logger.LogInformation("Getting rate for CreatorId: {creatorId} and StoreId: {storeId}", creatorId, conversionDto.StoreId);
         var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
         _logger.LogInformation("RateId: {rateId}", rate.RateId);
+        */
         
         // 3. Calculate commission: AmtEarned = conversionDto.order_cost * CommissionRate.
         _logger.LogInformation("OrderCost: {orderCost}, Commission Rate: {commissionRate}", 
-            conversionDto.OrderCost, rate.Rate);
-        var commissionAmount = conversionDto.OrderCost * ((decimal) rate.Rate / 100);
+            conversionDto.OrderCost, commissionRateDto.Rate);
+        var commissionAmount = conversionDto.OrderCost * ((decimal) commissionRateDto.Rate / 100);
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
+
+        return commissionAmount;
+
+        /*return commissionAmount;
+
+        // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
+        var newEarnedCommission = new CreateEarnedCommissionDTO
+        {
+            CreatorId = creatorId,
+            StoreId = conversionDto.StoreId,
+            ConversionId = conversionDto.ConversionId,
+            OrderCost = conversionDto.OrderCost,
+            AmtEarned = commissionAmount
+        };
+
+        // 5. Call repository to save EarnedCommission entity.
+        await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);*/
+
+        // TODO: Separate concerns. Keep this method for calculation only.
+    }
+
+    public async Task SetEarnedCommissionAsync(ConversionDTO conversionDto)
+    {
+        var creatorId = await GetCreatorIdFromConversionAsync(conversionDto);
+        
+        if (creatorId == Guid.Empty)
+        {
+            _logger.LogInformation("No creator attribution possible for ConversionId: {conversionId}", conversionDto.ConversionId);
+            return;
+        }
+        
+        _logger.LogInformation("Getting rate for CreatorId: {creatorId} and StoreId: {storeId}", creatorId, conversionDto.StoreId);
+        var rate = await _commissionRatesService.GetCommissionRateByCreatorAndStoreIdsAsync(creatorId, conversionDto.StoreId);
+        _logger.LogInformation("RateId: {rateId}", rate.RateId);
         
         // 4. Create CreateEarnedCommissionDTO entity with CreatorId, StoreId, ConversionId, OrderCost, AmtEarned.
         var newEarnedCommission = new CreateEarnedCommissionDTO
@@ -86,14 +122,6 @@ public class EarnedCommissionService : IEarnedCommissionService
             AmtEarned = commissionAmount
         };
         
-        // 5. Call repository to save EarnedCommission entity.
-        await _earnedCommissionRepository.SetEarnedCommission(newEarnedCommission);
-        
-        // TODO: Separate concerns. Keep this method for calculation only.
-    }
-
-    public async Task SetEarnedCommissionAsync(ConversionDTO conversionDto)
-    {
         throw new NotImplementedException();
     }
 
