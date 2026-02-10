@@ -189,6 +189,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
                                   $"Attributes: {order.Currency}, {order.FinancialStatus}, {order.FulfillmentStatus}, " +
                                   $"{order.CurrentSubtotalPrice}");
                 
+                Console.WriteLine($"OrderCreated formats:\n{order.CreatedAt}\n{order.CreatedAt.Value.UtcDateTime}\n{order.CreatedAt.Value.DateTime}\n");
+                
                 var pretty = Newtonsoft.Json.JsonConvert.SerializeObject(
                     Newtonsoft.Json.JsonConvert.DeserializeObject(body), Newtonsoft.Json.Formatting.Indented);
                 
@@ -203,11 +205,11 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 var currency = order.Currency;
                 var financialStatus = order.FinancialStatus;
                 var price = (decimal) order.CurrentSubtotalPrice;
-                var orderCreatedAt = order.CreatedAt.Value;
+                var orderCreatedAt = order.CreatedAt.Value.UtcDateTime;
                 
                 await _conversionService.SetConversionAsync(domain, shopifyWebhookId: orderId, shopifyOrderId: orderNum,
                     code: note, landingSite: landingSite, referralSite: referralSite, currency: currency,
-                    orderStatus: financialStatus, orderCost: price, shopifyOrderCreated: orderCreatedAt.UtcDateTime);
+                    orderStatus: financialStatus, orderCost: price, shopifyOrderCreated: orderCreatedAt);
 
                     return Ok();
             }

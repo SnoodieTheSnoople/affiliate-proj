@@ -27,7 +27,7 @@ public class Conversion
     [Required]
     public string Currency { get; set; }
     public string OrderStatus { get; set; }
-    public DateTime OrderCreated  { get; set; }
+    public DateTimeOffset OrderCreated  { get; set; }
     public string LandingSite  { get; set; }
     public string LandingSiteRef  { get; set; }
     public string Note { get; set; }

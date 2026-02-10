@@ -5,7 +5,7 @@ namespace affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 public interface IConversionService
 {
     Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code, string landingSite,
-        string referralSite, string currency, string orderStatus, decimal orderCost, DateTime shopifyOrderCreated);
+        string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated);
     Task UpdateConversionCancelledAsync(string domain, int shopifyOrderId, string orderStatus);
     Task<ConversionDTO?> UpdateConversionFulfilledAsync(string domain, int shopifyOrderId, string orderStatus);
 }

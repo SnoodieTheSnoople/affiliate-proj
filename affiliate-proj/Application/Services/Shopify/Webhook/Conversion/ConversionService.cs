@@ -25,7 +25,7 @@ public class ConversionService : IConversionService
 
     public async Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
         string landingSite,
-        string referralSite, string currency, string orderStatus, decimal orderCost, DateTime shopifyOrderCreated)
+        string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
         // Query DB to find StoreId using StoreUrl
         // Check if Link, Code, LandingSite, LandingSiteRef are null.
