@@ -8,4 +8,6 @@ public interface IEarnedCommissionService
     public Task<decimal> CalculateAttributedCommissionAsync(ConversionDTO conversionDto,
         Guid creatorId);
     public Task SetEarnedCommissionAsync(ConversionDTO conversionDto);
+    public Task UpdateEarnedCommissionStatusAsync();
+    public Task RemoveEarnedCommissionAsync();
 }
