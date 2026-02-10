@@ -27,6 +27,8 @@ public class ConversionService : IConversionService
         string landingSite,
         string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
+        // TODO: Reassess return type
+        
         // Query DB to find StoreId using StoreUrl
         // Check if Link, Code, LandingSite, LandingSiteRef are null.
         // TODO: Current assumption. CODE IS NOTE
@@ -40,6 +42,7 @@ public class ConversionService : IConversionService
             // Query DB and get AffiliateLink details
             var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
             clicks = affiliateLink.Clicks;
+            // TODO: Prevent throw.
         }
 
         if (!String.IsNullOrEmpty(code))
@@ -50,6 +53,7 @@ public class ConversionService : IConversionService
             // If no affiliate code found, early return and do not add record
             if (affiliateCode == null)
                 throw new Exception($"Couldn't find affiliate code for {code}");
+            // TODO: Prevent throw.
         }
         
         var newConversion = new CreateConversion()
