@@ -14,7 +14,7 @@ public class ConversionRepository : IConversionRepository
         _dbContext = dbContext;
     }
 
-    public async Task SetConversionAsync(CreateConversion createConversion)
+    public async Task<ConversionDTO> SetConversionAsync(CreateConversion createConversion)
     {
         var entity = ConvertDtoToEntity(createConversion);
         
@@ -23,11 +23,16 @@ public class ConversionRepository : IConversionRepository
         
         if (checkExists != null)
         {
-            return;
+            return ConvertEntityToDto(checkExists);
         }
         
         await _dbContext.Conversions.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
+        
+        checkExists = await _dbContext.Conversions.FirstOrDefaultAsync(x => 
+            x.ShopifyOrderId == entity.ShopifyOrderId && x.StoreId == entity.StoreId);
+        
+        return ConvertEntityToDto(checkExists);
     }
 
     public async Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId)
