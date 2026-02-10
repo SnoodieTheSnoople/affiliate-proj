@@ -54,7 +54,6 @@ public class EarnedCommissionService : IEarnedCommissionService
             conversionDto.OrderCost, rate.Rate);
         var commissionAmount = conversionDto.OrderCost * ((decimal) rate.Rate / 100);
         _logger.LogInformation("Attributed Commission Rate: {commissionAmount}", commissionAmount);
-        _logger.LogInformation("Time of conversion: {conversionTime} | Time of Shopify order: {order_created}", conversionDto.CreatedAt, conversionDto.OrderCreated);
 
         return commissionAmount;
     }
