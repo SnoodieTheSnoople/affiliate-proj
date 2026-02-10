@@ -91,6 +91,16 @@ public class EarnedCommissionService : IEarnedCommissionService
          */
     }
 
+    public async Task UpdateEarnedCommissionStatusAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task RemoveEarnedCommissionAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task<Guid> GetCreatorIdFromConversionAsync(ConversionDTO conversionDto)
     {
         // 1. Lookup affiliate_code or landing_site/landing_site_ref to identify the creator. Fetch CreatorId.
