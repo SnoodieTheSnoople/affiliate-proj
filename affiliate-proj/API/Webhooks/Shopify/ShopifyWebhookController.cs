@@ -148,6 +148,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     Request.Headers["X-Shopify-Shop-Domain"].ToString(), (int) order.OrderNumber
                     , order.FinancialStatus);
                 
+                // TODO: Create method to update/remove record if order is cancelled/refunded.
+                
                 return Ok();
             }
             catch (Exception e)
@@ -207,11 +209,13 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 var price = (decimal) order.CurrentSubtotalPrice;
                 var orderCreatedAt = order.CreatedAt.Value.UtcDateTime;
                 
-                await _conversionService.SetConversionAsync(domain, shopifyWebhookId: orderId, shopifyOrderId: orderNum,
+                var conversion = await _conversionService.SetConversionAsync(domain, shopifyWebhookId: orderId, shopifyOrderId: orderNum,
                     code: note, landingSite: landingSite, referralSite: referralSite, currency: currency,
                     orderStatus: financialStatus, orderCost: price, shopifyOrderCreated: orderCreatedAt);
 
-                    return Ok();
+                await _earnedCommissionService.SetEarnedCommissionAsync(conversion);
+                
+                return Ok();
             }
             catch (Exception e)
             {
@@ -255,8 +259,8 @@ namespace affiliate_proj.API.Webhooks.Shopify
                     Request.Headers["X-Shopify-Shop-Domain"].ToString(), (int) order.OrderNumber, 
                     order.FinancialStatus);
                 
-                await _earnedCommissionService.SetEarnedCommissionAsync(conversion);
-                
+                // await _earnedCommissionService.SetEarnedCommissionAsync(conversion);
+                // TODO: Change to update status if conversion is fulfilled. 
                 return Ok();
             }
             catch (Exception e)

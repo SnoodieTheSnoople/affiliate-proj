@@ -23,7 +23,7 @@ public class ConversionService : IConversionService
         _conversionRepository = conversionRepository;
     }
 
-    public async Task SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
+    public async Task<ConversionDTO> SetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code,
         string landingSite,
         string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
@@ -49,7 +49,7 @@ public class ConversionService : IConversionService
 
             // If no affiliate code found, early return and do not add record
             if (affiliateCode == null)
-                return;
+                throw new Exception($"Couldn't find affiliate code for {code}");
         }
         
         var newConversion = new CreateConversion()
@@ -69,7 +69,7 @@ public class ConversionService : IConversionService
         };
         
         // Make call to repository
-        await _conversionRepository.SetConversionAsync(newConversion);
+        return await _conversionRepository.SetConversionAsync(newConversion);
         
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
     }
