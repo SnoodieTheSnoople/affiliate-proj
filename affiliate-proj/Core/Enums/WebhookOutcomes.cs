@@ -2,5 +2,9 @@
 
 public enum WebhookOutcomes
 {
-    
+    ProcessedSuccessfully,
+    FailedToProcess,
+    NoOp,
+    Duplicate,
+    Ignored
 }
