@@ -1,6 +1,7 @@
 ﻿using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Processing;
+using affiliate_proj.Core.Enums;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Processing;
 
@@ -15,5 +16,10 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
         _conversionService = conversionService;
         _earnedCommissionService = earnedCommissionService;
         _logger = logger;
+    }
+
+    public async Task<WebhookOutcomes> HandlePaidOrderAsync()
+    {
+        throw new NotImplementedException();
     }
 }
