@@ -21,7 +21,9 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
         _dbContext = dbContext;
     }
 
-    public async Task<WebhookOutcomes> HandlePaidOrderAsync()
+    public async Task<WebhookOutcomes> HandlePaidOrderAsync(string domain, long shopifyWebhookId, int shopifyOrderId,
+        string code, string landingSite, string referralSite, string currency, string orderStatus, decimal orderCost,
+        DateTimeOffset shopifyOrderCreated)
     {
         throw new NotImplementedException();
     }
