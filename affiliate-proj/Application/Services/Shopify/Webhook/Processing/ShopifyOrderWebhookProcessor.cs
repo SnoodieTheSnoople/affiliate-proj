@@ -32,6 +32,14 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
          * 4. Call EarnedCommission ( CREATE NEW METHOD TO RETURN WebhookOutcomes )
          * 5. Commit transaction if all successful, else Rollback.
          */
+
+        await using var transaction = _dbContext.Database.BeginTransaction();
+
+        
+        await _dbContext.SaveChangesAsync();
+        await transaction.CommitAsync();
+        
+        return WebhookOutcomes.ProcessedSuccessfully;
         
         throw new NotImplementedException();
     }
