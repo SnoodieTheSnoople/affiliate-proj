@@ -2,6 +2,7 @@
 using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Store;
+using affiliate_proj.Core.DataTypes.Records;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
@@ -76,6 +77,12 @@ public class ConversionService : IConversionService
         return await _conversionRepository.SetConversionAsync(newConversion);
         
         // TODO: Identify best fit for conversion tracking to inject into cart_notes/note_attributes
+    }
+
+    public async Task<ConversionStageResult> StageSetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code, string landingSite,
+        string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
+    {
+        throw new NotImplementedException();
     }
 
     /*
