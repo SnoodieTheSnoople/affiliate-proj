@@ -89,8 +89,14 @@ public class ConversionService : IConversionService
         {
             // Query DB and get AffiliateLink details
             var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
+
+            if (affiliateLink == null)
+            {
+                _logger.LogError("Could not find affiliate link for landing site {LandingSite}.", landingSite);
+                return new ConversionStageResult { IsSuccess = false, };
+            }
+            
             clicks = affiliateLink.Clicks;
-            // TODO: Prevent throw.
         }
 
         if (!String.IsNullOrEmpty(code))
@@ -100,8 +106,10 @@ public class ConversionService : IConversionService
 
             // If no affiliate code found, early return and do not add record
             if (affiliateCode == null)
-                throw new Exception($"Couldn't find affiliate code for {code}");
-            // TODO: Prevent throw.
+            {
+                _logger.LogError("Could not find affiliate code for {Code}.", code);
+                return new ConversionStageResult { IsSuccess = false, };
+            }
         }
         
         var newConversion = new CreateConversion()
@@ -121,7 +129,6 @@ public class ConversionService : IConversionService
         };
         
         // Make call to repository
-        return await _conversionRepository.SetConversionAsync(newConversion);
         throw new NotImplementedException();
     }
 
