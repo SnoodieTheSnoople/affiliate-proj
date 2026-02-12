@@ -132,7 +132,7 @@ public class ConversionService : IConversionService
         };
         
         // Make call to repository
-        throw new NotImplementedException();
+        return await _conversionRepository.StageSetConversionRepositoryAsync(newConversion);
     }
 
     /*
