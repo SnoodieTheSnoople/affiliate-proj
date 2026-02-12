@@ -47,12 +47,12 @@ public class ConversionRepository : IConversionRepository
         
         if (checkExistsId != Guid.Empty)
         {
-            return new ConversionStageResult { ConversionId = checkExistsId, IsDuplicate = true };
+            return new ConversionStageResult { Status = ConversionStagingStatus.Duplicate, ConversionId = checkExistsId };
         }
         
         await _dbContext.Conversions.AddAsync(entity);
         
-        return new  ConversionStageResult { Conversion = entity, IsSuccess =  true };
+        return new  ConversionStageResult { Status = ConversionStagingStatus.Created, Conversion = entity };
     }
 
     public async Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId)
