@@ -82,6 +82,46 @@ public class ConversionService : IConversionService
     public async Task<ConversionStageResult> StageSetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code, string landingSite,
         string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
+        var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
+        var clicks = 0;
+
+        if (!String.IsNullOrEmpty(landingSite))
+        {
+            // Query DB and get AffiliateLink details
+            var affiliateLink = await _affiliateLinkService.GetAffiliateLinkByLinkAsync(landingSite);
+            clicks = affiliateLink.Clicks;
+            // TODO: Prevent throw.
+        }
+
+        if (!String.IsNullOrEmpty(code))
+        {
+            // Query DB and get AffiliateCode details
+            var affiliateCode = await _affiliateCodeService.GetAffiliateCodeByCodeAsync(code);
+
+            // If no affiliate code found, early return and do not add record
+            if (affiliateCode == null)
+                throw new Exception($"Couldn't find affiliate code for {code}");
+            // TODO: Prevent throw.
+        }
+        
+        var newConversion = new CreateConversion()
+        {
+            StoreId = store.StoreId,
+            Link = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
+            Clicks =  clicks,
+            Code = String.IsNullOrEmpty(code) ? "" : code.Trim(),
+            ShopifyOrderId = shopifyOrderId,
+            OrderCost = orderCost,
+            Currency = currency,
+            OrderStatus = orderStatus,
+            OrderCreated = shopifyOrderCreated,
+            LandingSite = String.IsNullOrEmpty(landingSite) ? "" : landingSite,
+            LandingSiteRef = String.IsNullOrEmpty(referralSite) ? "" : referralSite,
+            Note = code,
+        };
+        
+        // Make call to repository
+        return await _conversionRepository.SetConversionAsync(newConversion);
         throw new NotImplementedException();
     }
 
