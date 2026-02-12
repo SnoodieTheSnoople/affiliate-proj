@@ -91,6 +91,12 @@ public class EarnedCommissionService : IEarnedCommissionService
          */
     }
 
+    public async Task StageSetEarnedCommissionAsync(Guid conversionId, Guid storeId)
+    {
+        // TODO: Make enum for return status
+        throw new NotImplementedException();
+    }
+
     public async Task UpdateEarnedCommissionStatusAsync()
     {
         throw new NotImplementedException();
