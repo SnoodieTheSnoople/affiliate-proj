@@ -25,6 +25,14 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
         string code, string landingSite, string referralSite, string currency, string orderStatus, decimal orderCost,
         DateTimeOffset shopifyOrderCreated)
     {
+        /*
+         * 1. Use dbContext and begin transaction.
+         * 2. Call Conversion method first ( CREATE NEW METHOD TO RETURN WebhookOutcomes )
+         * 3. Early return for other events that are not successful.
+         * 4. Call EarnedCommission ( CREATE NEW METHOD TO RETURN WebhookOutcomes )
+         * 5. Commit transaction if all successful, else Rollback.
+         */
+        
         throw new NotImplementedException();
     }
 }
