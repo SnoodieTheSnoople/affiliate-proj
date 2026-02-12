@@ -82,6 +82,9 @@ public class ConversionService : IConversionService
     public async Task<ConversionStageResult> StageSetConversionAsync(string domain, long shopifyWebhookId, int shopifyOrderId, string code, string landingSite,
         string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
+        if (String.IsNullOrEmpty(landingSite) && String.IsNullOrEmpty(code)) 
+            return new ConversionStageResult { IsIgnored = true, };
+        
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         var clicks = 0;
 
