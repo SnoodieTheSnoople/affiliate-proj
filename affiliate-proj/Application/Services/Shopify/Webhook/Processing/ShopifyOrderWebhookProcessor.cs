@@ -45,6 +45,8 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
 
         await using var transaction = _dbContext.Database.BeginTransaction();
 
+        var conversionResult = await _conversionService.StageSetConversionAsync(domain, shopifyWebhookId, shopifyOrderId
+            , code, landingSite, referralSite, currency, orderStatus, orderCost, shopifyOrderCreated);
         
         await _dbContext.SaveChangesAsync();
         await transaction.CommitAsync();
