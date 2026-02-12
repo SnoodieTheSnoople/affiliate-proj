@@ -1,4 +1,6 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Code;
+using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Processing;
@@ -12,13 +14,21 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
     private readonly IEarnedCommissionService _earnedCommissionService;
     private readonly ILogger<ShopifyOrderWebhookProcessor> _logger;
     private readonly PostgresDbContext _dbContext;
+    
+    private readonly IAffiliateLinkService _affiliateLinkService;
+    private readonly IAffiliateCodeService _affiliateCodeService;
 
-    public ShopifyOrderWebhookProcessor(IConversionService conversionService, IEarnedCommissionService earnedCommissionService, ILogger<ShopifyOrderWebhookProcessor> logger, PostgresDbContext dbContext)
+    public ShopifyOrderWebhookProcessor(IConversionService conversionService, 
+        IEarnedCommissionService earnedCommissionService, ILogger<ShopifyOrderWebhookProcessor> logger, 
+        PostgresDbContext dbContext, IAffiliateLinkService affiliateLinkService, 
+        IAffiliateCodeService affiliateCodeService)
     {
         _conversionService = conversionService;
         _earnedCommissionService = earnedCommissionService;
         _logger = logger;
         _dbContext = dbContext;
+        _affiliateLinkService = affiliateLinkService;
+        _affiliateCodeService = affiliateCodeService;
     }
 
     public async Task<WebhookOutcomes> HandlePaidOrderAsync(string domain, long shopifyWebhookId, int shopifyOrderId,
