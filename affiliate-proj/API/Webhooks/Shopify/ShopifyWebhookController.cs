@@ -212,6 +212,11 @@ namespace affiliate_proj.API.Webhooks.Shopify
                 var financialStatus = order.FinancialStatus;
                 var price = (decimal) order.CurrentSubtotalPrice;
                 var orderCreatedAt = order.CreatedAt.Value.UtcDateTime;
+
+                _shopifyOrderWebhookProcessor.HandlePaidOrderAsync(domain, shopifyWebhookId: orderId,
+                    shopifyOrderId: orderNum,
+                    code: note, landingSite: landingSite, referralSite: referralSite, currency: currency,
+                    orderStatus: financialStatus, orderCost: price, shopifyOrderCreated: orderCreatedAt);
                 
                 var conversion = await _conversionService.SetConversionAsync(domain, shopifyWebhookId: orderId, shopifyOrderId: orderNum,
                     code: note, landingSite: landingSite, referralSite: referralSite, currency: currency,
