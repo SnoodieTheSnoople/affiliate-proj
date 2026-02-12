@@ -83,7 +83,7 @@ public class ConversionService : IConversionService
         string referralSite, string currency, string orderStatus, decimal orderCost, DateTimeOffset shopifyOrderCreated)
     {
         if (String.IsNullOrEmpty(landingSite) && String.IsNullOrEmpty(code)) 
-            return new ConversionStageResult { IsIgnored = true, };
+            return new ConversionStageResult { Status = ConversionStagingStatus.Ignored };
         
         var store = await _shopifyStoreHelper.GetStoreByDomainAsync(domain);
         var clicks = 0;
@@ -96,7 +96,7 @@ public class ConversionService : IConversionService
             if (affiliateLink == null)
             {
                 _logger.LogError("Could not find affiliate link for landing site {LandingSite}.", landingSite);
-                return new ConversionStageResult { IsSuccess = false, };
+                return new ConversionStageResult { Status = ConversionStagingStatus.Ignored };
             }
             
             clicks = affiliateLink.Clicks;
@@ -111,7 +111,7 @@ public class ConversionService : IConversionService
             if (affiliateCode == null)
             {
                 _logger.LogError("Could not find affiliate code for {Code}.", code);
-                return new ConversionStageResult { IsSuccess = false, };
+                return new ConversionStageResult { Status =  ConversionStagingStatus.Ignored };
             }
         }
         
