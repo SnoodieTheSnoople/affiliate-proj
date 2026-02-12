@@ -4,6 +4,7 @@ using affiliate_proj.Application.Interfaces.Account.Affiliate.Link;
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Processing;
+using affiliate_proj.Core.DataTypes.Records;
 using affiliate_proj.Core.Enums;
 
 namespace affiliate_proj.Application.Services.Shopify.Webhook.Processing;
@@ -47,6 +48,9 @@ public class ShopifyOrderWebhookProcessor : IShopifyOrderWebhookProcessor
 
         var conversionResult = await _conversionService.StageSetConversionAsync(domain, shopifyWebhookId, shopifyOrderId
             , code, landingSite, referralSite, currency, orderStatus, orderCost, shopifyOrderCreated);
+
+        if (conversionResult.Status == ConversionStagingStatus.Ignored)
+            return WebhookOutcomes.Ignored;
         
         await _dbContext.SaveChangesAsync();
         await transaction.CommitAsync();
