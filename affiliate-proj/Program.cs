@@ -13,6 +13,7 @@ using affiliate_proj.Application.Interfaces.Shopify.Data.Factories;
 using affiliate_proj.Application.Interfaces.Shopify.Data.Product;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Processing;
 using affiliate_proj.Application.Interfaces.Store;
 using affiliate_proj.Application.Services;
 using affiliate_proj.Application.Services.Account;
@@ -27,6 +28,7 @@ using affiliate_proj.Application.Services.Shopify.Data.Factories;
 using affiliate_proj.Application.Services.Shopify.Data.Product;
 using affiliate_proj.Application.Services.Shopify.Webhook;
 using affiliate_proj.Application.Services.Shopify.Webhook.Conversion;
+using affiliate_proj.Application.Services.Shopify.Webhook.Processing;
 using affiliate_proj.Application.Services.Store;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -125,6 +127,9 @@ public class Program
 
         builder.Services.AddScoped<IConversionService, ConversionService>();
         builder.Services.AddScoped<IConversionRepository, ConversionRepository>();
+        
+        /* Webhook Processor */
+        builder.Services.AddScoped<IShopifyOrderWebhookProcessor, ShopifyOrderWebhookProcessor>();
         
         /* CommissionAttribution Service */
         builder.Services.AddScoped<IEarnedCommissionService, EarnedCommissionService>();
