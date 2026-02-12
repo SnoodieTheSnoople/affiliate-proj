@@ -1,5 +1,6 @@
 ﻿using affiliate_proj.Accessors.DatabaseAccessors;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
+using affiliate_proj.Core.DataTypes.Records;
 using affiliate_proj.Core.DTOs.Shopify.Conversion;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,11 @@ public class ConversionRepository : IConversionRepository
             x.ShopifyOrderId == entity.ShopifyOrderId && x.StoreId == entity.StoreId);
         
         return ConvertEntityToDto(checkExists);
+    }
+
+    public async Task<ConversionStageResult> StageSetConversionRepositoryAsync(CreateConversion createConversion)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId)

@@ -1,10 +1,12 @@
-﻿using affiliate_proj.Core.DTOs.Shopify.Conversion;
+﻿using affiliate_proj.Core.DataTypes.Records;
+using affiliate_proj.Core.DTOs.Shopify.Conversion;
 
 namespace affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
 
 public interface IConversionRepository
 {
     Task<ConversionDTO> SetConversionAsync(CreateConversion createConversion);
+    Task<ConversionStageResult> StageSetConversionRepositoryAsync(CreateConversion createConversion);
     Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId);
     Task<List<ConversionDTO>> GetConversionsByStoreIdAsync(Guid storeId);
     Task<List<ConversionDTO>> GetConversionsByCodeAsync(string code);
