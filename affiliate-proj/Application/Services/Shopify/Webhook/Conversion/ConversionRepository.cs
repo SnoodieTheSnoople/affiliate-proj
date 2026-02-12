@@ -38,7 +38,21 @@ public class ConversionRepository : IConversionRepository
 
     public async Task<ConversionStageResult> StageSetConversionRepositoryAsync(CreateConversion createConversion)
     {
-        throw new NotImplementedException();
+        var entity = ConvertDtoToEntity(createConversion);
+        
+        var checkExistsId = await _dbContext.Conversions.AsNoTracking()
+            .Where(x => x.ShopifyOrderId == entity.ShopifyOrderId && x.StoreId == entity.StoreId)
+            .Select(x => x.ConversionId)
+            .FirstOrDefaultAsync();
+        
+        if (checkExistsId != Guid.Empty)
+        {
+            return new ConversionStageResult { ConversionId = checkExistsId, IsDuplicate = true };
+        }
+        
+        await _dbContext.Conversions.AddAsync(entity);
+        
+        return new  ConversionStageResult { Conversion = entity, IsSuccess =  true };
     }
 
     public async Task<ConversionDTO?> GetConversionByIdAsync(Guid conversionId)
