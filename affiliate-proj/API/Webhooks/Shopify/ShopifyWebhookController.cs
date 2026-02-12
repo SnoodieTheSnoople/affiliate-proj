@@ -1,6 +1,7 @@
 using affiliate_proj.Application.Interfaces.CommissionAttribution;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook;
 using affiliate_proj.Application.Interfaces.Shopify.Webhook.Conversion;
+using affiliate_proj.Application.Interfaces.Shopify.Webhook.Processing;
 using affiliate_proj.Application.Interfaces.Store;
 using Microsoft.AspNetCore.Mvc;
 using ShopifySharp;
@@ -19,11 +20,12 @@ namespace affiliate_proj.API.Webhooks.Shopify
         private readonly IStoreService _storeService;
         private readonly IConversionService _conversionService;
         private readonly IEarnedCommissionService _earnedCommissionService;
+        private readonly IShopifyOrderWebhookProcessor _shopifyOrderWebhookProcessor;
 
         public ShopifyWebhookController(IShopifyWebhookService shopifyWebhookService, 
             IShopifyRequestValidationUtility shopifyRequestValidationUtility, 
             IConfiguration configuration, IShopifyStoreHelper shopifyStoreHelper, 
-            IStoreService storeService, IConversionService conversionService, IEarnedCommissionService earnedCommissionService)
+            IStoreService storeService, IConversionService conversionService, IEarnedCommissionService earnedCommissionService, IShopifyOrderWebhookProcessor shopifyOrderWebhookProcessor)
         {
             _shopifyWebhookService = shopifyWebhookService;
             _shopifyRequestValidationUtility = shopifyRequestValidationUtility;
@@ -32,6 +34,7 @@ namespace affiliate_proj.API.Webhooks.Shopify
             _storeService = storeService;
             _conversionService = conversionService;
             _earnedCommissionService = earnedCommissionService;
+            _shopifyOrderWebhookProcessor = shopifyOrderWebhookProcessor;
         }
         
         [HttpPost("app/uninstalled")]
