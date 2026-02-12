@@ -1,3 +1,10 @@
-﻿namespace affiliate_proj.Core.DataTypes.Records;
+﻿using affiliate_proj.Core.Entities;
 
-public record ConversionStageResult();
+namespace affiliate_proj.Core.DataTypes.Records;
+
+public sealed record ConversionStageResult
+{
+    public bool IsSuccess { get; init; } 
+    public bool IsDuplicate { get; init; }
+    public Guid ConversionId { get; init; }
+}
